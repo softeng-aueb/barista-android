@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AUEB App</string>
+
+    <string name="text_small">w480dp-hdpi</string>
+    <string name="text_medium">w480dp-hdpi</string>
+    <string name="text_large">w480dp-hdpi</string>
+
+    <string name="text_dimens">dimens</string>
+</resources>

@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="gr.aueb.android.barista">
+
+    <!--xriazomaste auto to permission gia na mpori na trexei to wm density trexoume prota ston emulator
+   meta ekteloume to pm grant kai exoume dikaioma na trexoume tis entoles-->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.SET_ORIENTATION" />
+
+    <!-- gia na treksi to orientation -->
+    <uses-permission android:name="android.permission.ACCESS_CONTENT_PROVIDERS_EXTERNALLY" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+
+</manifest>
