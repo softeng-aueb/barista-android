@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HelloWorldGradle</string>
+    <string name="TextSample">Enter your name</string>
+    <string name="confirm_string">OK</string>
+</resources>
