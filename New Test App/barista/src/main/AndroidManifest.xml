@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="gr.aueb.android.barista">
+
+    <!-- Permission for Internet in order to use REST HTTP Client-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
+</manifest>
+

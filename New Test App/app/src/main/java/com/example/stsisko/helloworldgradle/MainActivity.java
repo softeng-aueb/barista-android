@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * InteliJ Bug => AppCompactActivity cannot be resolved
+ *  Solution: File -> Invalidate Caches/Restart
+ *  Source: https://stackoverflow.com/questions/29199891/cannot-resolve-symbol-appcompatactivity
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
