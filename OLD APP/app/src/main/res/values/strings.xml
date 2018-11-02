@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">My Application</string>
-	<string name="text_small">small normal</string>
-    <string name="text_medium">medium normal</string>
-    <string name="text_large">large normal</string>
-
-    <string name="text_dimens">dimens</string>
-    <string name="density_info">load density programmatically</string>
-</resources>

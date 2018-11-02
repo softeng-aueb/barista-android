@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">AUEB App</string>
-
-    <string name="text_small">small land</string>
-    <string name="text_medium">medium land</string>
-    <string name="text_large">large land</string>
-</resources>
