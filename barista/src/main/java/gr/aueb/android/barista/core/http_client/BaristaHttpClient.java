@@ -2,6 +2,7 @@ package gr.aueb.android.barista.core.http_client;
 
 import java.io.IOException;
 
+import gr.aueb.android.barista.BuildConfig;
 import okhttp3.OkHttpClient;
 
 import retrofit2.Call;
@@ -15,23 +16,30 @@ import retrofit2.http.GET;
 public class BaristaHttpClient {
 
     private Retrofit retrofit;
-
-
-    /**
-     *     todo java.lang.IllegalArgumentException: baseUrl must end in /
-     *     Error if URI does not end with /.
-     *     Discuss with ZV if a handler must be present if URI is given by client
-     */
-
-    private static String URI = "http://10.0.2.2:8040/barista/";
+    private  String URI ;
+    private int port;
 
     /**
      * Construct an HTTP client in order to perform REST CALLS to the Barista Server
-     * @param URI
+     *
      */
-    public BaristaHttpClient(String URI){
+    public BaristaHttpClient(){
         //todo Target Server UI  must be dynamicaly provided
         //this.URI = URI;
+
+        //Get the port number provided by  the .gradle file
+
+
+        if(BuildConfig.BARISTA_PORT != null ){
+
+            this.port = BuildConfig.BARISTA_PORT;
+            System.out.println("[BARISTA- LIB]: Given port is "+ this.port);
+            this.URI = "http://10.0.2.2:"+port+"/barista/";
+        }
+
+        else{
+            this.URI = "http://10.0.2.2:8040/barista/";
+        }
 
         this.retrofit = getRequestClient();
 
@@ -48,7 +56,7 @@ public class BaristaHttpClient {
             String returnedMessage = response.body();
             return returnedMessage;
         } catch (IOException e) {
-            System.out.println("EXCEPTION OCCURED");
+            System.out.println("[BARISTA-LIB]: EXCEPTION OCCURED");
             e.printStackTrace();
         }
         return null;
@@ -57,7 +65,7 @@ public class BaristaHttpClient {
     public String getStatus2(){
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.getStatusMessage2();
-        System.out.println("REST CALL URI: "+callSync.request().url().toString());
+        System.out.println("[BARISTA-LIB]: REST CALL URI: "+callSync.request().url().toString());
 
         try {
             Response<String> response = callSync.execute();
@@ -66,7 +74,7 @@ public class BaristaHttpClient {
 
             return returnedMessage;
         } catch (IOException e) {
-            System.out.println("EXCEPTION OCCURED");
+            System.out.println("[BARISTA-LIB]: EXCEPTION OCCURED");
             e.printStackTrace();
         }
         return null;
@@ -75,7 +83,7 @@ public class BaristaHttpClient {
     public String killServer(){
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.killServer();
-        System.out.println("REST CALL URI: "+callSync.request().url().toString());
+        System.out.println("[BARISTA-LIB]: REST CALL URI: "+callSync.request().url().toString());
 
         try {
             Response<String> response = callSync.execute();
@@ -84,7 +92,7 @@ public class BaristaHttpClient {
 
             return returnedMessage;
         } catch (IOException e) {
-            System.out.println("EXCEPTION OCCURED");
+            System.out.println("[BARISTA-LIB]: EXCEPTION OCCURED");
             e.printStackTrace();
         }
         return null;

@@ -44,7 +44,7 @@ public class ExampleInstrumentedTest {
 
     @BeforeClass
     public static void initilizeHttpClient(){
-      client = new BaristaHttpClient(null);
+      client = new BaristaHttpClient();
 
     }
 

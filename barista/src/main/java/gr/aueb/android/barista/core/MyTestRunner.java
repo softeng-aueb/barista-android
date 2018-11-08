@@ -37,7 +37,7 @@ public class MyTestRunner extends ParentRunner {
     public MyTestRunner(Class testClass) throws InitializationError {
 
         super(testClass);
-        client = new BaristaHttpClient(null);
+        client = new BaristaHttpClient();
 
         System.out.println("Default Constructor call");
         System.out.println("Class String: "+testClass.toString());

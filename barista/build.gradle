@@ -10,7 +10,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
+        //buildConfigField("Integer","BARISTA_PORT","8090")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -41,4 +41,8 @@ dependencies {
      * https://github.com/square/retrofit/tree/master/retrofit-converters/scalars
      */
     implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+}
+
+baristaSettings{
+    port = 8070
 }
