@@ -1,16 +1,16 @@
 apply plugin: 'com.android.library'
-//todo imported only for testing purposes
-apply plugin: 'gr.aueb.android.barista-plugin'
 
+// todo GOOD JAVA API EXAMPLES REFERENCE https://www.programcreek.com/java-api-examples/
 android {
     compileSdkVersion 28
     defaultConfig {
-        //todo see bug with Annotation Parser
+
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        //buildConfigField("Integer","BARISTA_PORT","8090")
+        //todo hardcoded portnumber.
+        buildConfigField("Integer","BARISTA_PORT","8090")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -25,24 +25,23 @@ android {
 }
 
 dependencies {
+    
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+
     // HTTP REST Client
     /**
      *  Gson converter for serialization to and from JSON
      *  https://github.com/square/retrofit/tree/master/retrofit-converters/gson
      */
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
     /**Scalar A Converter which supports converting strings and both primitives and their boxed types to text/plain bodies.
      * https://github.com/square/retrofit/tree/master/retrofit-converters/scalars
      */
     implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
-}
-
-baristaSettings{
-    port = 8070
 }

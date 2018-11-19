@@ -1,5 +1,6 @@
 package com.example.stsisko.helloworldgradle;
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -44,7 +45,8 @@ public class ExampleInstrumentedTest {
 
     @BeforeClass
     public static void initilizeHttpClient(){
-      client = new BaristaHttpClient();
+
+        client = new BaristaHttpClient();
 
     }
 
@@ -52,6 +54,7 @@ public class ExampleInstrumentedTest {
     @Test
     @SaySomething(param1="Annotation parsing Test!")
     public void TestMainctivityLayout() {
+        System.out.println("TEST MAIN ACTIVITY");
         Espresso.onView(withText("Button")).check(matches(isClickable()));
         Espresso.onView(withText("OK")).check(matches(isClickable()));
         Espresso.onView(withHint("Enter your name")).check(matches(isDisplayed()));
@@ -62,13 +65,14 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void TestUpperCaseTransformation(){
+        System.out.println("TEST UPPER CASE");
         String userInput = "Stelios";
         onView(withId(R.id.editText3)).perform(typeText(userInput));
         onView(withId(R.id.button)).perform(click());
         onView(withId(R.id.textView2)).check(matches(withText("STELIOS")));
     }
 
-    @Test
+    //@Test
     public void testRestClient(){
 
 
@@ -80,13 +84,13 @@ public class ExampleInstrumentedTest {
 
     }
 
-    @Test
+   // @Test
     public void testRestClient2(){
 
         System.out.println("@@@@ CALLING SERVICE");
         String message = client.getStatus2();
         //assertNotNull(message);
-        assertEquals("Hello World from Jersey Servlet Container",message);
+        assertEquals("Hello World from Jersey Servlet Container 12",message);
         System.out.println("REST RESPONSE: "+ message);
 
     }
