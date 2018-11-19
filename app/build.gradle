@@ -4,20 +4,22 @@ plugins{
     id 'gr.aueb.android.barista-plugin'
 }
 
+// todo read https://medium.com/stepstone-tech/exploring-androidjunitrunner-filtering-options-df26d30b4f60
 
 android {
     compileSdkVersion 28
 
     defaultConfig {
+
         applicationId "com.example.stsisko.helloworldgradle"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-
+        testInstrumentationRunnerArgument "listener","gr.aueb.android.barista.core.MyRunListener"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -41,5 +43,5 @@ dependencies {
 }
 
 baristaSettings{
-    port = 8070
+    port = 8040
 }
