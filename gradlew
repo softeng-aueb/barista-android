@@ -1,4 +1,5 @@
-#!/usr/bin/env sh
+Distilling Information Reliability and Source
+Trustworthiness from Digital Traces#!/usr/bin/env sh
 
 ##############################################################################
 ##
