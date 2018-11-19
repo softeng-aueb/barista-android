@@ -2,6 +2,7 @@
 plugins{
     id 'com.android.application'
     id 'gr.aueb.android.barista-plugin'
+    id "com.dorongold.task-tree" version "1.3.1"
 }
 
 // todo read https://medium.com/stepstone-tech/exploring-androidjunitrunner-filtering-options-df26d30b4f60
@@ -39,7 +40,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestCompile project(path: ':barista')
+    androidTestImplementation project(path: ':barista')
 }
 
 baristaSettings{

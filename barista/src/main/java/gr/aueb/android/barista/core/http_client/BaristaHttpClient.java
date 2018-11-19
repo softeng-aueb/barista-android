@@ -14,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.GET;
+import timber.log.Timber;
 
 
 public class BaristaHttpClient {
@@ -34,14 +35,14 @@ public class BaristaHttpClient {
 
 
         if(BuildConfig.BARISTA_PORT != null ){
-            System.out.println("[BARISTA- LIB]: Given port is "+ this.port);
+            Timber.d("Given port is "+ this.port);
             this.port = BuildConfig.BARISTA_PORT;
 
         }
 
         else{
 
-            System.out.println("[BARISTA- LIB]: No port provided, using default port "+this.port+".");
+            Timber.d("No port provided, using default port "+this.port+".");
             //this.port = 8040;
         }
         this.URI = "http://10.0.2.2:"+port+"/barista/";
@@ -52,7 +53,7 @@ public class BaristaHttpClient {
     public String getStatus(){
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.getStatusMessage();
-        System.out.println("REST CALL URI: "+callSync.request().url().toString());
+        Timber.d("REST CALL URI: "+callSync.request().url().toString());
 
         try {
             Response<String> response = callSync.execute();
@@ -60,7 +61,7 @@ public class BaristaHttpClient {
             String returnedMessage = response.body();
             return returnedMessage;
         } catch (IOException e) {
-            System.out.println("[BARISTA-LIB]: EXCEPTION OCCURED");
+            Timber.d("EXCEPTION OCCURED");
             e.printStackTrace();
         }
         return null;
