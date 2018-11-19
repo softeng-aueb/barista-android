@@ -1,7 +1,9 @@
 package gr.aueb.android.barista.core.http_client;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 public interface StatusService {
 
@@ -25,5 +27,8 @@ public interface StatusService {
      */
     @GET("kill")
     Call<String> killServer();
+
+    @POST("echo")
+    Call<String> echoMessage(@Body String originalMsg);
 
 }

@@ -1,11 +1,14 @@
 package gr.aueb.android.barista.core.http_client;
 
+
+
 import java.io.IOException;
 
 import gr.aueb.android.barista.BuildConfig;
 import okhttp3.OkHttpClient;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,7 +20,7 @@ public class BaristaHttpClient {
 
     private Retrofit retrofit;
     private  String URI ;
-    private int port;
+    private int port = 8040;
 
     /**
      * Construct an HTTP client in order to perform REST CALLS to the Barista Server
@@ -31,16 +34,17 @@ public class BaristaHttpClient {
 
 
         if(BuildConfig.BARISTA_PORT != null ){
-
-            this.port = BuildConfig.BARISTA_PORT;
             System.out.println("[BARISTA- LIB]: Given port is "+ this.port);
-            this.URI = "http://10.0.2.2:"+port+"/barista/";
+            this.port = BuildConfig.BARISTA_PORT;
+
         }
 
         else{
-            this.URI = "http://10.0.2.2:8040/barista/";
-        }
 
+            System.out.println("[BARISTA- LIB]: No port provided, using default port "+this.port+".");
+            //this.port = 8040;
+        }
+        this.URI = "http://10.0.2.2:"+port+"/barista/";
         this.retrofit = getRequestClient();
 
     }
@@ -80,6 +84,24 @@ public class BaristaHttpClient {
         return null;
     }
 
+    public void echoMessage(String msg){
+        StatusService service = getRequestClient().create(StatusService.class);
+        Call<String> callSync = service.echoMessage(msg);
+        callSync.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                printResponse(response);
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                System.out.println("[BARISTA-LIB]: "+t.getMessage());
+            }
+        });
+
+
+    }
+
     public String killServer(){
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.killServer();
@@ -87,7 +109,8 @@ public class BaristaHttpClient {
 
         try {
             Response<String> response = callSync.execute();
-            printResponse(response);
+            // debug only
+            //printResponse(response);
             String returnedMessage = response.body();
 
             return returnedMessage;
@@ -118,7 +141,7 @@ public class BaristaHttpClient {
          * for info on how ConverterFactory works on retrofit here(https://proandroiddev.com/retrofit-advance-multi-converter-c675e9483801)
          *
          *
-         * Currently active cconverter factories :
+         * Currently active converter factories :
          *  Gson for JSON response
          *  Scalar for plain text
          *
@@ -133,9 +156,10 @@ public class BaristaHttpClient {
     }
 
     private void printResponse(Response response){
-        System.out.println("REST CODE: "+response.code());
-        System.out.println("REST MESSAGE: "+response.message());
-        System.out.println("REST isSUCESFUL: "+response.isSuccessful());
-        System.out.println("REST TO_STRING: "+response.toString());
+        System.out.println("[BARISTA-LIB] REST CODE: "+response.code());
+        System.out.println("[BARISTA-LIB] REST MESSAGE: "+response.message());
+        System.out.println("[BARISTA-LIB] REST BODY: "+response.body());
+        System.out.println("[BARISTA-LIB] REST IS_SUCESFUL: "+response.isSuccessful());
+        System.out.println("[BARISTA-LIB] REST TO_STRING: "+response.toString());
     }
 }

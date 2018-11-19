@@ -1,24 +1,22 @@
 package gr.aueb.android.barista.core;
 
-import android.app.Instrumentation;
 
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunListener;
-
 import java.lang.annotation.Annotation;
-
 import gr.aueb.android.barista.core.annotations.SaySomething;
 import gr.aueb.android.barista.core.http_client.BaristaHttpClient;
-//import android.support.test.InstrumentationRegistry;
+
 
 public class MyRunListener extends RunListener {
+
     private BaristaHttpClient client;
+
     // empty constructor
     public MyRunListener(){
-        //https://developer.android.com/training/testing/junit-runner
-        //InstrumentationRegistry.
-        client = new BaristaHttpClient();
 
+        //https://developer.android.com/training/testing/junit-runner
+        client = new BaristaHttpClient();
     }
 
     /**
@@ -27,8 +25,19 @@ public class MyRunListener extends RunListener {
      */
     public void testStarted(Description description){
         logDescription(description);
-        System.out.println("[BARISTA-LIB]: REST RESP 1 -> "+client.getStatus());
-        System.out.println("[BARISTA-LIB]: REST RESP 2 -> "+client.getStatus());
+
+        Annotation a = description.getAnnotation(SaySomething.class);
+        if(a != null ) {
+            client.echoMessage(((SaySomething) a).param1());
+            client.echoMessage(((SaySomething) a).param2());
+            client.echoMessage(((SaySomething) a).param3());
+            client.echoMessage(((SaySomething) a).param4());
+
+        }
+        else{
+            System.out.println("[BARISTA-LIB] NULL ANNOTATION");
+        }
+
     }
 
     /**
@@ -42,20 +51,10 @@ public class MyRunListener extends RunListener {
 
     private void logDescription(Description description){
 
-        System.out.println("[BARISTA-LIB]: Message from custom RunListener. "+description.getDisplayName());
-        System.out.println("[BARISTA-LIB]: METHOD RUNNING: "+description.getMethodName());
-        System.out.println("[BARISTA-LIB]: CLASS NAME: "+ description.getClassName());
-        System.out.println("[BARISTA-LIB]: ANNOTATIONS FOUND");
+        System.out.println("[BARISTA-LIB] Message from custom RunListener: "+description.getDisplayName());
+        System.out.println("[BARISTA-LIB] Method Running: "+description.getMethodName());
+        System.out.println("[BARISTA-LIB] Class Name: "+ description.getClassName());
 
-       Annotation a = description.getAnnotation(SaySomething.class);
-        if(a != null ) {
-            System.out.println("[BARISTA-LIB]:"+((SaySomething) a).param1());
-            System.out.println("[BARISTA-LIB]:"+((SaySomething) a).param2());
-            System.out.println("[BARISTA-LIB]:"+((SaySomething) a).param3());
-            System.out.println("[BARISTA-LIB]:"+((SaySomething) a).param4());
-        }
-        else{
-            System.out.println("[BARISTA-LIB]: NULL ANOTATION");
-        }
+        System.out.println("[BARISTA-LIB] ANNOTATIONS FOUND");
     }
 }
