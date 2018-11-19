@@ -1,11 +1,21 @@
 package gr.aueb.android.barista.core;
 
 
+import android.support.annotation.Nullable;
+import android.support.test.InstrumentationRegistry;
+import android.util.Log;
+
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunListener;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+
+import gr.aueb.android.barista.BuildConfig;
 import gr.aueb.android.barista.core.annotations.SaySomething;
 import gr.aueb.android.barista.core.http_client.BaristaHttpClient;
+import timber.log.Timber;
+
+import static android.util.Log.INFO;
 
 
 public class MyRunListener extends RunListener {
@@ -16,7 +26,9 @@ public class MyRunListener extends RunListener {
     public MyRunListener(){
 
         //https://developer.android.com/training/testing/junit-runner
-        client = new BaristaHttpClient();
+
+
+
     }
 
     /**
@@ -37,7 +49,6 @@ public class MyRunListener extends RunListener {
         else{
             System.out.println("[BARISTA-LIB] NULL ANNOTATION");
         }
-
     }
 
     /**
@@ -46,7 +57,31 @@ public class MyRunListener extends RunListener {
      */
     public void testRunStarted(Description description){
 
+        //if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        /*} else {
+            Timber.plant(new CrashReportingTree());
+        }*/
+
+        String packageName = InstrumentationRegistry.getTargetContext().getPackageName();
+        String buildConfigClass = packageName + ".BuildConfig";
+        try {
+            // TODO: get emulator port and ip address through reflection on BuildConfig
+            Class clazz = Class.forName(buildConfigClass);
+            Field portField = clazz.getField("BARISTA_PORT");
+            Timber.d("Found field %s", portField);
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        Timber.d("Found package %s", packageName);
         logDescription(description);
+
+        // TODO: configure client with port, ipaddress
+        client = new BaristaHttpClient();
+
     }
 
     private void logDescription(Description description){
@@ -57,4 +92,32 @@ public class MyRunListener extends RunListener {
 
         System.out.println("[BARISTA-LIB] ANNOTATIONS FOUND");
     }
+
+
+    /** A tree which logs important information for crash reporting. */
+/*    private static final class CrashReportingTree extends Timber.Tree {
+        @Override
+        public boolean isLoggable(int priority, @Nullable String tag) {
+            return priority >= INFO;
+        }
+
+        @Override
+        protected void log(int priority, String tag, Throwable t, String message) {
+            if (priority == Log.VERBOSE || priority == Log.DEBUG) {
+                return;
+            }
+
+            FakeCrashLibrary.log(priority, tag, message);
+
+            if (t != null) {
+                if (priority == Log.ERROR) {
+                    FakeCrashLibrary.logError(t);
+                } else if (priority == Log.WARN) {
+                    FakeCrashLibrary.logWarning(t);
+                }
+            }
+        }
+    }*/
+
 }
+
