@@ -4,6 +4,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface StatusService {
 
@@ -30,5 +31,8 @@ public interface StatusService {
 
     @POST("echo")
     Call<String> echoMessage(@Body String originalMsg);
+
+    @GET("setDimension")
+    Call<String> resizeScreen(@Query("width") String width, @Query("height") String height);
 
 }

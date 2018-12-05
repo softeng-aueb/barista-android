@@ -70,7 +70,7 @@ public class BaristaHttpClient {
     public String getStatus2(){
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.getStatusMessage2();
-        System.out.println("[BARISTA-LIB]: REST CALL URI: "+callSync.request().url().toString());
+        Timber.d("REST CALL URI: %s",callSync.request().url().toString());
 
         try {
             Response<String> response = callSync.execute();
@@ -79,7 +79,7 @@ public class BaristaHttpClient {
 
             return returnedMessage;
         } catch (IOException e) {
-            System.out.println("[BARISTA-LIB]: EXCEPTION OCCURED");
+            Timber.d("EXCEPTION OCCURED");
             e.printStackTrace();
         }
         return null;
@@ -96,7 +96,7 @@ public class BaristaHttpClient {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                System.out.println("[BARISTA-LIB]: "+t.getMessage());
+                Timber.d("Task Failed! %s", t.getMessage());
             }
         });
 
@@ -106,7 +106,7 @@ public class BaristaHttpClient {
     public String killServer(){
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.killServer();
-        System.out.println("[BARISTA-LIB]: REST CALL URI: "+callSync.request().url().toString());
+        Timber.d("REST CALL URI: %s",callSync.request().url().toString());
 
         try {
             Response<String> response = callSync.execute();
@@ -116,12 +116,23 @@ public class BaristaHttpClient {
 
             return returnedMessage;
         } catch (IOException e) {
-            System.out.println("[BARISTA-LIB]: EXCEPTION OCCURED");
+            Timber.d("EXCEPTION OCCURED");
             e.printStackTrace();
         }
         return null;
     }
 
+    public void resizeScreen(String width, String height){
+        StatusService service = getRequestClient().create(StatusService.class);
+        Call<String> callSync = service.resizeScreen(width,height);
+        try {
+            Timber.d("Calling '/setDimension' Service");
+            callSync.execute();
+        } catch (IOException e) {
+            Timber.e("Error Occured when calling '/setSize' Service");
+            e.printStackTrace();
+        }
+    }
 
     private Retrofit getRequestClient(){
         if(retrofit == null){
@@ -157,10 +168,10 @@ public class BaristaHttpClient {
     }
 
     private void printResponse(Response response){
-        System.out.println("[BARISTA-LIB] REST CODE: "+response.code());
-        System.out.println("[BARISTA-LIB] REST MESSAGE: "+response.message());
-        System.out.println("[BARISTA-LIB] REST BODY: "+response.body());
-        System.out.println("[BARISTA-LIB] REST IS_SUCESFUL: "+response.isSuccessful());
-        System.out.println("[BARISTA-LIB] REST TO_STRING: "+response.toString());
+        Timber.d("REST CODE: "+response.code());
+        Timber.d("REST MESSAGE: "+response.message());
+        Timber.d("REST BODY: "+response.body());
+        Timber.d("REST IS_SUCESFUL: "+response.isSuccessful());
+        Timber.d("REST TO_STRING: "+response.toString());
     }
 }
