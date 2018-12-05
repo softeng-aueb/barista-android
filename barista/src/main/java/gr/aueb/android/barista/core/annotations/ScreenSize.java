@@ -8,11 +8,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Retention(RUNTIME)
 @Target({ElementType.METHOD,ElementType.FIELD})
-public @interface SaySomething{
+public @interface ScreenSize {
 
 
-    public String param1() default "Default Param1";
-    public String param2() default "Default Param2";
-    public String param3() default "Default Param3";
-    public String param4() default "Default Param4";
+    public String width() default "Default Param1";
+    public String height() default "Default Param2";
+
 }
