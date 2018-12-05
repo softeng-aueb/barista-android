@@ -52,7 +52,7 @@ public class ExampleInstrumentedTest {
 
 
     @Test
-    @SaySomething(param1="Annotation parsing Test!")
+    //@SaySomething(param1="Annotation parsing Test!")
     public void TestMainctivityLayout() {
         System.out.println("TEST MAIN ACTIVITY");
         Espresso.onView(withText("Button")).check(matches(isClickable()));
@@ -64,6 +64,7 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
+    @SaySomething(param1="Annotation parsing Test!")
     public void TestUpperCaseTransformation(){
         System.out.println("TEST UPPER CASE");
         String userInput = "Stelios";

@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import gr.aueb.android.barista.core.annotations.SaySomething;
+import timber.log.Timber;
 
 import static java.util.Objects.requireNonNull;
 
-// todo use restrofit http client
 
 public class AnottationParser
 {
@@ -61,10 +61,10 @@ public class AnottationParser
             System.out.println(annotationList.length);
             f.setAccessible(true);
             if(f.isAnnotationPresent(SaySomething.class)){
-                System.out.println("FIELD TO STRING: "+f.toString());
-                System.out.println("Field Name: "+f.getName());
-                System.out.println("FILD CLASS: "+f.getType());
-                System.out.println("ANNOTAION TO STRING: "+ f.getAnnotation(SaySomething.class).toString());
+                Timber.d("FIELD TO STRING: %s",f.toString());
+                Timber.d("Field Name: %s",f.getName());
+                Timber.d("FILD CLASS: %s",f.getType());
+                Timber.d("ANNOTAION TO STRING: %s", f.getAnnotation(SaySomething.class).toString());
 
                 nameOfFields.put(f.getAnnotation(SaySomething.class).param1(),"Field");
                 nameOfFields.put(f.getAnnotation(SaySomething.class).param2(),"Field");

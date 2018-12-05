@@ -6,6 +6,7 @@ import android.support.test.InstrumentationRegistry;
 import android.util.Log;
 
 import org.junit.runner.Description;
+import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -20,7 +21,7 @@ import static android.util.Log.INFO;
 
 public class MyRunListener extends RunListener {
 
-    private BaristaHttpClient client;
+    private BaristaHttpClient httpClient;
 
     // empty constructor
     public MyRunListener(){
@@ -40,14 +41,15 @@ public class MyRunListener extends RunListener {
 
         Annotation a = description.getAnnotation(SaySomething.class);
         if(a != null ) {
-            client.echoMessage(((SaySomething) a).param1());
-            client.echoMessage(((SaySomething) a).param2());
-            client.echoMessage(((SaySomething) a).param3());
-            client.echoMessage(((SaySomething) a).param4());
+            httpClient.echoMessage(((SaySomething) a).param1());
+            httpClient.echoMessage(((SaySomething) a).param2());
+            httpClient.echoMessage(((SaySomething) a).param3());
+            httpClient.echoMessage(((SaySomething) a).param4());
+            httpClient.resizeScreen("500","600");
 
         }
         else{
-            System.out.println("[BARISTA-LIB] NULL ANNOTATION");
+            Timber.d("NULL ANNOTATION");
         }
     }
 
@@ -80,20 +82,24 @@ public class MyRunListener extends RunListener {
         logDescription(description);
 
         // TODO: configure client with port, ipaddress
-        client = new BaristaHttpClient();
+        httpClient = new BaristaHttpClient();
 
     }
 
     private void logDescription(Description description){
-
-        System.out.println("[BARISTA-LIB] Message from custom RunListener: "+description.getDisplayName());
-        System.out.println("[BARISTA-LIB] Method Running: "+description.getMethodName());
-        System.out.println("[BARISTA-LIB] Class Name: "+ description.getClassName());
-
-        System.out.println("[BARISTA-LIB] ANNOTATIONS FOUND");
+        Timber.d("Message from custom RunListener: %s",description.getDisplayName());
+        Timber.d("Method Running: %s", description.getMethodName());
+        Timber.d("Class Name: %s",description.getClassName());
+        Timber.d("ANNOTATIONS FOUND");
     }
 
+    public void testRunFinished(Result result) throws Exception {
+       if(!result.wasSuccessful()){
+          Timber.e("Tests Failed. Closing Barista server manualy");
+          this.httpClient.killServer();
+       }
 
+    }
     /** A tree which logs important information for crash reporting. */
 /*    private static final class CrashReportingTree extends Timber.Tree {
         @Override
