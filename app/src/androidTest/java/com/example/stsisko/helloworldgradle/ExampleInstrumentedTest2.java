@@ -1,19 +1,17 @@
 package com.example.stsisko.helloworldgradle;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import gr.aueb.android.barista.core.annotations.SaySomething;
+import gr.aueb.android.barista.core.annotations.ScreenSize;
 import gr.aueb.android.barista.core.http_client.BaristaHttpClient;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -36,23 +34,16 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(AndroidJUnit4.class)
 //@RunWith(MyTestRunner.class)
 @LargeTest
-public class ExampleInstrumentedTest {
+public class ExampleInstrumentedTest2 {
 
-    private static BaristaHttpClient client;
+
 
     @Rule
     public ActivityTestRule<MainActivity> mainRule = new ActivityTestRule<>(MainActivity.class);
 
-    @BeforeClass
-    public static void initilizeHttpClient(){
-
-        client = new BaristaHttpClient();
-
-    }
-
 
     @Test
-    //@SaySomething(param1="Annotation parsing Test!")
+    @ScreenSize(width = "2500",height = "1600")
     public void TestMainctivityLayout() {
         System.out.println("TEST MAIN ACTIVITY");
         Espresso.onView(withText("Button")).check(matches(isClickable()));
@@ -64,7 +55,7 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    @SaySomething(param1="Annotation parsing Test!")
+    @ScreenSize(width = "1500",height = "1600")
     public void TestUpperCaseTransformation(){
         System.out.println("TEST UPPER CASE");
         String userInput = "Stelios";
@@ -76,28 +67,13 @@ public class ExampleInstrumentedTest {
     @Test
     public void testRestClient(){
 
-
+        BaristaHttpClient client = BaristaHttpClient.getInstance();
         System.out.println("@@@@ CALLING SERVICE");
         String message = client.getStatus();
-      // assertNotNull(message);
+        assertNotNull(message);
         assertEquals("Hello World from Jersey Servlet Container",message);
         System.out.println("REST RESPONSE: "+ message);
-
     }
 
-   // @Test
-    public void testRestClient2(){
 
-        System.out.println("@@@@ CALLING SERVICE");
-        String message = client.getStatus2();
-        //assertNotNull(message);
-        assertEquals("Hello World from Jersey Servlet Container 12",message);
-        System.out.println("REST RESPONSE: "+ message);
-
-    }
-
-   // @AfterClass
-    public static void killServer(){
-       client.killServer();
-    }
 }
