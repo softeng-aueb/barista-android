@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         //todo hardcoded portnumber.
-        buildConfigField("Integer","BARISTA_PORT","8090")
+       // buildConfigField("Integer","BARISTA_PORT","8090")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
