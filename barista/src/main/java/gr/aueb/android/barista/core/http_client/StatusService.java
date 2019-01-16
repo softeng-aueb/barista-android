@@ -35,4 +35,7 @@ public interface StatusService {
     @GET("setDimension")
     Call<String> resizeScreen(@Query("width") String width, @Query("height") String height);
 
+    @GET("reset")
+    Call<String> resetSize();
+
 }
