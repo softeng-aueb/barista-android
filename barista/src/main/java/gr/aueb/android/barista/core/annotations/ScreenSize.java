@@ -7,11 +7,11 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Retention(RUNTIME)
-@Target({ElementType.METHOD,ElementType.FIELD})
+@Target(ElementType.METHOD)
 public @interface ScreenSize {
 
-
-    public String width() default "Default Param1";
-    public String height() default "Default Param2";
+    public String width() default "";
+    public String height() default "";
 
 }
+
