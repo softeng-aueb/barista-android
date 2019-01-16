@@ -2,7 +2,10 @@ package gr.aueb.android.barista.core.http_client;
 
 
 
+import android.support.test.InstrumentationRegistry;
+
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 import gr.aueb.android.barista.BuildConfig;
 import okhttp3.OkHttpClient;
@@ -19,35 +22,36 @@ import timber.log.Timber;
 
 public class BaristaHttpClient {
 
+    private static BaristaHttpClient INSTANCE = null;
+
+    private final int DEFAULT_PORT = 8040;
     private Retrofit retrofit;
     private  String URI ;
-    private int port = 8040;
+    private int port;
 
     /**
      * Construct an HTTP client in order to perform REST CALLS to the Barista Server
      *
      */
-    public BaristaHttpClient(){
-        //todo Target Server UI  must be dynamicaly provided
-        //this.URI = URI;
-
-        //Get the port number provided by  the .gradle file
-
-
-        if(BuildConfig.BARISTA_PORT != null ){
+    private BaristaHttpClient(){
+        int portValue = decidePort();
+        if(portValue != -1){
             Timber.d("Given port is "+ this.port);
-            this.port = BuildConfig.BARISTA_PORT;
-
+            this.port = portValue;
         }
-
         else{
-
             Timber.d("No port provided, using default port "+this.port+".");
             //this.port = 8040;
         }
         this.URI = "http://10.0.2.2:"+port+"/barista/";
         this.retrofit = getRequestClient();
+    }
 
+    public static BaristaHttpClient getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new BaristaHttpClient();
+        }
+        return INSTANCE;
     }
 
     public String getStatus(){
@@ -103,6 +107,7 @@ public class BaristaHttpClient {
 
     }
 
+    //todo if server has stoped normally by  the gradle plugin. timeout exception will occur
     public String killServer(){
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.killServer();
@@ -122,14 +127,63 @@ public class BaristaHttpClient {
         return null;
     }
 
-    public void resizeScreen(String width, String height){
+    public void resizeScreen(String width, String height) {
         StatusService service = getRequestClient().create(StatusService.class);
-        Call<String> callSync = service.resizeScreen(width,height);
+        Call<String> callSync = service.resizeScreen(width, height);
         try {
             Timber.d("Calling '/setDimension' Service");
             callSync.execute();
         } catch (IOException e) {
             Timber.e("Error Occured when calling '/setSize' Service");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Decides for the listening port of the server. If not provided in the gradle configuration extension
+     * default port will de used
+     * @return
+     */
+    private int decidePort(){
+        Integer portValue;
+
+        String packageName = InstrumentationRegistry.getTargetContext().getPackageName();
+        String buildConfigClass = packageName + ".BuildConfig";
+
+        try {
+            // TODO: get emulator port and ip address through reflection on BuildConfig
+            Class clazz = Class.forName(buildConfigClass);
+            Field portField = clazz.getField("BARISTA_PORT");
+
+            if(portField == null){
+                portValue = DEFAULT_PORT;
+                Timber.d("Using default port: %s",portValue);
+            }
+            else{
+                portField.setAccessible(true);
+                portValue = (Integer) portField.get(clazz);
+                Timber.d("Using given configuration port: %s", portValue);
+            }
+
+            return portValue;
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public void resetScreen(){
+        StatusService service = getRequestClient().create(StatusService.class);
+        Call<String> callSync = service.resetSize();
+        try {
+            Timber.d("Calling '/reset' Service");
+            callSync.execute();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
