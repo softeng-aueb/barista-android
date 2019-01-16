@@ -43,12 +43,6 @@ public class ExampleInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> mainRule = new ActivityTestRule<>(MainActivity.class);
 
-    @BeforeClass
-    public static void initilizeHttpClient(){
-
-        client = new BaristaHttpClient();
-
-    }
 
 
     @Test
@@ -59,8 +53,8 @@ public class ExampleInstrumentedTest {
         Espresso.onView(withText("OK")).check(matches(isClickable()));
         Espresso.onView(withHint("Enter your name")).check(matches(isDisplayed()));
         onView(withId(R.id.textView2)).check(matches(withText("")));
-//        AnottationParser p = new AnottationParser();
-//        p.printValue(this);
+//      AnottationParser p = new AnottationParser();
+//      p.printValue(this);
     }
 
     @Test
@@ -73,31 +67,28 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.textView2)).check(matches(withText("STELIOS")));
     }
 
-    //@Test
+    @Test
     public void testRestClient(){
 
-
+        BaristaHttpClient client = BaristaHttpClient.getInstance();
         System.out.println("@@@@ CALLING SERVICE");
         String message = client.getStatus();
-      // assertNotNull(message);
+        assertNotNull(message);
         assertEquals("Hello World from Jersey Servlet Container",message);
         System.out.println("REST RESPONSE: "+ message);
 
     }
 
-   // @Test
+    @Test
     public void testRestClient2(){
 
+        BaristaHttpClient client = BaristaHttpClient.getInstance();
         System.out.println("@@@@ CALLING SERVICE");
         String message = client.getStatus2();
-        //assertNotNull(message);
-        assertEquals("Hello World from Jersey Servlet Container 12",message);
+        assertNotNull(message);
+        assertEquals("Hello World from Jersey Servlet Container",message);
         System.out.println("REST RESPONSE: "+ message);
 
     }
 
-   // @AfterClass
-    public static void killServer(){
-       client.killServer();
-    }
 }

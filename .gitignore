@@ -4,3 +4,6 @@ app/build/
 barista/build/
 build/
 gradle/
+barista/barista.iml
+app/app.iml
+out.txt
