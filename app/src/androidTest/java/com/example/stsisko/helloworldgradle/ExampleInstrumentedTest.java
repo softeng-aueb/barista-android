@@ -13,6 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.SaySomething;
 import gr.aueb.android.barista.core.http_client.BaristaHttpClient;
 
@@ -88,6 +89,12 @@ public class ExampleInstrumentedTest {
         assertNotNull(message);
         assertEquals("Hello World from Jersey Servlet Container",message);
         System.out.println("REST RESPONSE: "+ message);
+
+    }
+
+    @Test
+    @GeoFix(lat=61.2553, longt=78.4545)
+    public void testGeoFix(){
 
     }
 

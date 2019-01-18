@@ -33,9 +33,12 @@ public interface StatusService {
     Call<String> echoMessage(@Body String originalMsg);
 
     @GET("setDimension")
-    Call<String> resizeScreen(@Query("width") String width, @Query("height") String height);
+    Call<String> resizeScreen(@Query("token") String token,@Query("width") String width, @Query("height") String height);
 
     @GET("reset")
-    Call<String> resetSize();
+    Call<String> resetSize(@Query("token") String token);
+
+    @GET("geofix")
+    Call<String> setGeoFix(@Query("token") String token,@Query("lat") double lat, @Query("longt") double longt);
 
 }

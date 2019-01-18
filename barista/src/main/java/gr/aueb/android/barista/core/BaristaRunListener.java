@@ -1,27 +1,15 @@
 package gr.aueb.android.barista.core;
 
-
-import android.app.Instrumentation;
-import android.support.annotation.Nullable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnitRunner;
-import android.util.Log;
-
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.util.Random;
 
-import gr.aueb.android.barista.BuildConfig;
-import gr.aueb.android.barista.core.annotations.SaySomething;
+import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
 import gr.aueb.android.barista.core.http_client.BaristaHttpClient;
 import timber.log.Timber;
-
-import static android.util.Log.INFO;
-
 
 public class BaristaRunListener extends RunListener {
 
@@ -43,6 +31,7 @@ public class BaristaRunListener extends RunListener {
     public void testStarted(Description description){
         TestRunnerMonitor.testStarted();
         Timber.d("Starting test: "+description.getClassName()+":"+description.getMethodName());
+
         // logDescription(description);
         BaristaHttpClient httpClient = BaristaHttpClient.getInstance();
 
@@ -56,7 +45,20 @@ public class BaristaRunListener extends RunListener {
 
         }
         else{
-            Timber.d("No Barista annotations provided");
+            Timber.d("No ScreenSize annotations provided");
+        }
+
+        Annotation geofixAnnotaion = description.getAnnotation(GeoFix.class);
+        if(geofixAnnotaion != null ) {
+
+            double latitude = ((GeoFix) geofixAnnotaion).lat();
+            double longitude = ((GeoFix) geofixAnnotaion).longt();
+            Timber.d("Set GPS coordinates to: lat:"+latitude+", long:"+longitude);
+            httpClient.setGeofix(latitude,longitude);
+
+        }
+        else{
+            Timber.d("No ScreenSize annotations provided");
         }
     }
 
