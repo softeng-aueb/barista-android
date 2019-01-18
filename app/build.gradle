@@ -17,7 +17,10 @@ android {
 
         applicationId "com.example.stsisko.helloworldgradle"
         minSdkVersion 19
-        targetSdkVersion 28
+
+        //todo target version sould be <23 in order to use android.permission.READ_EXTERNAL_STORAGE. see https://developer.android.com/training/permissions/requesting
+        //noinspection ExpiredTargetSdkVersion
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
