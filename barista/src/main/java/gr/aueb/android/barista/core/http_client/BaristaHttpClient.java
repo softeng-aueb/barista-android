@@ -2,10 +2,16 @@ package gr.aueb.android.barista.core.http_client;
 
 
 
+import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Set;
 
 import gr.aueb.android.barista.BuildConfig;
 import okhttp3.OkHttpClient;
@@ -28,6 +34,7 @@ public class BaristaHttpClient {
     private Retrofit retrofit;
     private  String URI ;
     private int port;
+    private String token;
 
     /**
      * Construct an HTTP client in order to perform REST CALLS to the Barista Server
@@ -44,7 +51,29 @@ public class BaristaHttpClient {
             //this.port = 8040;
         }
         this.URI = "http://10.0.2.2:"+port+"/barista/";
+
+        this.token = getAccessToken();
+        Timber.d("Access Token aquired: "+token);
+
         this.retrofit = getRequestClient();
+
+    }
+
+    public String getAccessToken(){
+
+       File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"barista-token.txt");
+       String accessToken = "";
+       Timber.d("Searching for token at: "+file.getAbsolutePath());
+       try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                accessToken = line;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return accessToken;
     }
 
     public static BaristaHttpClient getInstance(){
@@ -55,12 +84,20 @@ public class BaristaHttpClient {
     }
 
     public String getStatus(){
+
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.getStatusMessage();
         Timber.d("REST CALL URI: "+callSync.request().url().toString());
 
         try {
             Response<String> response = callSync.execute();
+
+            //analyze response
+            Set<String> names = response.headers().names();
+            for (String name: names ) {
+                Timber.d("Response From Server: ["+name+"]"+response.headers().get(name));
+            }
+
             printResponse(response);
             String returnedMessage = response.body();
             return returnedMessage;
@@ -68,10 +105,12 @@ public class BaristaHttpClient {
             Timber.d("EXCEPTION OCCURED");
             e.printStackTrace();
         }
+
         return null;
     }
 
     public String getStatus2(){
+
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.getStatusMessage2();
         Timber.d("REST CALL URI: %s",callSync.request().url().toString());
@@ -86,10 +125,12 @@ public class BaristaHttpClient {
             Timber.d("EXCEPTION OCCURED");
             e.printStackTrace();
         }
+
         return null;
     }
 
     public void echoMessage(String msg){
+
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.echoMessage(msg);
         callSync.enqueue(new Callback<String>() {
@@ -104,11 +145,11 @@ public class BaristaHttpClient {
             }
         });
 
-
     }
 
     //todo if server has stoped normally by  the gradle plugin. timeout exception will occur
     public String killServer(){
+
         StatusService service = getRequestClient().create(StatusService.class);
         Call<String> callSync = service.killServer();
         Timber.d("REST CALL URI: %s",callSync.request().url().toString());
@@ -124,12 +165,15 @@ public class BaristaHttpClient {
             Timber.d("EXCEPTION OCCURED");
             e.printStackTrace();
         }
+
         return null;
     }
 
-    public void resizeScreen(String width, String height) {
+    public void resizeScreen( String width, String height) {
         StatusService service = getRequestClient().create(StatusService.class);
-        Call<String> callSync = service.resizeScreen(width, height);
+
+        Call<String> callSync = service.resizeScreen(this.token,width, height);
+
         try {
             Timber.d("Calling '/setDimension' Service");
             callSync.execute();
@@ -139,47 +183,23 @@ public class BaristaHttpClient {
         }
     }
 
-    /**
-     * Decides for the listening port of the server. If not provided in the gradle configuration extension
-     * default port will de used
-     * @return
-     */
-    private int decidePort(){
-        Integer portValue;
-
-        String packageName = InstrumentationRegistry.getTargetContext().getPackageName();
-        String buildConfigClass = packageName + ".BuildConfig";
-
+    public void setGeofix(double lat, double longt) {
+        StatusService service = getRequestClient().create(StatusService.class);
+        Call<String> callSync = service.setGeoFix(this.token,lat,longt);
         try {
-            // TODO: get emulator port and ip address through reflection on BuildConfig
-            Class clazz = Class.forName(buildConfigClass);
-            Field portField = clazz.getField("BARISTA_PORT");
-
-            if(portField == null){
-                portValue = DEFAULT_PORT;
-                Timber.d("Using default port: %s",portValue);
-            }
-            else{
-                portField.setAccessible(true);
-                portValue = (Integer) portField.get(clazz);
-                Timber.d("Using given configuration port: %s", portValue);
-            }
-
-            return portValue;
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+            Timber.d("Calling '/geofix' Service");
+            callSync.execute();
+        } catch (IOException e) {
+            Timber.e("Error Occured when calling '/geofix' Service");
             e.printStackTrace();
         }
-        return -1;
     }
+
+
 
     public void resetScreen(){
         StatusService service = getRequestClient().create(StatusService.class);
-        Call<String> callSync = service.resetSize();
+        Call<String> callSync = service.resetSize(this.token);
         try {
             Timber.d("Calling '/reset' Service");
             callSync.execute();
@@ -227,5 +247,43 @@ public class BaristaHttpClient {
         Timber.d("REST BODY: "+response.body());
         Timber.d("REST IS_SUCESFUL: "+response.isSuccessful());
         Timber.d("REST TO_STRING: "+response.toString());
+    }
+
+    /**
+     * Decides for the listening port of the server. If not provided in the gradle configuration extension
+     * default port will de used
+     * @return
+     */
+    private int decidePort(){
+        Integer portValue;
+
+        String packageName = InstrumentationRegistry.getTargetContext().getPackageName();
+        String buildConfigClass = packageName + ".BuildConfig";
+
+        try {
+            // TODO: get emulator port and ip address through reflection on BuildConfig
+            Class clazz = Class.forName(buildConfigClass);
+            Field portField = clazz.getField("BARISTA_PORT");
+
+            if(portField == null){
+                portValue = DEFAULT_PORT;
+                Timber.d("Using default port: %s",portValue);
+            }
+            else{
+                portField.setAccessible(true);
+                portValue = (Integer) portField.get(clazz);
+                Timber.d("Using given configuration port: %s", portValue);
+            }
+
+            return portValue;
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }
