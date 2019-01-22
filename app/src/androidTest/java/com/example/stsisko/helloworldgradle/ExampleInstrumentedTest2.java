@@ -4,6 +4,7 @@ import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.DisplayMetrics;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -13,6 +14,7 @@ import org.junit.runner.RunWith;
 import gr.aueb.android.barista.core.annotations.SaySomething;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
 import gr.aueb.android.barista.core.http_client.BaristaHttpClient;
+import gr.aueb.android.barista.core.http_client.dto.SizeDto;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -43,16 +45,18 @@ public class ExampleInstrumentedTest2 {
 
 
     @Test
-    @ScreenSize(width = "2500",height = "1600")
+    @ScreenSize(width = "800",height = "600")
     public void TestMainctivityLayout() {
         System.out.println("TEST MAIN ACTIVITY");
         Espresso.onView(withText("Button")).check(matches(isClickable()));
         Espresso.onView(withText("OK")).check(matches(isClickable()));
         Espresso.onView(withHint("Enter your name")).check(matches(isDisplayed()));
         onView(withId(R.id.textView2)).check(matches(withText("")));
-//        AnottationParser p = new AnottationParser();
-//        p.printValue(this);
+
+
     }
+
+
 
     @Test
     @ScreenSize(width = "1500",height = "1600")
@@ -62,6 +66,7 @@ public class ExampleInstrumentedTest2 {
         onView(withId(R.id.editText3)).perform(typeText(userInput));
         onView(withId(R.id.button)).perform(click());
         onView(withId(R.id.textView2)).check(matches(withText("STELIOS")));
+
     }
 
     @Test
@@ -73,6 +78,19 @@ public class ExampleInstrumentedTest2 {
         assertNotNull(message);
         assertEquals("Hello World from Jersey Servlet Container",message);
         System.out.println("REST RESPONSE: "+ message);
+    }
+
+    @Test
+    @ScreenSize(width = "800",height = "600")
+    public void testFindSize(){
+
+        BaristaHttpClient client = BaristaHttpClient.getInstance();
+
+        SizeDto size = client.getActuallSize();
+        assertNotNull(size);
+        assertEquals(800,size.getWidth());
+        assertEquals(600,size.getHeight());
+
     }
 
 

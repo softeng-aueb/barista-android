@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import gr.aueb.android.barista.BuildConfig;
+import gr.aueb.android.barista.core.http_client.dto.SizeDto;
 import okhttp3.OkHttpClient;
 
 import retrofit2.Call;
@@ -261,7 +262,6 @@ public class BaristaHttpClient {
         String buildConfigClass = packageName + ".BuildConfig";
 
         try {
-            // TODO: get emulator port and ip address through reflection on BuildConfig
             Class clazz = Class.forName(buildConfigClass);
             Field portField = clazz.getField("BARISTA_PORT");
 
@@ -285,5 +285,19 @@ public class BaristaHttpClient {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public SizeDto getActuallSize(){
+
+        try {
+            StatusService service = getRequestClient().create(StatusService.class);
+            Call<SizeDto> callSync = service.getActualSize(this.token);
+            Response<SizeDto> resultSize = callSync.execute();
+            System.out.println(resultSize.body().getHeight());
+            return resultSize.body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

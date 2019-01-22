@@ -31,7 +31,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //buildConfigField("Integer","BARISTA_PORT","8090")
         }
     }
     productFlavors {
@@ -50,5 +49,5 @@ dependencies {
 }
 
 baristaSettings{
-    port = 8090
+    port = 8070
 }

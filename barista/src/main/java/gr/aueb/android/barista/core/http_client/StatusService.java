@@ -1,5 +1,8 @@
 package gr.aueb.android.barista.core.http_client;
 
+
+
+import gr.aueb.android.barista.core.http_client.dto.SizeDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -40,5 +43,8 @@ public interface StatusService {
 
     @GET("geofix")
     Call<String> setGeoFix(@Query("token") String token,@Query("lat") double lat, @Query("longt") double longt);
+
+    @GET("actualSize")
+    Call<SizeDto> getActualSize(@Query("token") String token);
 
 }
