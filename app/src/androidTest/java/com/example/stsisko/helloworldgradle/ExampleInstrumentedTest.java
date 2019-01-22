@@ -1,5 +1,10 @@
 package com.example.stsisko.helloworldgradle;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
@@ -7,11 +12,16 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 
+import com.example.stsisko.helloworldgradle.helpers.CustomLocationListener;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.SaySomething;
@@ -37,7 +47,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(AndroidJUnit4.class)
 //@RunWith(MyTestRunner.class)
 @LargeTest
-public class ExampleInstrumentedTest {
+public class ExampleInstrumentedTest  {
 
     private static BaristaHttpClient client;
 
@@ -95,6 +105,7 @@ public class ExampleInstrumentedTest {
     @Test
     @GeoFix(lat=61.2553, longt=78.4545)
     public void testGeoFix(){
+        System.out.println("TESTING WITH NEW LOCATION");
 
     }
 
