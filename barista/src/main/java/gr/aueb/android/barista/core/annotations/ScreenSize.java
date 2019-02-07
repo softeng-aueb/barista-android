@@ -10,8 +10,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(ElementType.METHOD)
 public @interface ScreenSize {
 
-    public String width() default "";
-    public String height() default "";
+    public int width() default 0;
+    public int height() default 0;
 
 }
 
