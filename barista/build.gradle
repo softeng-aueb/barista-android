@@ -9,8 +9,6 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        //todo hardcoded portnumber.
-       // buildConfigField("Integer","BARISTA_PORT","8090")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -22,6 +20,7 @@ android {
     }
     productFlavors {
     }
+
 }
 
 dependencies {
@@ -32,18 +31,14 @@ dependencies {
     implementation 'junit:junit:4.12'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // HTTP REST Client
-    /**
-     *  Gson converter for serialization to and from JSON
-     *  https://github.com/square/retrofit/tree/master/retrofit-converters/gson
-     */
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.4.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 
-    /**Scalar A Converter which supports converting strings and both primitives and their boxed types to text/plain bodies.
-     * https://github.com/square/retrofit/tree/master/retrofit-converters/scalars
-     */
-    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    //implementation 'com.squareup.okhttp3:mockwebserver:3.6.0'
 }
