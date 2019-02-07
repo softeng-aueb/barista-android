@@ -1,31 +1,18 @@
 package com.example.stsisko.helloworldgradle;
 
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 
-import com.example.stsisko.helloworldgradle.helpers.CustomLocationListener;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.SaySomething;
-import gr.aueb.android.barista.core.http_client.BaristaHttpClient;
+import gr.aueb.android.barista.core.http_client.DefaultBaristaRetrofitClient;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -36,8 +23,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -45,11 +31,10 @@ import static org.junit.Assert.assertNotNull;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-//@RunWith(MyTestRunner.class)
 @LargeTest
 public class ExampleInstrumentedTest  {
 
-    private static BaristaHttpClient client;
+    private static DefaultBaristaRetrofitClient client;
 
     @Rule
     public ActivityTestRule<MainActivity> mainRule = new ActivityTestRule<>(MainActivity.class);
@@ -78,32 +63,32 @@ public class ExampleInstrumentedTest  {
         onView(withId(R.id.textView2)).check(matches(withText("STELIOS")));
     }
 
+//    @Test
+//    public void testRestClient(){
+//
+//        DefaultBaristaRetrofitClient client = DefaultBaristaRetrofitClient.getHttpClient();
+//        System.out.println("@@@@ CALLING SERVICE");
+//        String message = client.getStatus();
+//        assertNotNull(message);
+//        assertEquals("Hello World from Jersey Servlet Container",message);
+//        System.out.println("REST RESPONSE: "+ message);
+//
+//    }
+
+//    @Test
+//    public void testRestClient2(){
+//
+//        DefaultBaristaRetrofitClient client = DefaultBaristaRetrofitClient.getHttpClient();
+//        System.out.println("@@@@ CALLING SERVICE");
+//        String message = client.getStatus2();
+//        assertNotNull(message);
+//        assertEquals("Hello World from Jersey Servlet Container",message);
+//        System.out.println("REST RESPONSE: "+ message);
+//
+//    }
+
     @Test
-    public void testRestClient(){
-
-        BaristaHttpClient client = BaristaHttpClient.getInstance();
-        System.out.println("@@@@ CALLING SERVICE");
-        String message = client.getStatus();
-        assertNotNull(message);
-        assertEquals("Hello World from Jersey Servlet Container",message);
-        System.out.println("REST RESPONSE: "+ message);
-
-    }
-
-    @Test
-    public void testRestClient2(){
-
-        BaristaHttpClient client = BaristaHttpClient.getInstance();
-        System.out.println("@@@@ CALLING SERVICE");
-        String message = client.getStatus2();
-        assertNotNull(message);
-        assertEquals("Hello World from Jersey Servlet Container",message);
-        System.out.println("REST RESPONSE: "+ message);
-
-    }
-
-    @Test
-    @GeoFix(lat=61.2553, longt=78.4545)
+    @GeoFix(lat=80, longt=80)
     public void testGeoFix(){
         System.out.println("TESTING WITH NEW LOCATION");
 

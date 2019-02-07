@@ -1,17 +1,5 @@
 package gr.aueb.android.barista;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import gr.aueb.android.barista.core.http_client.BaristaHttpClient;
-
-
-import static org.junit.Assert.*;
-
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -30,7 +18,7 @@ import static org.junit.Assert.*;
 //    @Test
 //    public void testRestClient(){
 //
-//        BaristaHttpClient client =  BaristaHttpClient.getInstance();
+//        DefaultBaristaRetrofitClient client =  DefaultBaristaRetrofitClient.getHttpClient();
 //        System.out.println("@@@@ CALLING SERVICE");
 //        String message = client.getStatus();
 //        assertNotNull(message);
@@ -42,7 +30,7 @@ import static org.junit.Assert.*;
 //    @Test
 //    public void testRestClient2(){
 //
-//        BaristaHttpClient client =  BaristaHttpClient.getInstance();
+//        DefaultBaristaRetrofitClient client =  DefaultBaristaRetrofitClient.getHttpClient();
 //        System.out.println("@@@@ CALLING SERVICE");
 //        String message = client.getStatus2();
 //        assertNotNull(message);
