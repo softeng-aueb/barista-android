@@ -18,7 +18,7 @@ public interface BaristaPluginService{
     @POST("execute")
     Call<ResponseBody> executeCommand(@Body CommandDTO command);
 
-    @POST("/executeAll")
+    @POST("executeAll")
     Call<ResponseBody> executeCommand(@Body List<CommandDTO> commands);
 
     @GET("kill")
