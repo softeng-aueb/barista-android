@@ -14,7 +14,7 @@ import timber.log.Timber;
 public class DefaultBaristaConfigurationReader {
 
     private static final int DEFAULT_PORT = 8040;
-
+    private static String sessionToken = null;
     public DefaultBaristaConfigurationReader(){
 
     }
@@ -56,20 +56,26 @@ public class DefaultBaristaConfigurationReader {
 
 
     public static String getEmulatorSessionToken() {
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"barista-token.txt");
-        String accessToken = "";
-        Timber.d("Searching for token at: "+file.getAbsolutePath());
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                accessToken = line;
+        if(sessionToken == null) {
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "barista-token.txt");
+            Timber.d("Searching for token at: " + file.getAbsolutePath());
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    sessionToken = line;
+                }
+
+            } catch (IOException e) {
+                Timber.e("Error while trying to read the seessionToken. "+e.getMessage());
+                e.printStackTrace();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            return sessionToken;
         }
-
-        return accessToken;
+        else{
+            Timber.d("Returning cached value.");
+            return sessionToken;
+        }
     }
 }
 
