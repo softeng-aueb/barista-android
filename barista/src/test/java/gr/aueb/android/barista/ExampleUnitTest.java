@@ -3,10 +3,6 @@ package gr.aueb.android.barista;
 import org.junit.Test;
 
 
-import java.io.File;
-
-import gr.aueb.android.barista.core.http_client.BaristaHttpClient;
-
 import static org.junit.Assert.*;
 
 /**
