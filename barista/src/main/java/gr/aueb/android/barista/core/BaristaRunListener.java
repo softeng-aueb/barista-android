@@ -7,8 +7,10 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Random;
 
+import gr.aueb.android.barista.core.annotations.BaristaAnotationParser;
 import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
 import gr.aueb.android.barista.core.http_client.BaristaClient;
@@ -53,40 +55,13 @@ public class BaristaRunListener extends RunListener {
         TestRunnerMonitor.testStarted();
         Timber.d("Starting test: "+description.getClassName()+":"+description.getMethodName());
 
-        // TODO use BaristaAnnotationParser
-        Annotation screenAnnotaion = description.getAnnotation(ScreenSize.class);
-        if(screenAnnotaion != null ) {
-
-            int height = ((ScreenSize) screenAnnotaion).height();
-            int width = ((ScreenSize) screenAnnotaion).width();
-            Timber.d("Resizing screen to: "+width+"x"+height);
-
-            CommandDTO resizeCommand = new WmSizeDTO(emulatorToken,height,width,false,"DPI");
-            ((WmSizeDTO) resizeCommand).setHeight(height);
-            ((WmSizeDTO) resizeCommand).setWidth(width);
-            httpClient.executeCommand(resizeCommand);
-            //httpClient.resizeScreen(width,height);
-
+        List<CommandDTO> currentCommands = BaristaAnotationParser.getParsedCommands(description);
+        if(currentCommands.size() == 1){
+            httpClient.executeCommand(currentCommands.get(0));
         }
         else{
-            Timber.d("No ScreenSize annotations provided");
-        }
-
-        Annotation geofixAnnotaion = description.getAnnotation(GeoFix.class);
-        if(geofixAnnotaion != null ) {
-
-            double latitude = ((GeoFix) geofixAnnotaion).lat();
-            double longitude = ((GeoFix) geofixAnnotaion).longt();
-            Timber.d("Set GPS coordinates to: lat:"+latitude+", long:"+longitude);
-
-            CommandDTO geofixCommand = new GeoFixDTO(emulatorToken,latitude,longitude);
-
-            httpClient.executeCommand(geofixCommand);
-
-
-        }
-        else{
-            Timber.d("No ScreenSize annotations provided");
+            Timber.d("Total commands to execute: "+currentCommands.size());
+            httpClient.executeAllCommands(currentCommands);
         }
     }
 
