@@ -18,6 +18,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
     productFlavors {
     }
 
@@ -31,14 +33,19 @@ dependencies {
     implementation 'junit:junit:4.12'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
 
+   // implementation group: 'org.jmockit', name: 'jmockit', version: '1.8'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // HTTP REST Client
+
+
     implementation 'com.squareup.retrofit2:converter-jackson:2.4.0'
+
     implementation 'com.squareup.okhttp3:okhttp:3.6.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 
-    //implementation 'com.squareup.okhttp3:mockwebserver:3.6.0'
+      //implementation 'com.squareup.okhttp3:mockwebserver:3.6.0'
 }
