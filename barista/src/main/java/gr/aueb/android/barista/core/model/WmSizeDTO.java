@@ -49,4 +49,9 @@ public class WmSizeDTO extends CommandDTO{
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
+    @Override
+    public String toString(){
+        return "Set Size Comand [ w:"+width+", h:"+height+"]";
+    }
 }

@@ -1,24 +1,11 @@
 package gr.aueb.android.barista.core.http_client;
 
 
-
-import android.support.test.InstrumentationRegistry;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-
 import gr.aueb.android.barista.BuildConfig;
-import gr.aueb.android.barista.core.dto.SizeDto;
-import gr.aueb.android.barista.core.model.Command;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import okhttp3.OkHttpClient;
-
-
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -26,15 +13,11 @@ import retrofit2.Callback;
 import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
-
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import timber.log.Timber;
 
 
 public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
-
-    private static DefaultBaristaRetrofitClient INSTANCE = null;
 
     private final int DEFAULT_PORT = 8040;
     private Retrofit retrofit;
@@ -114,45 +97,10 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
 
     }
 
-//    public void resizeScreen( String width, String height) {
-//        StatusService service = getRequestClient().create(StatusService.class);
-//
-//        Call<String> callSync = service.resizeScreen(this.token,width, height);
-//
-//        try {
-//            Timber.d("Calling '/setDimension' Service");
-//            callSync.execute();
-//        } catch (IOException e) {
-//            Timber.e("Error Occured when calling '/setSize' Service");
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void setGeofix(double lat, double longt) {
-//        StatusService service = getRequestClient().create(StatusService.class);
-//        Call<String> callSync = service.setGeoFix(this.token,lat,longt);
-//        try {
-//            Timber.d("Calling '/geofix' Service");
-//            callSync.execute();
-//        } catch (IOException e) {
-//            Timber.e("Error Occured when calling '/geofix' Service");
-//            e.printStackTrace();
-//        }
-//    }
-
-
-
-//    public void resetScreen(){
-//        StatusService service = getRequestClient().create(StatusService.class);
-//        Call<String> callSync = service.resetSize(this.token);
-//        try {
-//            Timber.d("Calling '/reset' Service");
-//            callSync.execute();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
+    /**
+     *
+     * @return
+     */
     private Retrofit getRequestClient(){
         if(retrofit == null){
             this.create();
@@ -161,22 +109,12 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
         return retrofit;
     }
 
+    /**
+     *  Initializes the retrofit client instance to be used for the REST calls.
+     *  By default it uses the Jackson Converter factory.
+     */
     private void create(){
-        /**
-         * httClient is going to take care of connecting to the server and the sending and retrieval information.
-         *
-         * ConverterFactory should contain proper factories for each possible response type (xml, json, plain text etc.)
-         * If a converterFactory isn't present for a specific response type an exception will be thrown
-         *
-         * for example: MalformedJsonException if the response is not JSON.
-         * for info on how ConverterFactory works on retrofit here(https://proandroiddev.com/retrofit-advance-multi-converter-c675e9483801)
-         *
-         *
-         * Currently active converter factories :
-         *  Gson for JSON response
-         *  Scalar for plain text
-         *
-         */
+
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
         if (BuildConfig.DEBUG) {
@@ -192,15 +130,6 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
                 .client(httpClient.build())
                 .build();
     }
-
-    private void printResponse(Response response){
-        Timber.d("REST CODE: "+response.code());
-        Timber.d("REST MESSAGE: "+response.message());
-        Timber.d("REST BODY: "+response.body());
-        Timber.d("REST IS_SUCESFUL: "+response.isSuccessful());
-        Timber.d("REST TO_STRING: "+response.toString());
-    }
-
 
 
 //    public SizeDto getActuallSize(){

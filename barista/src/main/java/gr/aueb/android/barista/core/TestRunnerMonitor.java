@@ -11,21 +11,21 @@ public class TestRunnerMonitor {
 
     public static void testRunStarted(){
         running_tests++;
-        Timber.d(BaristaRunListener.UID+" - Called testRunStarted");
+        Timber.d("Called testRunStarted()");
 
     }
 
     public static void testRunFinished(){
         running_tests--;
-        Timber.d(BaristaRunListener.UID+"-Called testRunFinished");
+        Timber.d("Called testRunFinished()");
     }
 
     public static void testStarted(){
-        Timber.d(BaristaRunListener.UID+" - Called testStarted");
+        Timber.d("Called testStarted()");
     }
 
     public static void testFinished(){
-        Timber.d(BaristaRunListener.UID+" - Called testFinished");
+        Timber.d("Called testFinished()");
     }
 
 
