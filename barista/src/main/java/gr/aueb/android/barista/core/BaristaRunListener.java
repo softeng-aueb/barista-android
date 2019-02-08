@@ -1,23 +1,15 @@
 package gr.aueb.android.barista.core;
 
-import android.support.test.InstrumentationRegistry;
 
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Random;
 
 import gr.aueb.android.barista.core.annotations.BaristaAnotationParser;
-import gr.aueb.android.barista.core.annotations.GeoFix;
-import gr.aueb.android.barista.core.annotations.ScreenSize;
 import gr.aueb.android.barista.core.http_client.BaristaClient;
 import gr.aueb.android.barista.core.http_client.DefaultBaristaRetrofitClient;
 import gr.aueb.android.barista.core.model.CommandDTO;
-import gr.aueb.android.barista.core.model.GeoFixDTO;
-import gr.aueb.android.barista.core.model.WmSizeDTO;
 import gr.aueb.android.barista.core.utilities.BaristaConfigurationReader;
 import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -25,19 +17,16 @@ import timber.log.Timber;
 
 public class BaristaRunListener extends RunListener {
 
-    //todo not use anymore
-    public static final int UID = new Random().nextInt(1000);
 
-    private static final String BaseURL = "http://10.0.2.2";
+    private static final String BASE_URL = "http://10.0.2.2";
     private BaristaClient httpClient;
-    private String emulatorToken = DefaultBaristaConfigurationReader.getEmulatorSessionToken();
-
-
+    private String sessionToken = null;
     public BaristaRunListener(){
         Timber.plant(new Timber.DebugTree());
+        sessionToken = DefaultBaristaConfigurationReader.getEmulatorSessionToken();
         //fixme find port number with DefaultBaristaConfigurationReader method.
         // If use DefaultBaristaConfigurationReader No Instrumentation registry found error will occur.
-        httpClient = new DefaultBaristaRetrofitClient(BaseURL,
+        httpClient = new DefaultBaristaRetrofitClient(BASE_URL,
                 8070,
                 JacksonConverterFactory.create());
     }
@@ -55,7 +44,7 @@ public class BaristaRunListener extends RunListener {
         TestRunnerMonitor.testStarted();
         Timber.d("Starting test: "+description.getClassName()+":"+description.getMethodName());
 
-        List<CommandDTO> currentCommands = BaristaAnotationParser.getParsedCommands(description);
+        List<CommandDTO> currentCommands = BaristaAnotationParser.getParsedCommands(description,sessionToken);
         if(currentCommands.size() == 1){
             httpClient.executeCommand(currentCommands.get(0));
         }
@@ -83,15 +72,13 @@ public class BaristaRunListener extends RunListener {
 
     public void testRunFinished(Result result){
         TestRunnerMonitor.testRunFinished();
-        //DefaultBaristaRetrofitClient httpClient = DefaultBaristaRetrofitClient.getHttpClient(BaseURL);
         httpClient.killServer();
-
     }
 
     public void testFinished(Description description) {
         TestRunnerMonitor.testFinished();
         Timber.d("Test "+description.getClassName()+":"+description.getMethodName()+" finished. Reseting Device");
-        //DefaultBaristaRetrofitClient httpClient = DefaultBaristaRetrofitClient.getHttpClient(BaseURL);
+        //DefaultBaristaRetrofitClient httpClient = DefaultBaristaRetrofitClient.getHttpClient(BASE_URL);
         //todo reset device
         //httpClient.resetScreen();
     }
