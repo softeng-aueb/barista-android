@@ -53,15 +53,11 @@ public class BaristaAnotationParser {
         for (Class c: supportedBaristaCommandAnotations) {
             Annotation providedAnnotation = description.getAnnotation(c);
             if(providedAnnotation !=null) {
-                CommandDTO cmd = null;
-                try {
-                    cmd = commandConstructorMap.get(c).constructCommand(providedAnnotation);
-                    cmd.setSessionToken(sessionToken);
-                    commandList.add(cmd);
-                } catch (BaristaParseException e) {
-                    Timber.e("Error trying to construct the command");
-                    e.printStackTrace();
-                }
+
+                CommandDTO cmd = commandConstructorMap.get(c).constructCommand(providedAnnotation);
+                cmd.setSessionToken(sessionToken);
+                commandList.add(cmd);
+
             }
         }
 
