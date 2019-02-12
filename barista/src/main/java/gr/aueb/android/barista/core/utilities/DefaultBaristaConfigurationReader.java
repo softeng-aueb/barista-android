@@ -11,18 +11,26 @@ import java.lang.reflect.Field;
 
 import timber.log.Timber;
 
+
 public class DefaultBaristaConfigurationReader {
 
     private static final int DEFAULT_PORT = 8040;
     private static String sessionToken = null;
+
     public DefaultBaristaConfigurationReader(){
 
     }
 
+    /**
+     * Method that searches and returns the value for the BARISTA_PORT field in the BuildConfig file of the instrumented app.
+     * IMPORTANT: This method must be called after the Instrumentation Registry has been initialized or else
+     *
+     * @return The integer value of the port. If none provided default port 8040 will be used
+     */
     public static int getBaristaServerPort() {
         Integer portValue;
 
-        String packageName = InstrumentationRegistry.getTargetContext().getPackageName(); // InstrumentationRegistry.getTargetContext().getPackageName();
+        String packageName = InstrumentationRegistry.getTargetContext().getPackageName();
 
         String buildConfigClass = packageName + ".BuildConfig";
 
@@ -54,7 +62,10 @@ public class DefaultBaristaConfigurationReader {
 
     }
 
-
+    /**
+     *
+     * @return
+     */
     public static String getEmulatorSessionToken() {
         if(sessionToken == null) {
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "barista-token.txt");
@@ -66,7 +77,7 @@ public class DefaultBaristaConfigurationReader {
                 }
 
             } catch (IOException e) {
-                Timber.e("Error while trying to read the seessionToken. "+e.getMessage());
+                Timber.e("Error while trying to read the sessionToken. "+e.getMessage());
                 e.printStackTrace();
             }
 

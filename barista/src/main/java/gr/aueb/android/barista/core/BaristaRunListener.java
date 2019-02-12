@@ -21,16 +21,10 @@ public class BaristaRunListener extends RunListener {
     private static final String BASE_URL = "http://10.0.2.2";
     private BaristaClient httpClient;
     private String sessionToken = null;
+
     public BaristaRunListener(){
         Timber.plant(new Timber.DebugTree());
-        sessionToken = DefaultBaristaConfigurationReader.getEmulatorSessionToken();
-        //fixme find port number with DefaultBaristaConfigurationReader method.
-        // If use DefaultBaristaConfigurationReader No Instrumentation registry found error will occur.
-        httpClient = new DefaultBaristaRetrofitClient(BASE_URL,
-                8070,
-                JacksonConverterFactory.create());
     }
-
 
 
     /**
@@ -59,8 +53,17 @@ public class BaristaRunListener extends RunListener {
      * @param description
      */
     public void testRunStarted(Description description){
+
+        //debug only
         TestRunnerMonitor.testRunStarted();
 
+        // load the session token provided by the barista plugin
+        sessionToken = DefaultBaristaConfigurationReader.getEmulatorSessionToken();
+
+        //initialize the http client.
+        httpClient = new DefaultBaristaRetrofitClient(BASE_URL,
+                DefaultBaristaConfigurationReader.getBaristaServerPort(),
+                JacksonConverterFactory.create());
     }
 
     private void logDescription(Description description){
