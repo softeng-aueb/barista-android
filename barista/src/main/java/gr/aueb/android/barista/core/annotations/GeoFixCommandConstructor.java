@@ -9,6 +9,10 @@ import gr.aueb.android.barista.core.utilities.BaristaConfigurationReader;
 import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
 import timber.log.Timber;
 
+/**
+ * Command Constructor that transform  GeoFix type annotations to GeoFixDTO objects
+ * @see CommandConstructor
+ */
 public class GeoFixCommandConstructor implements CommandConstructor {
 
 
