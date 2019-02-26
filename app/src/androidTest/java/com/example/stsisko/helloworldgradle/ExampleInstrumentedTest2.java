@@ -1,8 +1,10 @@
 package com.example.stsisko.helloworldgradle;
 
+import android.Manifest;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Rule;
@@ -37,10 +39,11 @@ public class ExampleInstrumentedTest2 {
 
     @Rule
     public ActivityTestRule<MainActivity> mainRule = new ActivityTestRule<>(MainActivity.class);
-
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule .grant(Manifest.permission.READ_EXTERNAL_STORAGE);
 
     @Test
-    @ScreenSize(width = 1800,height = 2600)
+    @ScreenSize(width = 800,height = 2600)
     public void TestMainctivityLayout() {
         System.out.println("TEST MAIN ACTIVITY");
         Espresso.onView(withText("Button")).check(matches(isClickable()));
@@ -50,42 +53,15 @@ public class ExampleInstrumentedTest2 {
     }
 
 
-
     @Test
-    @ScreenSize(width = 1500,height = 1600)
+    @ScreenSize(width = 800,height = 1600)
     public void TestUpperCaseTransformation(){
         System.out.println("TEST UPPER CASE");
         String userInput = "Stelios";
         onView(withId(R.id.editText3)).perform(typeText(userInput));
         onView(withId(R.id.button)).perform(click());
         onView(withId(R.id.textView2)).check(matches(withText("STELIOS")));
-        //assertEquals("1","2");
 
     }
-
-//    @Test
-//    public void testRestClient(){
-//
-//        DefaultBaristaRetrofitClient client = DefaultBaristaRetrofitClient.getHttpClient();
-//        System.out.println("@@@@ CALLING SERVICE");
-//        String message = client.getStatus();
-//        assertNotNull(message);
-//        assertEquals("Hello World from Jersey Servlet Container",message);
-//        System.out.println("REST RESPONSE: "+ message);
-//    }
-
-//    @Test
-//    @ScreenSize(width = 800,height = 600)
-//    public void testFindSize(){
-//
-//        DefaultBaristaRetrofitClient client = DefaultBaristaRetrofitClient.getHttpClient();
-//
-//        SizeDto size = client.getActuallSize();
-//        assertNotNull(size);
-//        assertEquals(800,size.getWidth());
-//        assertEquals(600,size.getHeight());
-//
-//    }
-
 
 }
