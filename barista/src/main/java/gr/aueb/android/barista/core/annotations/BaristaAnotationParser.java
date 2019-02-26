@@ -43,13 +43,12 @@ public class BaristaAnotationParser {
      * This command will parse the Desscription of a JUnit test runner and will look for
      * barista annotations. For each annotation found it will construct a command and add it to a list.
      * Finally a list will be returned containing all the commands found.
-     * If wanted you can attach the session token to the returned commands
+     *
      *
      * @param description
-     * @param sessionToken
      * @return
      */
-    public static List<CommandDTO> getParsedCommands(Description description, String sessionToken){
+    public static List<CommandDTO> getParsedCommands(Description description){
 
         List<CommandDTO> commandList = new ArrayList<>();
 
@@ -58,7 +57,6 @@ public class BaristaAnotationParser {
             if(providedAnnotation !=null) {
 
                 CommandDTO cmd = commandConstructorMap.get(c).constructCommand(providedAnnotation);
-                cmd.setSessionToken(sessionToken);
                 commandList.add(cmd);
 
             }
