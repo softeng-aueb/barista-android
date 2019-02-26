@@ -23,19 +23,33 @@ public class BaristaAnotationParserTest {
     private static final String GEOFIX_ASSERT_STR = CommandDTODataHelper.geoFixCommand.toString();
     private static final String SCREENSIZE_ASSERT_STR = CommandDTODataHelper.sizeCommand.toString();
 
-    private Annotation geoFixAnnotation;
-    private Annotation wmSizeAnnotation;
+    private Description geoFixDescription;
+    private Description wmSizeDescription;
+    private Description geoFixAndWmSizeDescription;
+    //private Annotation geoFixAnnotation;
+    //private Annotation wmSizeAnnotation;
 
     @Before
     public void initializeAnnotatedMethods(){
         // use the DummyAnnotatedClass to construct a legitimate GeoFix Annotation instance
         try {
            Method geoFixAnnotatedMethod = DummyAnnotatedClass.class.getMethod("m1");
-           geoFixAnnotation = geoFixAnnotatedMethod.getAnnotation(GeoFix.class);
+           Annotation geoFixAnnotation = geoFixAnnotatedMethod.getAnnotation(GeoFix.class);
 
             // use the DummyAnnotatedClass to construct a legitimate GeoFix Annotation instance to use as mocked result
             Method ScreenSizeAnnotatedMethod = DummyAnnotatedClass.class.getMethod("m2");
-            wmSizeAnnotation = ScreenSizeAnnotatedMethod.getAnnotation(ScreenSize.class);
+            Annotation wmSizeAnnotation = ScreenSizeAnnotatedMethod.getAnnotation(ScreenSize.class);
+
+            geoFixDescription = mock(Description.class);
+            wmSizeDescription = mock(Description.class);
+            geoFixAndWmSizeDescription = mock(Description.class);
+
+            when(geoFixDescription.getAnnotation(GeoFix.class)).thenReturn((GeoFix) geoFixAnnotation);
+            when(wmSizeDescription.getAnnotation(ScreenSize.class)).thenReturn((ScreenSize) wmSizeAnnotation);
+
+            when(geoFixAndWmSizeDescription.getAnnotation(GeoFix.class)).thenReturn((GeoFix) geoFixAnnotation);
+            when(geoFixAndWmSizeDescription.getAnnotation(ScreenSize.class)).thenReturn((ScreenSize) wmSizeAnnotation);
+
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -85,7 +99,7 @@ public class BaristaAnotationParserTest {
 
 
 
-        List<CommandDTO> commands =  BaristaAnotationParser.getParsedCommands(desc,null);
+        List<CommandDTO> commands =  BaristaAnotationParser.getParsedCommands(desc);
         assertThat(commands.size(),is(equalTo(2)));
         assertThat(commands.get(0).toString(), is(equalTo(GEOFIX_ASSERT_STR)));
         assertThat(commands.get(1).toString(), is(equalTo(SCREENSIZE_ASSERT_STR)));
@@ -95,11 +109,7 @@ public class BaristaAnotationParserTest {
     @Test
     public void testGeoFixAnnotation() {
 
-        // mock a Description object to return the GeoFix Annotation
-        Description desc = mock(Description.class);
-        when(desc.getAnnotation(GeoFix.class)).thenReturn((GeoFix) geoFixAnnotation);
-
-        List<CommandDTO> commands =  BaristaAnotationParser.getParsedCommands(desc,null);
+        List<CommandDTO> commands =  BaristaAnotationParser.getParsedCommands(geoFixDescription);
         assertThat(commands.size(),is(equalTo(1)));
         CommandDTO parsedCommand = commands.get(0);
         assertThat(parsedCommand.toString(),is(equalTo(GEOFIX_ASSERT_STR)));
@@ -109,44 +119,19 @@ public class BaristaAnotationParserTest {
     @Test
     public void testWmSizeAnnotation(){
 
-        // mock a Description object to return the ScreenSize Annotation
-        Description desc = mock(Description.class);
-        when(desc.getAnnotation(ScreenSize.class)).thenReturn((ScreenSize) wmSizeAnnotation);
-
-        List<CommandDTO> commands =  BaristaAnotationParser.getParsedCommands(desc,null);
+        List<CommandDTO> commands =  BaristaAnotationParser.getParsedCommands(wmSizeDescription);
         assertThat(commands.size(),is(equalTo(1)));
         CommandDTO parsedCommand = commands.get(0);
         assertThat(parsedCommand.toString(),is(equalTo(SCREENSIZE_ASSERT_STR)));
 
     }
 
+    @Test
     public void testSizeAndGeofixAnnotation(){
 
-
-        ArrayList<Annotation> annotationList = new ArrayList<>();
-        annotationList.add(this.geoFixAnnotation);
-        annotationList.add(this.wmSizeAnnotation);
-
-        Description desc = mock(Description.class);
-        when(desc.getAnnotations()).thenReturn(annotationList);
-
-        List<CommandDTO> commands =  BaristaAnotationParser.getParsedCommands(desc,null);
-
-
-
+        List<CommandDTO> commands =  BaristaAnotationParser.getParsedCommands(geoFixAndWmSizeDescription);
+        assertThat(commands.size(),is(equalTo(2)));
     }
 
 
-//    @Test
-//    public void testJMock(){
-//        new MockUp<DefaultBaristaConfigurationReader>(){
-//
-//            @Mock
-//            public String getEmulatorSessionToken(){
-//                return "1";
-//            }
-//        };
-//
-//        assertThat(DefaultBaristaConfigurationReader.getEmulatorSessionToken(),is(equalTo("1")));
-//    }
 }

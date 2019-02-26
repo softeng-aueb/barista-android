@@ -12,9 +12,4 @@ public class DummyAnnotatedClass {
     @ScreenSize(width = ConstantValues.width, height = ConstantValues.height)
     public void m2(){}
 
-    @ScreenSize(width = ConstantValues.width, height = ConstantValues.height)
-    @GeoFix(lat = ConstantValues.lat, longt = ConstantValues.longt)
-    public void m3(){}
-
-
 }
