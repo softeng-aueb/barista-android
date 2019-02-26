@@ -32,29 +32,52 @@ android {
     productFlavors {
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'junit:junit:4.12'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'junit:junit:4.12'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
-
-   // implementation group: 'org.jmockit', name: 'jmockit', version: '1.8'
+    implementation 'org.mockito:mockito-core:2.1.0'
+    // implementation group: 'org.jmockit', name: 'jmockit', version: '1.8'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     // HTTP REST Client
-
-
     implementation 'com.squareup.retrofit2:converter-jackson:2.4.0'
-
     implementation 'com.squareup.okhttp3:okhttp:3.6.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    //implementation 'com.squareup.okhttp3:mockwebserver:3.6.0'
+}
 
-      //implementation 'com.squareup.okhttp3:mockwebserver:3.6.0'
+publishing {
+    publications {
+        library(MavenPublication) {
+             artifactId = 'barista'
+             groupId = 'gr.aueb.android'
+             artifact("$buildDir/outputs/aar/barista-release.aar")
+             version = '1.0'
+            // include dependencies at the exported aar
+            //https://stackoverflow.com/questions/26874498/publish-an-android-library-to-maven-with-aar-and-source-jar/39252262
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+                //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
+                configurations.compile.allDependencies.each {
+                    if(it.group != null && (it.name != null || "unspecified".equals(it.name)) && it.version != null)
+                    {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+    }
 }
