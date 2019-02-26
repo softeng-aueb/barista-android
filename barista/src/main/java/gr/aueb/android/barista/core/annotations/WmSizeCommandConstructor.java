@@ -15,7 +15,8 @@ public class WmSizeCommandConstructor implements CommandConstructor{
         int height = ((ScreenSize) a).height();
         int width = ((ScreenSize) a).width();
         Timber.d("Resizing screen to: "+width+"x"+height);
-        WmSizeDTO resizeCommand = new WmSizeDTO(null,height,width,false,"DPI");
+        WmSizeDTO resizeCommand = new WmSizeDTO(null,width,height,false,"DPI");
+
         return resizeCommand;
 
     }
