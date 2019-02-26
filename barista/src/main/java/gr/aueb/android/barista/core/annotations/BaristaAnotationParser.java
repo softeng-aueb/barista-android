@@ -27,6 +27,7 @@ public class BaristaAnotationParser {
         supportedBaristaCommandAnotations = new  ArrayList<>();
         supportedBaristaCommandAnotations.add(GeoFix.class);
         supportedBaristaCommandAnotations.add(ScreenSize.class);
+        supportedBaristaCommandAnotations.add(Permission.class);
     }
 
     /**
@@ -35,19 +36,21 @@ public class BaristaAnotationParser {
     static{
         commandConstructorMap.put(GeoFix.class, new GeoFixCommandConstructor());
         commandConstructorMap.put(ScreenSize.class, new WmSizeCommandConstructor());
+        commandConstructorMap.put(Permission.class, new PmGrantCommandConstructor());
     }
 
     /**
      * This command will parse the Desscription of a JUnit test runner and will look for
      * barista annotations. For each annotation found it will construct a command and add it to a list.
      * Finally a list will be returned containing all the commands found.
-     * If wanted you can atach the session token to the reurned commands
+     * If wanted you can attach the session token to the returned commands
      *
      * @param description
      * @param sessionToken
      * @return
      */
     public static List<CommandDTO> getParsedCommands(Description description, String sessionToken){
+
         List<CommandDTO> commandList = new ArrayList<>();
 
         for (Class c: supportedBaristaCommandAnotations) {
