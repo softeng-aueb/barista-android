@@ -1,11 +1,20 @@
 apply plugin: 'com.android.library'
+// plugin to publish the library into maven repo (https://android.jlelse.eu/android-local-libraries-with-maven-b7456d4268cf)
+apply plugin: 'maven-publish'
+
+
 
 // todo GOOD JAVA API EXAMPLES REFERENCE https://www.programcreek.com/java-api-examples/
 android {
     compileSdkVersion 28
+
+    lintOptions {
+        abortOnError false
+    }
+
     defaultConfig {
 
-        minSdkVersion 19
+        minSdkVersion 24 //19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
