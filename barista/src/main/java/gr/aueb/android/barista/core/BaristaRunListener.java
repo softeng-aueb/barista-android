@@ -83,7 +83,25 @@ public class BaristaRunListener extends RunListener {
         Timber.d("Test "+description.getClassName()+":"+description.getMethodName()+" finished. Reseting Device");
         //DefaultBaristaRetrofitClient httpClient = DefaultBaristaRetrofitClient.getHttpClient(BASE_URL);
         //todo reset device
-        //httpClient.resetScreen();
+        CommandDTO sizeResetCommand = new WmSizeResetDTO(this.sessionToken);
+        httpClient.executeCommand(sizeResetCommand);
+
+    }
+
+    /**
+     * Helping function that sets the current sessionsToken to a list of commands
+     *
+     * @param commands  A Collection of CommandDTO objects
+     * @return  A reference to the refactored list. The result is not a new List but the same list
+     *
+     */
+    private Collection<CommandDTO> setSessionTokenToCommands(Collection<CommandDTO> commands){
+        commands.forEach(command->{
+            command.setSessionToken(sessionToken);
+        });
+
+        return commands;
+
     }
 
 
