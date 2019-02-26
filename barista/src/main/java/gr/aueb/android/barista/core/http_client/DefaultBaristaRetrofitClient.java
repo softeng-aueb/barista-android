@@ -34,10 +34,33 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
 
     }
 
+    @Override
+    public void activate(){
+        BaristaPluginService service = getRequestClient().create(BaristaPluginService.class);
+        Call<String> callSync = service.activate();
+        Timber.d("REST CALL URI: %s",callSync.request().url().toString());
+
+        try {
+            Response<String> response = callSync.execute();
+            // debug only
+            //printResponse(response);
+            String returnedMessage = response.body();
+
+        } catch (IOException e) {
+            Timber.e("Exception Occured. "+e.getMessage());
+            callSync.cancel();
+
+            e.printStackTrace();
+
+            return;
+        }
+
+    }
+
     //todo if server has stoped normally by  the gradle plugin. timeout exception will occur
     public void killServer(){
 
-        StatusService service = getRequestClient().create(StatusService.class);
+        BaristaPluginService service = getRequestClient().create(BaristaPluginService.class);
         Call<String> callSync = service.killServer();
         Timber.d("REST CALL URI: %s",callSync.request().url().toString());
 
@@ -48,8 +71,12 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
             String returnedMessage = response.body();
 
         } catch (IOException e) {
-            Timber.d("Exception Oqured. "+e.getMessage());
+            Timber.e("Exception Occured. "+e.getMessage());
+            callSync.cancel();
+
             e.printStackTrace();
+
+            return;
         }
 
     }
@@ -122,7 +149,9 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
+            httpClient.connectTimeout(5, TimeUnit.SECONDS)
+                    .readTimeout(5,TimeUnit.SECONDS)
+                    .writeTimeout(5,TimeUnit.SECONDS);
             httpClient.addInterceptor(logging);
         }
 
