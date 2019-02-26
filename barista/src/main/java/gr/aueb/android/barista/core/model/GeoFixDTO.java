@@ -32,7 +32,7 @@ public class GeoFixDTO extends CommandDTO {
 
     @Override
     public String toString(){
-        return "Geofix Comand ["+longitude+","+latitude+"]";
+        return "Geofix Comand ["+latitude+","+longitude+"]";
     }
 
 }

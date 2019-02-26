@@ -1,13 +1,20 @@
 package gr.aueb.android.barista.core.annotations;
 
 
+import gr.aueb.android.barista.core.model.CommandDTO;
+
 public class DummyAnnotatedClass {
 
-    @GeoFix(lat = 0, longt = 2)
+
+    @GeoFix(lat = ConstantValues.lat, longt = ConstantValues.longt)
     public void m1(){}
 
-    @ScreenSize(width = 500, height = 600)
+    @ScreenSize(width = ConstantValues.width, height = ConstantValues.height)
     public void m2(){}
+
+    @ScreenSize(width = ConstantValues.width, height = ConstantValues.height)
+    @GeoFix(lat = ConstantValues.lat, longt = ConstantValues.longt)
+    public void m3(){}
 
 
 }
