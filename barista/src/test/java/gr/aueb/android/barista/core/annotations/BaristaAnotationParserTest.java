@@ -20,8 +20,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class BaristaAnotationParserTest {
-    private static final String GEOFIX_ASSERT_STR = "Geofix Comand ["+ConstantValues.lat+","+ConstantValues.longt+"]";
-    private static final String SCREENSIZE_ASSERT_STR = "Set Size Comand [ w:"+ConstantValues.width+", h:"+ConstantValues.height+"]";
+    private static final String GEOFIX_ASSERT_STR = CommandDTODataHelper.geoFixCommand.toString();
+    private static final String SCREENSIZE_ASSERT_STR = CommandDTODataHelper.sizeCommand.toString();
 
     private Annotation geoFixAnnotation;
     private Annotation wmSizeAnnotation;
