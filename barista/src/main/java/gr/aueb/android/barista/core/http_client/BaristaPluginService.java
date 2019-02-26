@@ -23,4 +23,7 @@ public interface BaristaPluginService{
 
     @GET("kill")
     Call<String> killServer();
+
+    @GET("activate")
+    Call<String> activate();
 }

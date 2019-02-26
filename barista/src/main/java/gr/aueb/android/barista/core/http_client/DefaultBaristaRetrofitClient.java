@@ -3,6 +3,8 @@ package gr.aueb.android.barista.core.http_client;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import gr.aueb.android.barista.BuildConfig;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import okhttp3.OkHttpClient;

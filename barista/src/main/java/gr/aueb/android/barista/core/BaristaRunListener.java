@@ -57,22 +57,28 @@ public class BaristaRunListener extends RunListener {
         //debug only
         TestRunnerMonitor.testRunStarted();
 
-        // load the session token provided by the barista plugin
-        sessionToken = DefaultBaristaConfigurationReader.getEmulatorSessionToken();
 
         //initialize the http client.
         httpClient = new DefaultBaristaRetrofitClient(BASE_URL,
                 DefaultBaristaConfigurationReader.getBaristaServerPort(),
                 JacksonConverterFactory.create());
+
+        // reques to gain read permissions
+        httpClient.activate();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // load the session token provided by the barista plugin
+        sessionToken = DefaultBaristaConfigurationReader.getEmulatorSessionToken();
     }
 
-    private void logDescription(Description description){
-        Timber.d("Message from custom RunListener: %s",description.getDisplayName());
-        Timber.d("Method Running: %s", description.getMethodName());
-        Timber.d("Class Name: %s",description.getClassName());
-        Timber.d("ANNOTATIONS FOUND");
-    }
-
+    /**
+     *
+     * @param result
+     */
     public void testRunFinished(Result result){
         TestRunnerMonitor.testRunFinished();
         httpClient.killServer();

@@ -8,6 +8,7 @@ import gr.aueb.android.barista.core.model.CommandDTO;
 public interface BaristaClient {
 
     void killServer();
+    void activate();
     void executeCommand(CommandDTO cmd);
     void executeAllCommands(List<CommandDTO> cmd);
 
