@@ -10,7 +10,7 @@
 package gr.aueb.android.barista.core.dto;
 
 
-
+@Deprecated
 public class SizeDto {
 
     private int width;

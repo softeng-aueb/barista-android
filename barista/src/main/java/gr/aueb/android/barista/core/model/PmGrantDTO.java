@@ -23,6 +23,6 @@ public class PmGrantDTO extends CommandDTO {
 
     @Override
     public String toString(){
-        return "Set Permission Comand "+this.permission;
+        return "Set Permission Command "+this.permission;
     }
 }

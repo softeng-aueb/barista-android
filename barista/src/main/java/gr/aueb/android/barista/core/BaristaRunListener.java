@@ -8,12 +8,11 @@ import org.junit.runner.notification.RunListener;
 import java.util.Collection;
 import java.util.List;
 
-import gr.aueb.android.barista.core.annotations.BaristaAnotationParser;
+import gr.aueb.android.barista.core.annotations.BaristaAnnotationParser;
 import gr.aueb.android.barista.core.http_client.BaristaClient;
 import gr.aueb.android.barista.core.http_client.DefaultBaristaRetrofitClient;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.WmSizeResetDTO;
-import gr.aueb.android.barista.core.utilities.BaristaConfigurationReader;
 import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import timber.log.Timber;
@@ -41,7 +40,7 @@ public class BaristaRunListener extends RunListener {
         TestRunnerMonitor.testStarted();
         Timber.d("Starting test: "+description.getClassName()+":"+description.getMethodName());
 
-        List<CommandDTO> currentCommands = BaristaAnotationParser.getParsedCommands(description);
+        List<CommandDTO> currentCommands = BaristaAnnotationParser.getParsedCommands(description);
         setSessionTokenToCommands(currentCommands);
         if(currentCommands.size() == 1){
             httpClient.executeCommand(currentCommands.get(0));

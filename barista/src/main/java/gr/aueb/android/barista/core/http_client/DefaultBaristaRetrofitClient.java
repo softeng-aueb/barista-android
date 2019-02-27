@@ -31,7 +31,6 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
     public DefaultBaristaRetrofitClient(String BaseURL, int port, Converter.Factory converter){
        super(BaseURL,port,converter);
 
-
     }
 
     @Override
@@ -127,7 +126,7 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
     }
 
     /**
-     *
+     * Returns
      * @return
      */
     private Retrofit getRequestClient(){
@@ -162,18 +161,4 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
                 .build();
     }
 
-
-//    public SizeDto getActuallSize(){
-//
-//        try {
-//            StatusService service = getRequestClient().create(StatusService.class);
-//            Call<SizeDto> callSync = service.getActualSize(this.token);
-//            Response<SizeDto> resultSize = callSync.execute();
-//            System.out.println(resultSize.body().getHeight());
-//            return resultSize.body();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 }
