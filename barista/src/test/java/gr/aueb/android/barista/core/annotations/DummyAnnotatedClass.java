@@ -12,4 +12,17 @@ public class DummyAnnotatedClass {
     @ScreenSize(width = ConstantValues.width, height = ConstantValues.height)
     public void m2(){}
 
+    @Permission(type = ConstantValues.permission)
+    public void m3(){
+
+    }
+
+    @Density(density = ConstantValues.density)
+    public void m4(){
+
+    }
+
+    @BatteryOptions(plugged = ConstantValues.pluged, level = ConstantValues.baterryLevel)
+    public void m5(){}
+
 }

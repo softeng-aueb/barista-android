@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.Permission;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
-import gr.aueb.android.barista.core.utilities.AndroidPermission;
+import gr.aueb.android.barista.core.utilities.AndroidPermissions;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -40,8 +40,8 @@ public class ExampleInstrumentedTest4 {
     }
 
     @Test
-    //@Permission(type = AndroidPermission.ACCESS_COARSE_LOCATION)
-    @Permission(type = AndroidPermission.BODY_SENSORS)
+    //@Permission(type = AndroidPermissions.ACCESS_COARSE_LOCATION)
+    @Permission(type = AndroidPermissions.BODY_SENSORS)
     public void testGivePermissions(){
 
         System.out.println("LALA: "+getPermissionsByPackageName(mainRule.getActivity().getApplicationContext().getPackageName()));

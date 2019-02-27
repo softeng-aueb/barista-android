@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import gr.aueb.android.barista.core.annotations.BatteryOptions;
 import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
 
@@ -54,6 +55,18 @@ public class ExampleInstrumentedTest3 {
 
 
     }
+
+    @Test
+    @BatteryOptions(level =40, plugged = false)
+    public void testBattery(){
+
+    }
+
+//    @Test
+//    @BatteryOptions(level = 100, plugged = true)
+//    public void testBattery2(){
+//
+//    }
 
 
 
