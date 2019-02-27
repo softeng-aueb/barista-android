@@ -1,7 +1,9 @@
-package gr.aueb.android.barista.core.annotations;
+package gr.aueb.android.barista.core.annotations.constructors;
 
 import java.lang.annotation.Annotation;
+import java.util.Collection;
 
+import gr.aueb.android.barista.core.annotations.BaristaAnnotationParser;
 import gr.aueb.android.barista.core.model.CommandDTO;
 
 /**
@@ -9,7 +11,7 @@ import gr.aueb.android.barista.core.model.CommandDTO;
  * data passed with annotations to commandDTO objects. The CommandConstructor interface describes the method that parses an Annotation instance
  * and returns a CommandDTO instance.
  * The maping between Command and CommandConstructor is handled by the BaristaAnnotationParser
- * @see BaristaAnotationParser
+ * @see BaristaAnnotationParser
  * @see CommandDTO
  */
 public interface CommandConstructor {
@@ -17,8 +19,10 @@ public interface CommandConstructor {
     /**
      * Function that transforms an annotation to a Command.
      * @param a Annotation that belongs to the barista command collection.
-     * @return A CommandDTO object that represents the command indeded to be called. The result is the object that will be JSONised
+     * @return A CommandDTO collection  that represents the list of commands command indeded to be called. The result is the object that will be JSONised
      * and sent to the Barista Server for execution.
      */
-    public CommandDTO constructCommand(Annotation a);
+    Collection<CommandDTO> constructCommand(Annotation a);
+
+
 }

@@ -8,17 +8,19 @@ import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 
-import gr.aueb.android.barista.core.annotations.GeoFix;
-import gr.aueb.android.barista.core.annotations.ScreenSize;
-import gr.aueb.android.barista.core.model.Command;
+import gr.aueb.android.barista.core.annotations.constructors.BatteryCommandConstructor;
+import gr.aueb.android.barista.core.annotations.constructors.CommandConstructor;
+import gr.aueb.android.barista.core.annotations.constructors.GeoFixCommandConstructor;
+import gr.aueb.android.barista.core.annotations.constructors.PmGrantCommandConstructor;
+import gr.aueb.android.barista.core.annotations.constructors.WmDensityCommandConstructor;
+import gr.aueb.android.barista.core.annotations.constructors.WmSizeCommandConstructor;
 import gr.aueb.android.barista.core.model.CommandDTO;
-import timber.log.Timber;
 
-public class BaristaAnotationParser {
+public class BaristaAnnotationParser {
 
     private static ArrayList<Class> supportedBaristaCommandAnotations;
 
-    private static Hashtable<Class,CommandConstructor> commandConstructorMap = new Hashtable<>();
+    private static Hashtable<Class, CommandConstructor> commandConstructorMap = new Hashtable<>();
 
     /**
      * statically initialize the supported commands with the implemented annotation classes
@@ -28,6 +30,8 @@ public class BaristaAnotationParser {
         supportedBaristaCommandAnotations.add(GeoFix.class);
         supportedBaristaCommandAnotations.add(ScreenSize.class);
         supportedBaristaCommandAnotations.add(Permission.class);
+        supportedBaristaCommandAnotations.add(Density.class);
+        supportedBaristaCommandAnotations.add(BatteryOptions.class);
     }
 
     /**
@@ -37,6 +41,8 @@ public class BaristaAnotationParser {
         commandConstructorMap.put(GeoFix.class, new GeoFixCommandConstructor());
         commandConstructorMap.put(ScreenSize.class, new WmSizeCommandConstructor());
         commandConstructorMap.put(Permission.class, new PmGrantCommandConstructor());
+        commandConstructorMap.put(Density.class, new WmDensityCommandConstructor());
+        commandConstructorMap.put(BatteryOptions.class,new BatteryCommandConstructor());
     }
 
     /**
@@ -56,8 +62,8 @@ public class BaristaAnotationParser {
             Annotation providedAnnotation = description.getAnnotation(c);
             if(providedAnnotation !=null) {
 
-                CommandDTO cmd = commandConstructorMap.get(c).constructCommand(providedAnnotation);
-                commandList.add(cmd);
+                Collection<CommandDTO> cmd = commandConstructorMap.get(c).constructCommand(providedAnnotation);
+                cmd.forEach(command->commandList.add(command));
 
             }
         }
