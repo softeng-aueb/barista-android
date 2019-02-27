@@ -19,4 +19,9 @@ public class WmDensityDTO extends CommandDTO {
     public void setDensity(int density) {
         this.density = density;
     }
+
+    @Override
+    public String toString(){
+        return "Density: "+density;
+    }
 }
