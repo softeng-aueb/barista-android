@@ -4,6 +4,8 @@ import gr.aueb.android.barista.core.model.BatteryChargeDTO;
 import gr.aueb.android.barista.core.model.BatteryLevelDTO;
 import gr.aueb.android.barista.core.model.GeoFixDTO;
 import gr.aueb.android.barista.core.model.PmGrantDTO;
+import gr.aueb.android.barista.core.model.SvcDataDTO;
+import gr.aueb.android.barista.core.model.SvcWifiDTO;
 import gr.aueb.android.barista.core.model.WmDensityDTO;
 import gr.aueb.android.barista.core.model.WmSizeDTO;
 
@@ -18,6 +20,9 @@ public class CommandDTODataHelper {
     public static final WmDensityDTO densityCommand = new WmDensityDTO(null,ConstantValues.density);
     public static final BatteryChargeDTO batteryChargeCommand = new BatteryChargeDTO(null, ConstantValues.plugged);
     public static final BatteryLevelDTO batteryLevelCommand = new BatteryLevelDTO(null,ConstantValues.baterryLevel);
+    public static final SvcDataDTO dataCommand = new SvcDataDTO(null, ConstantValues.dataEnabled);
+    public static final SvcWifiDTO wifiCommand = new SvcWifiDTO(null, ConstantValues.wifiEnabled);
+
 
 
 }

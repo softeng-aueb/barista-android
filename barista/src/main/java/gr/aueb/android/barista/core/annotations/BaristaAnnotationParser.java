@@ -10,8 +10,10 @@ import java.util.List;
 
 import gr.aueb.android.barista.core.annotations.constructors.BatteryCommandConstructor;
 import gr.aueb.android.barista.core.annotations.constructors.CommandConstructor;
+import gr.aueb.android.barista.core.annotations.constructors.DataCommandConstructor;
 import gr.aueb.android.barista.core.annotations.constructors.GeoFixCommandConstructor;
 import gr.aueb.android.barista.core.annotations.constructors.PmGrantCommandConstructor;
+import gr.aueb.android.barista.core.annotations.constructors.WifiCommandConstructor;
 import gr.aueb.android.barista.core.annotations.constructors.WmDensityCommandConstructor;
 import gr.aueb.android.barista.core.annotations.constructors.WmSizeCommandConstructor;
 import gr.aueb.android.barista.core.model.CommandDTO;
@@ -32,6 +34,8 @@ public class BaristaAnnotationParser {
         supportedBaristaCommandAnotations.add(Permission.class);
         supportedBaristaCommandAnotations.add(Density.class);
         supportedBaristaCommandAnotations.add(BatteryOptions.class);
+        supportedBaristaCommandAnotations.add(Data.class);
+        supportedBaristaCommandAnotations.add(Wifi.class);
     }
 
     /**
@@ -43,6 +47,8 @@ public class BaristaAnnotationParser {
         commandConstructorMap.put(Permission.class, new PmGrantCommandConstructor());
         commandConstructorMap.put(Density.class, new WmDensityCommandConstructor());
         commandConstructorMap.put(BatteryOptions.class,new BatteryCommandConstructor());
+        commandConstructorMap.put(Data.class,new DataCommandConstructor());
+        commandConstructorMap.put(Wifi.class,new WifiCommandConstructor());
     }
 
     /**

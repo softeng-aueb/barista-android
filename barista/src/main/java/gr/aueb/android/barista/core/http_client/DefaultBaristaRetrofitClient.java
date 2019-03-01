@@ -41,22 +41,21 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
 
         try {
             Response<String> response = callSync.execute();
-            // debug only
-            //printResponse(response);
-            String returnedMessage = response.body();
 
         } catch (IOException e) {
             Timber.e("Exception Occured. "+e.getMessage());
             callSync.cancel();
-
             e.printStackTrace();
-
             return;
         }
-
     }
 
-    //todo if server has stoped normally by  the gradle plugin. timeout exception will occur
+
+
+    /**
+     * Do a GET request to give signal to kill the server
+     * todo if server has stoped normally by  the gradle plugin. timeout exception will occur
+     */
     public void killServer(){
 
         BaristaPluginService service = getRequestClient().create(BaristaPluginService.class);
@@ -65,19 +64,13 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
 
         try {
             Response<String> response = callSync.execute();
-            // debug only
-            //printResponse(response);
-            String returnedMessage = response.body();
 
         } catch (IOException e) {
             Timber.e("Exception Occured. "+e.getMessage());
             callSync.cancel();
-
             e.printStackTrace();
-
             return;
         }
-
     }
 
     @Override

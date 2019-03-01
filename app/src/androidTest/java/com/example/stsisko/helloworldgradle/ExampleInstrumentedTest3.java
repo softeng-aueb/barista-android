@@ -12,8 +12,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import gr.aueb.android.barista.core.annotations.BatteryOptions;
+import gr.aueb.android.barista.core.annotations.Data;
 import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
+import gr.aueb.android.barista.core.annotations.Wifi;
+import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -24,6 +27,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType.DISABLED;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -62,12 +66,16 @@ public class ExampleInstrumentedTest3 {
 
     }
 
-//    @Test
-//    @BatteryOptions(level = 100, plugged = true)
-//    public void testBattery2(){
-//
-//    }
+    @Test
+    @Wifi(enabled = DISABLED)
+    public void testWifi(){
 
+    }
 
+    @Test
+    @Data(enabled = DISABLED)
+    public void testData(){
+
+    }
 
 }

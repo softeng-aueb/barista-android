@@ -1,5 +1,6 @@
 package gr.aueb.android.barista.core.annotations;
 
+import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
 import gr.aueb.android.barista.core.utilities.AndroidPermissions;
 
 public class ConstantValues {
@@ -13,5 +14,10 @@ public class ConstantValues {
     public static final int baterryLevel = 40;
     public static final boolean plugged = false;
 
+    public static final boolean wifiEnabled = false;
+    public static final NetworkAdapterStateType wifiEnabledEnum = NetworkAdapterStateType.DISABLED;
+
+    public static final boolean dataEnabled = false;
+    public static final NetworkAdapterStateType dataEnabledEnum = NetworkAdapterStateType.DISABLED;
 
 }

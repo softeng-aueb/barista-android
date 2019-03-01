@@ -1,7 +1,11 @@
 package gr.aueb.android.barista.core.annotations;
 
 
+import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
 import gr.aueb.android.barista.core.model.CommandDTO;
+
+import static gr.aueb.android.barista.core.annotations.ConstantValues.wifiEnabledEnum;
+
 
 public class DummyAnnotatedClass {
 
@@ -22,7 +26,19 @@ public class DummyAnnotatedClass {
 
     }
 
-    @BatteryOptions(plugged = ConstantValues.pluged, level = ConstantValues.baterryLevel)
+    @BatteryOptions(plugged = ConstantValues.plugged, level = ConstantValues.baterryLevel)
     public void m5(){}
+
+    @Wifi(enabled = NetworkAdapterStateType.DISABLED)
+    public void m6(){
+
+    }
+
+    @Data(enabled = NetworkAdapterStateType.DISABLED)
+    public void m7(){
+
+    }
+
+
 
 }
