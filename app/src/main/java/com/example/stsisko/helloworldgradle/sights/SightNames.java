@@ -1,4 +1,4 @@
-package com.example.baristademoapp.sights;
+package com.example.stsisko.helloworldgradle.sights;
 
 public interface SightNames {
     public static String ACROPOLIS = "ACROPOLIS";

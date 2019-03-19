@@ -1,9 +1,9 @@
-package com.example.baristademoapp.activities;
+package com.example.stsisko.helloworldgradle.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import com.example.baristademoapp.R;
+import com.example.stsisko.helloworldgradle.R;
 
 public class WifiTestAcivity extends AppCompatActivity {
 

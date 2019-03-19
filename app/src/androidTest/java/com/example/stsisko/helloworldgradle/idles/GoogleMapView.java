@@ -1,4 +1,4 @@
-package com.example.baristademoapp.idles;
+package com.example.stsisko.helloworldgradle.idles;
 
 import android.support.test.espresso.IdlingResource;
 

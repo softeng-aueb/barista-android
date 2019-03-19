@@ -1,4 +1,4 @@
-package com.example.baristademoapp;
+package com.example.stsisko.helloworldgradle;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;

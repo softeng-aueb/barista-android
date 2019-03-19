@@ -62,7 +62,7 @@ publishing {
              artifactId = 'barista'
              groupId = 'gr.aueb.android'
              artifact("$buildDir/outputs/aar/barista-release.aar")
-             version = '1.0'
+             version = '2.0'
             // include dependencies at the exported aar
             //https://stackoverflow.com/questions/26874498/publish-an-android-library-to-maven-with-aar-and-source-jar/39252262
             pom.withXml {

@@ -1,4 +1,4 @@
-package com.example.baristademoapp.activities;
+package com.example.stsisko.helloworldgradle.activities;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -10,10 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.example.baristademoapp.R;
-import com.example.baristademoapp.helpers.IntegerCounter;
-import com.example.baristademoapp.helpers.ThreadSleepingTime;
-import com.example.baristademoapp.receivers.BatteryEventReceiver;
+import com.example.stsisko.helloworldgradle.R;
+import com.example.stsisko.helloworldgradle.helpers.IntegerCounter;
+import com.example.stsisko.helloworldgradle.helpers.ThreadSleepingTime;
+import com.example.stsisko.helloworldgradle.receivers.BatteryEventReceiver;
 
 public class BatteryTestActivity extends Activity {
 

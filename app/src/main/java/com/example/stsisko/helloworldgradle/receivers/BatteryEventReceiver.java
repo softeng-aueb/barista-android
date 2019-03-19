@@ -1,4 +1,4 @@
-package com.example.baristademoapp.receivers;
+package com.example.stsisko.helloworldgradle.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.BatteryManager;
 
-import com.example.baristademoapp.R;
-import com.example.baristademoapp.activities.BatteryTestActivity;
-import com.example.baristademoapp.helpers.ThreadSleepingTime;
+import com.example.stsisko.helloworldgradle.R;
+import com.example.stsisko.helloworldgradle.activities.BatteryTestActivity;
+import com.example.stsisko.helloworldgradle.helpers.ThreadSleepingTime;
 
 public class BatteryEventReceiver extends BroadcastReceiver {
 

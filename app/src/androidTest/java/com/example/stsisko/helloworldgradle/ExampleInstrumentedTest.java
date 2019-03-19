@@ -1,4 +1,4 @@
-package com.example.baristademoapp;
+package com.example.stsisko.helloworldgradle;
 
 import android.Manifest;
 import android.content.Context;
@@ -8,11 +8,13 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiDevice;
 
-import com.example.baristademoapp.activities.BatteryTestActivity;
-import com.example.baristademoapp.activities.MainActivity;
-import com.example.baristademoapp.sights.SightNames;
+import com.example.stsisko.helloworldgradle.activities.BatteryTestActivity;
+import com.example.stsisko.helloworldgradle.activities.MainActivity;
+import com.example.stsisko.helloworldgradle.sights.SightNames;
+import com.example.stsisko.helloworldgradle.activities.BatteryTestActivity;
+import com.example.stsisko.helloworldgradle.activities.MainActivity;
+import com.example.stsisko.helloworldgradle.sights.SightNames;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,18 +26,15 @@ import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.Permission;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
 
-
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -110,13 +109,6 @@ public class ExampleInstrumentedTest {
 
     }
 
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("com.example.baristademoapp", appContext.getPackageName());
-    }
 
     @Test
     @ScreenSize(width=1500, height=2600)

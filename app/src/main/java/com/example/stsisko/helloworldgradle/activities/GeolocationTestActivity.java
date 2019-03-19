@@ -1,43 +1,35 @@
-package com.example.baristademoapp.activities;
+package com.example.stsisko.helloworldgradle.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.baristademoapp.R;
-import com.example.baristademoapp.sights.SightManager;
+import com.example.stsisko.helloworldgradle.R;
+import com.example.stsisko.helloworldgradle.sights.SightManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
 
 public class GeolocationTestActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -92,8 +84,6 @@ public class GeolocationTestActivity extends FragmentActivity implements OnMapRe
 
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        // Add a marker in Sydney and move the camera
-
 
         /**
          * USER LOCATION LOGIC
@@ -162,8 +152,6 @@ public class GeolocationTestActivity extends FragmentActivity implements OnMapRe
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,18));;
             }
         }
-
-
 
 
     }

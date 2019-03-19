@@ -1,4 +1,4 @@
-package com.example.baristademoapp.helpers;
+package com.example.stsisko.helloworldgradle.helpers;
 
 public class IntegerCounter {
 

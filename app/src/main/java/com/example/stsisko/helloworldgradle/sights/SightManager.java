@@ -1,9 +1,8 @@
-package com.example.baristademoapp.sights;
+package com.example.stsisko.helloworldgradle.sights;
 
-import com.example.baristademoapp.helpers.DistanceCalculator;
+import com.example.stsisko.helloworldgradle.helpers.DistanceCalculator;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
