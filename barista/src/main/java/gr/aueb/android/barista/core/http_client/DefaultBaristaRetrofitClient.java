@@ -1,6 +1,8 @@
 package gr.aueb.android.barista.core.http_client;
 
 
+import org.mockito.internal.matchers.Null;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +56,7 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
 
     /**
      * Do a GET request to give signal to kill the server
-     * todo if server has stoped normally by  the gradle plugin. timeout exception will occur
+     * fixme if server has stoped normally by  the gradle plugin. timeout exception will occur
      */
     public void killServer(){
 
@@ -75,7 +77,9 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
 
     @Override
     public void executeCommand(CommandDTO cmd) {
-
+        if(cmd == null ){
+            throw new NullCommandRequestException("Request to execute a null command.");
+        }
         Timber.d("Calling: "+cmd.toString()+" for "+cmd.getSessionToken());
         BaristaPluginService service = getRequestClient().create(BaristaPluginService.class);
         Call<ResponseBody> callSync = service.executeCommand(cmd);
@@ -141,9 +145,9 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-            httpClient.connectTimeout(5, TimeUnit.SECONDS)
-                    .readTimeout(5,TimeUnit.SECONDS)
-                    .writeTimeout(5,TimeUnit.SECONDS);
+            httpClient.connectTimeout(1, TimeUnit.SECONDS)
+                    .readTimeout(1,TimeUnit.SECONDS)
+                    .writeTimeout(1,TimeUnit.SECONDS);
             httpClient.addInterceptor(logging);
         }
 
