@@ -5,7 +5,6 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-// FIXME
 public abstract class BaristaRetrofitClient implements  BaristaClient {
 
     private static BaristaRetrofitClient INSTANCE = null;
@@ -46,7 +45,5 @@ public abstract class BaristaRetrofitClient implements  BaristaClient {
         }
         return retrofit;
     }
-
-
 
 }

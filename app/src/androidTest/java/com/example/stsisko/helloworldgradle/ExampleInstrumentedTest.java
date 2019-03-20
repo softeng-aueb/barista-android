@@ -90,6 +90,7 @@ public class ExampleInstrumentedTest {
 
     @Test
     @GeoFix(lat = 37.9670, longt = 23.728612) //near museum
+    @ScreenSize(width = 600, height = 500)
     @Permission(type = Manifest.permission.ACCESS_FINE_LOCATION)
     public void testNearMuseum(){
         onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
