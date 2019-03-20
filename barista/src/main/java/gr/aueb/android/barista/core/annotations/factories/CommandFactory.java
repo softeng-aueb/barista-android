@@ -1,4 +1,4 @@
-package gr.aueb.android.barista.core.annotations.constructors;
+package gr.aueb.android.barista.core.annotations.factories;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
@@ -8,13 +8,13 @@ import gr.aueb.android.barista.core.model.CommandDTO;
 
 /**
  * Every Barista Command must be associated with a commandConstructor.The Command Constructor is responsible for transforming
- * data passed with annotations to commandDTO objects. The CommandConstructor interface describes the method that parses an Annotation instance
+ * data passed with annotations to commandDTO objects. The CommandFactory interface describes the method that parses an Annotation instance
  * and returns a CommandDTO instance.
- * The maping between Command and CommandConstructor is handled by the BaristaAnnotationParser
+ * The maping between Command and CommandFactory is handled by the BaristaAnnotationParser
  * @see BaristaAnnotationParser
  * @see CommandDTO
  */
-public interface CommandConstructor {
+public interface CommandFactory {
 
     /**
      * Function that transforms an annotation to a Command.

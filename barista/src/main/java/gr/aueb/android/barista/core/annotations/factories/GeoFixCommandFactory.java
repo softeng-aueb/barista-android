@@ -1,4 +1,4 @@
-package gr.aueb.android.barista.core.annotations.constructors;
+package gr.aueb.android.barista.core.annotations.factories;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -11,9 +11,9 @@ import timber.log.Timber;
 
 /**
  * Command Constructor that transform  GeoFix type annotations to GeoFixDTO objects
- * @see CommandConstructor
+ * @see CommandFactory
  */
-public class GeoFixCommandConstructor implements CommandConstructor {
+public class GeoFixCommandFactory implements CommandFactory {
 
 
     @Override

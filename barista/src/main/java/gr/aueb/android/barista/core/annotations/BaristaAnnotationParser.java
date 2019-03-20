@@ -8,21 +8,21 @@ import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 
-import gr.aueb.android.barista.core.annotations.constructors.BatteryCommandConstructor;
-import gr.aueb.android.barista.core.annotations.constructors.CommandConstructor;
-import gr.aueb.android.barista.core.annotations.constructors.DataCommandConstructor;
-import gr.aueb.android.barista.core.annotations.constructors.GeoFixCommandConstructor;
-import gr.aueb.android.barista.core.annotations.constructors.PmGrantCommandConstructor;
-import gr.aueb.android.barista.core.annotations.constructors.WifiCommandConstructor;
-import gr.aueb.android.barista.core.annotations.constructors.WmDensityCommandConstructor;
-import gr.aueb.android.barista.core.annotations.constructors.WmSizeCommandConstructor;
+import gr.aueb.android.barista.core.annotations.factories.BatteryCommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.CommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.DataCommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.GeoFixCommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.PmGrantCommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.WifiCommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.WmDensityCommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.WmSizeCommandFactory;
 import gr.aueb.android.barista.core.model.CommandDTO;
 
 public class BaristaAnnotationParser {
 
     private static ArrayList<Class> supportedBaristaCommandAnotations;
 
-    private static Hashtable<Class, CommandConstructor> commandConstructorMap = new Hashtable<>();
+    private static Hashtable<Class, CommandFactory> commandConstructorMap = new Hashtable<>();
 
     /**
      * statically initialize the supported commands with the implemented annotation classes
@@ -42,13 +42,13 @@ public class BaristaAnnotationParser {
      * statically map a comand constructor for each implemented annotation
      */
     static{
-        commandConstructorMap.put(GeoFix.class, new GeoFixCommandConstructor());
-        commandConstructorMap.put(ScreenSize.class, new WmSizeCommandConstructor());
-        commandConstructorMap.put(Permission.class, new PmGrantCommandConstructor());
-        commandConstructorMap.put(Density.class, new WmDensityCommandConstructor());
-        commandConstructorMap.put(BatteryOptions.class,new BatteryCommandConstructor());
-        commandConstructorMap.put(Data.class,new DataCommandConstructor());
-        commandConstructorMap.put(Wifi.class,new WifiCommandConstructor());
+        commandConstructorMap.put(GeoFix.class, new GeoFixCommandFactory());
+        commandConstructorMap.put(ScreenSize.class, new WmSizeCommandFactory());
+        commandConstructorMap.put(Permission.class, new PmGrantCommandFactory());
+        commandConstructorMap.put(Density.class, new WmDensityCommandFactory());
+        commandConstructorMap.put(BatteryOptions.class,new BatteryCommandFactory());
+        commandConstructorMap.put(Data.class,new DataCommandFactory());
+        commandConstructorMap.put(Wifi.class,new WifiCommandFactory());
     }
 
     /**
