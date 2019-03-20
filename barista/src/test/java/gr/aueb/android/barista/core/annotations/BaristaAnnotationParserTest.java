@@ -4,6 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
 
+
+import static org.hamcrest.CoreMatchers.notNullValue;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -12,6 +15,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import gr.aueb.android.barista.core.model.BatteryChargeDTO;
 import gr.aueb.android.barista.core.model.BatteryLevelDTO;
 import gr.aueb.android.barista.core.model.CommandDTO;
 
@@ -106,55 +110,6 @@ public class BaristaAnnotationParserTest {
     }
 
 
-    /*@Test
-    public void getParsedAnnotations() {
-
-        // Create Barista Annotation instances based on DummyAnnotatedClass anotated methods
-        Annotation geoFixAnnotation = null ;
-        Annotation screenSizeAnnotation = null;
-
-        Method[] allMethods = DummyAnnotatedClass.class.getMethods();
-
-        for(Method m : allMethods){
-            //
-            if(m.getName().equals("m1")){
-                geoFixAnnotation = m.getAnnotation(GeoFix.class);
-            }
-            else if(m.getName().equals("m2")){
-                screenSizeAnnotation = m.getAnnotation(ScreenSize.class);
-            }
-
-        }
-
-        assertNotNull(geoFixAnnotation);
-        assertNotNull(screenSizeAnnotation);
-
-
-        Description desc = mock(Description.class);
-        when(desc.getAnnotation(GeoFix.class)).thenReturn((GeoFix) geoFixAnnotation);
-        when(desc.getAnnotation(ScreenSize.class)).thenReturn((ScreenSize) screenSizeAnnotation);
-
-
-        Annotation r1 = desc.getAnnotation(GeoFix.class);
-        assertNotNull(r1);
-        assertThat(((GeoFix) r1).lat(),is(equalTo(ConstantValues.lat)));
-        assertThat(((GeoFix) r1).longt(),is(equalTo(ConstantValues.longt)));
-
-        Annotation r2 = desc.getAnnotation(ScreenSize.class);
-        assertNotNull(r2);
-        assertThat(((ScreenSize) r2).height(),is(equalTo(ConstantValues.height)));
-        assertThat(((ScreenSize) r2).width(),is(equalTo(ConstantValues.width)));
-
-
-
-        List<CommandDTO> commands =  BaristaAnnotationParser.getParsedCommands(desc);
-        assertThat(commands.size(),is(equalTo(2)));
-        assertThat(commands.get(0).toString(), is(equalTo(GEOFIX_ASSERT_STR)));
-        assertThat(commands.get(1).toString(), is(equalTo(SCREENSIZE_ASSERT_STR)));
-
-    }
-    */
-
     @Test
     public void testGeoFixAnnotation() {
 
@@ -172,6 +127,7 @@ public class BaristaAnnotationParserTest {
         assertThat(commands.size(),is(equalTo(1)));
         CommandDTO parsedCommand = commands.get(0);
         assertThat(parsedCommand.toString(),is(equalTo(SCREENSIZE_ASSERT_STR)));
+        assertThat(parsedCommand.getResetCommand(), is(notNullValue()));
 
     }
 
@@ -209,6 +165,19 @@ public class BaristaAnnotationParserTest {
         parsedCommand = commands.get(1);
         assertThat(parsedCommand.toString(),is(equalTo(BATTERY_PLUGED_ASSERT_STR)));
 
+        // assert reverse command for level
+        CommandDTO resetLevel =  commands.get(0).getResetCommand();
+        assertThat(resetLevel, is(notNullValue()));
+        assertThat(((BatteryLevelDTO)resetLevel).getLevel(),is(equalTo(100)));
+        assertThat(resetLevel.getResetCommand(), equalTo(null)); // reverse command of reverse should not exist
+
+        // assert reverse command for charging
+        CommandDTO resetCharging =  commands.get(1).getResetCommand();
+        assertThat(resetCharging, is(notNullValue()));
+        assertThat(((BatteryChargeDTO)resetCharging).isPlugged(),is(equalTo(true)));
+        assertThat(resetCharging.getResetCommand(), equalTo(null)); // reverse command of reverse should not exist
+
+
     }
 
     @Test
@@ -217,6 +186,7 @@ public class BaristaAnnotationParserTest {
         assertThat(commands.size(),is(equalTo(1)));
         CommandDTO parsedCommand = commands.get(0);
         assertThat(parsedCommand.toString(),is(equalTo(WIFI_ASSERT_STR)));
+        assertThat(parsedCommand.getResetCommand(), is(notNullValue()));
     }
 
     @Test
@@ -225,6 +195,7 @@ public class BaristaAnnotationParserTest {
         assertThat(commands.size(),is(equalTo(1)));
         CommandDTO parsedCommand = commands.get(0);
         assertThat(parsedCommand.toString(),is(equalTo(DATA_ASSERT_STR)));
+        assertThat(parsedCommand.getResetCommand(), is(notNullValue()));
     }
 
 

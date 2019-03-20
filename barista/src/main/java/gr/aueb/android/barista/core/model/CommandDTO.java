@@ -1,6 +1,7 @@
 package gr.aueb.android.barista.core.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -26,10 +27,13 @@ public abstract class CommandDTO <T extends Command> {
 
     private String sessionToken;
 
+    @JsonIgnore
+    private CommandDTO resetCommand;
+
     public CommandDTO(String sessionToken) {
         this.sessionToken = sessionToken;
+        this.resetCommand = null;
     }
-
 
     public String getSessionToken() {
         return sessionToken;
@@ -38,6 +42,9 @@ public abstract class CommandDTO <T extends Command> {
     public void setSessionToken(String sessionToken) {
         this.sessionToken = sessionToken;
     }
-    
+
+    public CommandDTO getResetCommand() {return this.resetCommand;}
+
+    public void setResetCommand( CommandDTO resetCommand ) { this.resetCommand = resetCommand; }
 
 }

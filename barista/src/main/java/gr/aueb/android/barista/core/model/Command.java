@@ -12,6 +12,8 @@ public interface Command {
 
     void setSessionToken(String sessionToken);
 
+
+    CommandDTO getResetCommand();
     //void accept(CommandExecutor executor);
 
     //boolean isCompleted(CommandClient client);

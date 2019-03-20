@@ -7,6 +7,8 @@ import org.junit.runner.notification.RunListener;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import gr.aueb.android.barista.core.annotations.BaristaAnnotationParser;
 import gr.aueb.android.barista.core.http_client.BaristaClient;
@@ -20,12 +22,16 @@ import timber.log.Timber;
 public class BaristaRunListener extends RunListener {
 
 
+    // The ip of the host machine (where the Barista server Runs)
     private static final String BASE_URL = "http://10.0.2.2";
+
     private BaristaClient httpClient;
     private String sessionToken = null;
+    private List<CommandDTO> lastExecutedCommands;
 
     public BaristaRunListener(){
         Timber.plant(new Timber.DebugTree());
+        lastExecutedCommands = null;
     }
 
 
@@ -42,13 +48,12 @@ public class BaristaRunListener extends RunListener {
 
         List<CommandDTO> currentCommands = BaristaAnnotationParser.getParsedCommands(description);
         setSessionTokenToCommands(currentCommands);
-        if(currentCommands.size() == 1){
-            httpClient.executeCommand(currentCommands.get(0));
-        }
-        else{
-            Timber.d("Total commands to execute: "+currentCommands.size());
-            httpClient.executeAllCommands(currentCommands);
-        }
+        Timber.d("Total commands to execute: "+currentCommands.size());
+
+        httpClient.executeAllCommands(currentCommands);
+
+        this.lastExecutedCommands = currentCommands;
+
     }
 
     /**
@@ -87,18 +92,23 @@ public class BaristaRunListener extends RunListener {
         httpClient.killServer();
     }
 
+    /**
+     * Executed every time a est case finishes
+     * @param description
+     */
     public void testFinished(Description description) {
         TestRunnerMonitor.testFinished();
         Timber.d("Test "+description.getClassName()+":"+description.getMethodName()+" finished. Reseting Device");
-        //DefaultBaristaRetrofitClient httpClient = DefaultBaristaRetrofitClient.getHttpClient(BASE_URL);
-        //todo reset device
-        CommandDTO sizeResetCommand = new WmSizeResetDTO(this.sessionToken);
-        httpClient.executeCommand(sizeResetCommand);
-
+        List<CommandDTO> reverseCommands = this.lastExecutedCommands.stream()
+                 .filter(command -> Objects.nonNull(command.getResetCommand()))
+                 .map(command -> command.getResetCommand())
+                 .collect(Collectors.toList());
+        httpClient.executeAllCommands(reverseCommands);
     }
 
     /**
-     * Helping function that sets the current sessionsToken to a list of commands
+     * Helping function that sets the current sessionsToken to a list of commands. It also sets the session token to the reverse
+     * commands
      *
      * @param commands  A Collection of CommandDTO objects
      * @return  A reference to the refactored list. The result is not a new List but the same list
@@ -107,6 +117,9 @@ public class BaristaRunListener extends RunListener {
     private Collection<CommandDTO> setSessionTokenToCommands(Collection<CommandDTO> commands){
         commands.forEach(command->{
             command.setSessionToken(sessionToken);
+            if(command.getResetCommand() != null ){
+                command.getResetCommand().setSessionToken(sessionToken);
+            }
         });
 
         return commands;

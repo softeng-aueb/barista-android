@@ -25,4 +25,6 @@ public class BatteryLevelDTO extends CommandDTO {
     public String toString(){
         return "Batery-Level:"+level;
     }
+
+
 }

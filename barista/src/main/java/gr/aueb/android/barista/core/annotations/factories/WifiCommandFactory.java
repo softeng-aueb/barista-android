@@ -1,4 +1,4 @@
-package gr.aueb.android.barista.core.annotations.constructors;
+package gr.aueb.android.barista.core.annotations.factories;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -6,21 +6,29 @@ import java.util.Collection;
 
 import gr.aueb.android.barista.core.annotations.Wifi;
 import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
+import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterUtilities;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.SvcWifiDTO;
 
-public class WifiCommandConstructor implements CommandConstructor {
+public class WifiCommandFactory implements CommandFactory {
+
+    private NetworkAdapterStateType DEFAULT_STATE = NetworkAdapterStateType.ENABLED;
+
     @Override
     public Collection<CommandDTO> constructCommand(Annotation a) {
        CommandDTO wifiCommand = null;
-        switch (((Wifi)a).enabled()){
-            case ENABLED:
-                wifiCommand = new SvcWifiDTO(null,true);
-                break;
-            case DISABLED:
-                wifiCommand = new SvcWifiDTO(null,false);
-                break;
-        }
-        return Arrays.asList(wifiCommand);
+
+       NetworkAdapterStateType selectedState = ((Wifi)a).enabled();
+       Boolean state = NetworkAdapterUtilities.NETWORK_STATES.get(selectedState) ;
+       wifiCommand = new SvcWifiDTO(null,state);
+
+       // construct reverse command
+       if(selectedState != DEFAULT_STATE ){
+           CommandDTO reverse = new SvcWifiDTO(null, NetworkAdapterUtilities.NETWORK_STATES.get(DEFAULT_STATE));
+           wifiCommand.setResetCommand(reverse);
+       }
+
+       return Arrays.asList(wifiCommand);
     }
+
 }
