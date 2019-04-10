@@ -27,7 +27,6 @@ public abstract class CommandDTO <T extends Command> {
 
     private String sessionToken;
 
-    @JsonIgnore
     private CommandDTO resetCommand;
 
     public CommandDTO(String sessionToken) {

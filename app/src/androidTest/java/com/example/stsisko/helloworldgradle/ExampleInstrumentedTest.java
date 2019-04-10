@@ -16,6 +16,7 @@ import com.example.stsisko.helloworldgradle.activities.BatteryTestActivity;
 import com.example.stsisko.helloworldgradle.activities.MainActivity;
 import com.example.stsisko.helloworldgradle.sights.SightNames;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,6 +53,7 @@ public class ExampleInstrumentedTest {
     @Before
     public void init(){
         activityActivityTestRule.getActivity().getSupportFragmentManager().beginTransaction();
+
     }
 
     @Test
@@ -70,7 +72,7 @@ public class ExampleInstrumentedTest {
 
         onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
         onView(withId(R.id.gpsButton)).perform(ViewActions.click());
-
+        onView(withId(R.id.map)).check(matches(isDisplayed()));
         onView(withText(SightNames.SYNTAGMA)).check(matches(isDisplayed()));
 
 
@@ -83,6 +85,7 @@ public class ExampleInstrumentedTest {
 
         onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
         onView(withId(R.id.gpsButton)).perform(ViewActions.click());
+        onView(withId(R.id.map)).check(matches(isDisplayed()));
         onView(withText(SightNames.ACROPOLIS)).check(matches(isDisplayed()));
         onView(withText(SightNames.AGORA)).check(matches(isDisplayed()));
     }
@@ -90,13 +93,14 @@ public class ExampleInstrumentedTest {
 
     @Test
     @GeoFix(lat = 37.9670, longt = 23.728612) //near museum
-    @ScreenSize(width = 600, height = 500)
+    //@ScreenSize(width = 600, height = 500)
     @Permission(type = Manifest.permission.ACCESS_FINE_LOCATION)
     public void testNearMuseum(){
+
         onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
         onView(withId(R.id.gpsButton)).perform(ViewActions.click());
+        onView(withId(R.id.map)).check(matches(isDisplayed()));
         onView(withText(SightNames.MUSEUM)).check(matches(isDisplayed()));
-
     }
 
 
@@ -110,6 +114,16 @@ public class ExampleInstrumentedTest {
 
     }
 
+    @Test
+    @BatteryOptions(level = 80, plugged = true)
+    public void testBatteryReaction2(){
+        onView(withId(R.id.batteryButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.batteryButton)).perform(ViewActions.click());
+        ColorDrawable backgroundColor = (ColorDrawable) BatteryTestActivity.getInstance().findViewById(R.id.battery_layout).getBackground();
+        assertThat(backgroundColor.getColor(),is(equalTo(Color.WHITE)));
+
+    }
+
 
     @Test
     @ScreenSize(width=1500, height=2600)
@@ -117,5 +131,11 @@ public class ExampleInstrumentedTest {
 
     }
 
+//    @After
+//    public void resetPermissions(){
+//        String packageName = InstrumentationRegistry.getTargetContext().getApplicationContext().getPackageName();
+//        String permissionName = Manifest.permission.ACCESS_FINE_LOCATION;
+//        InstrumentationRegistry.getInstrumentation().getUiAutomation().revokeRuntimePermission(packageName, permissionName);
+//    }
 
 }

@@ -1,5 +1,6 @@
 package gr.aueb.android.barista.core.annotations;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -18,6 +19,7 @@ import java.util.List;
 import gr.aueb.android.barista.core.model.BatteryChargeDTO;
 import gr.aueb.android.barista.core.model.BatteryLevelDTO;
 import gr.aueb.android.barista.core.model.CommandDTO;
+import gr.aueb.android.barista.core.model.PmRevokeDTO;
 
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -29,6 +31,7 @@ public class BaristaAnnotationParserTest {
     private final String GEOFIX_ASSERT_STR = CommandDTODataHelper.geoFixCommand.toString();
     private final String SCREENSIZE_ASSERT_STR = CommandDTODataHelper.sizeCommand.toString();
     private final String PERMISSION_ASSERT_STR = CommandDTODataHelper.permissionCommand.toString();
+    private final String REVOKE_PERMISSION_ASSERT_STR = CommandDTODataHelper.revokeCommand.toString();
     private final String DENSITY_ASSER_STR = CommandDTODataHelper.densityCommand.toString();
     private final String BATTERY_LEVEL_ASSERT_STR = CommandDTODataHelper.batteryLevelCommand.toString();
     private final String BATTERY_PLUGED_ASSERT_STR = CommandDTODataHelper.batteryChargeCommand.toString();
@@ -145,6 +148,11 @@ public class BaristaAnnotationParserTest {
         assertThat(commands.size(),is(equalTo(1)));
         CommandDTO parsedCommand = commands.get(0);
         assertThat(parsedCommand.toString(),is(equalTo(PERMISSION_ASSERT_STR)));
+
+        //assert reverse command
+        CommandDTO revokeCommand = parsedCommand.getResetCommand();
+        assertThat(revokeCommand,is(notNullValue()));
+        assertThat(((PmRevokeDTO)revokeCommand).toString(),is(equalTo(REVOKE_PERMISSION_ASSERT_STR)));
     }
 
     @Test

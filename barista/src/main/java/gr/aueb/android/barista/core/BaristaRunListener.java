@@ -71,8 +71,9 @@ public class BaristaRunListener extends RunListener {
                 DefaultBaristaConfigurationReader.getBaristaServerPort(),
                 JacksonConverterFactory.create());
 
-        // reques to gain read permissions
+        // request to gain read permissions
         httpClient.activate();
+
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
