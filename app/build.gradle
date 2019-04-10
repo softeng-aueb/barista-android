@@ -24,6 +24,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArgument "listener", "gr.aueb.android.barista.core.BaristaRunListener"
+        //testInstrumentationRunnerArguments clearPackageData: 'true'
 
     }
 
