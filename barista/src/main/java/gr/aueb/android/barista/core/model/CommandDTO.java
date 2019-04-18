@@ -42,6 +42,8 @@ public abstract class CommandDTO <T extends Command> {
         this.sessionToken = sessionToken;
     }
 
+    @JsonIgnore
+    //todo decouble reset command feature from model
     public CommandDTO getResetCommand() {return this.resetCommand;}
 
     public void setResetCommand( CommandDTO resetCommand ) { this.resetCommand = resetCommand; }

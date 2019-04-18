@@ -145,9 +145,9 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-            httpClient.connectTimeout(1, TimeUnit.SECONDS)
-                    .readTimeout(1,TimeUnit.SECONDS)
-                    .writeTimeout(1,TimeUnit.SECONDS);
+            httpClient.connectTimeout(5, TimeUnit.SECONDS)
+                    .readTimeout(5,TimeUnit.SECONDS)
+                    .writeTimeout(5,TimeUnit.SECONDS);
             httpClient.addInterceptor(logging);
         }
 

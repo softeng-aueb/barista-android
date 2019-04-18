@@ -34,28 +34,6 @@ public class BaristaRunListener extends RunListener {
         lastExecutedCommands = null;
     }
 
-
-    /**
-     *   Called when an atomic test is about to be started.
-     *   todo think about smart reseting device properties after execution
-     *         for example if only size attributes are affected , reset only screen size after execution
-     *         Maybe cache the tests
-     * @param description
-     */
-    public void testStarted(Description description){
-        TestRunnerMonitor.testStarted();
-        Timber.d("Starting test: "+description.getClassName()+":"+description.getMethodName());
-
-        List<CommandDTO> currentCommands = BaristaAnnotationParser.getParsedCommands(description);
-        setSessionTokenToCommands(currentCommands);
-        Timber.d("Total commands to execute: "+currentCommands.size());
-
-        httpClient.executeAllCommands(currentCommands);
-
-        this.lastExecutedCommands = currentCommands;
-
-    }
-
     /**
      * Called before any tests have been run.
      * @param description
@@ -85,13 +63,26 @@ public class BaristaRunListener extends RunListener {
     }
 
     /**
-     *
-     * @param result
+     *   Called when an atomic test is about to be started.
+     *   todo think about smart reseting device properties after execution
+     *         for example if only size attributes are affected , reset only screen size after execution
+     *         Maybe cache the tests
+     * @param description
      */
-    public void testRunFinished(Result result){
-        TestRunnerMonitor.testRunFinished();
-        httpClient.killServer();
+    public void testStarted(Description description){
+        TestRunnerMonitor.testStarted();
+        Timber.d("Starting test: "+description.getClassName()+":"+description.getMethodName());
+
+        List<CommandDTO> currentCommands = BaristaAnnotationParser.getParsedCommands(description);
+        setSessionTokenToCommands(currentCommands);
+        Timber.d("Total commands to execute: "+currentCommands.size());
+
+        httpClient.executeAllCommands(currentCommands);
+
+        this.lastExecutedCommands = currentCommands;
+
     }
+
 
     /**
      * Executed every time a est case finishes
@@ -106,6 +97,16 @@ public class BaristaRunListener extends RunListener {
                  .collect(Collectors.toList());
         httpClient.executeAllCommands(reverseCommands);
     }
+
+    /**
+     * When all tests finish, send a termination signal to the server. This doesn't mean the server will close.
+     * @param result
+     */
+    public void testRunFinished(Result result){
+        TestRunnerMonitor.testRunFinished();
+        httpClient.killServer();
+    }
+
 
     /**
      * Helping function that sets the current sessionsToken to a list of commands. It also sets the session token to the reverse

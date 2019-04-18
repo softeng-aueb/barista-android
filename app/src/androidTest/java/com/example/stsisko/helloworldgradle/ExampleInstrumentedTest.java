@@ -35,6 +35,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -104,7 +105,7 @@ public class ExampleInstrumentedTest {
     }
 
 
-    @Test
+    //@Test
     @BatteryOptions(level = 40, plugged = false)
     public void testBatteryReaction(){
         onView(withId(R.id.batteryButton)).check(matches(isDisplayed()));
@@ -119,8 +120,9 @@ public class ExampleInstrumentedTest {
     public void testBatteryReaction2(){
         onView(withId(R.id.batteryButton)).check(matches(isDisplayed()));
         onView(withId(R.id.batteryButton)).perform(ViewActions.click());
+        onView(withId(R.id.battery_layout)).check(matches(isDisplayed()));
         ColorDrawable backgroundColor = (ColorDrawable) BatteryTestActivity.getInstance().findViewById(R.id.battery_layout).getBackground();
-        assertThat(backgroundColor.getColor(),is(equalTo(Color.WHITE)));
+        assertNotEquals(backgroundColor.getColor(),Color.GRAY);
 
     }
 
