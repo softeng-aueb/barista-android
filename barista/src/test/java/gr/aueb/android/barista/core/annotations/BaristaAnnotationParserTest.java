@@ -37,7 +37,7 @@ public class BaristaAnnotationParserTest {
     private final String BATTERY_PLUGED_ASSERT_STR = CommandDTODataHelper.batteryChargeCommand.toString();
     private final String WIFI_ASSERT_STR = CommandDTODataHelper.wifiCommand.toString();
     private final String DATA_ASSERT_STR = CommandDTODataHelper.dataCommand.toString();
-
+    private final String ORIENTATION_ASSERT_STR = CommandDTODataHelper.orientationComnnand.toString();
 
     //single descriptions
     private Description geoFixDescription;
@@ -47,6 +47,7 @@ public class BaristaAnnotationParserTest {
     private Description batteryDescription;
     private Description wifiDescription;
     private Description dataDescription;
+    private Description orientationDescription;
 
     //combo descriptions
     private Description geoFixAndWmSizeDescription;
@@ -83,6 +84,10 @@ public class BaristaAnnotationParserTest {
             Method dataAnnotatedMethod = DummyAnnotatedClass.class.getMethod("m7");
             Annotation dataAnnotation = dataAnnotatedMethod.getAnnotation(Data.class);
 
+            //orientation Description mocking
+            Method orientationAnnotatedMethod = DummyAnnotatedClass.class.getMethod("m8");
+            Annotation orientationAnnotation = orientationAnnotatedMethod.getAnnotation(Orientation.class);
+
             geoFixDescription = mock(Description.class);
             wmSizeDescription = mock(Description.class);
             geoFixAndWmSizeDescription = mock(Description.class);
@@ -91,6 +96,7 @@ public class BaristaAnnotationParserTest {
             batteryDescription = mock(Description.class);
             wifiDescription = mock(Description.class);
             dataDescription = mock(Description.class);
+            orientationDescription = mock(Description.class);
 
             //single mocks
             when(geoFixDescription.getAnnotation(GeoFix.class)).thenReturn((GeoFix) geoFixAnnotation);
@@ -100,6 +106,7 @@ public class BaristaAnnotationParserTest {
             when(batteryDescription.getAnnotation(BatteryOptions.class)).thenReturn((BatteryOptions) batteryAnnotation);
             when(wifiDescription.getAnnotation(Wifi.class)).thenReturn((Wifi) wifiAnnotation);
             when(dataDescription.getAnnotation(Data.class)).thenReturn((Data) dataAnnotation);
+            when(orientationDescription.getAnnotation(Orientation.class)).thenReturn((Orientation) orientationAnnotation);
 
 
             //group mock
@@ -204,6 +211,17 @@ public class BaristaAnnotationParserTest {
         CommandDTO parsedCommand = commands.get(0);
         assertThat(parsedCommand.toString(),is(equalTo(DATA_ASSERT_STR)));
         assertThat(parsedCommand.getResetCommand(), is(notNullValue()));
+    }
+
+    @Test
+    public void testOrienttionAnnotations(){
+
+        List<CommandDTO> commands =  BaristaAnnotationParser.getParsedCommands(orientationDescription);
+        assertThat(commands.size(),is(equalTo(1)));
+        CommandDTO parsedCommand = commands.get(0);
+        assertThat(parsedCommand.toString(),is(equalTo(ORIENTATION_ASSERT_STR)));
+        assertThat(parsedCommand.getResetCommand(), is(notNullValue()));
+
     }
 
 
