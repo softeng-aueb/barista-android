@@ -2,6 +2,7 @@ package gr.aueb.android.barista.core.annotations;
 
 
 import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
+import gr.aueb.android.barista.core.annotations.enumarations.OrientationOptions;
 import gr.aueb.android.barista.core.model.CommandDTO;
 
 import static gr.aueb.android.barista.core.annotations.ConstantValues.wifiEnabledEnum;
@@ -38,6 +39,13 @@ public class DummyAnnotatedClass {
     public void m7(){
 
     }
+
+    @Orientation(value = OrientationOptions.ORIENTATION_90)
+    public void m8() {
+
+    }
+
+
 
 
 

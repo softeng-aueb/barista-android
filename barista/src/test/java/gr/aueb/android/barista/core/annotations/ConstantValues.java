@@ -1,6 +1,8 @@
 package gr.aueb.android.barista.core.annotations;
 
 import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
+import gr.aueb.android.barista.core.annotations.enumarations.OrientationOptionUtilities;
+import gr.aueb.android.barista.core.annotations.enumarations.OrientationOptions;
 import gr.aueb.android.barista.core.utilities.AndroidPermissions;
 
 public class ConstantValues {
@@ -20,4 +22,5 @@ public class ConstantValues {
     public static final boolean dataEnabled = false;
     public static final NetworkAdapterStateType dataEnabledEnum = NetworkAdapterStateType.DISABLED;
 
+    public static int orientationLandscape = OrientationOptionUtilities.ORIENTATION_OPTIONS.get(OrientationOptions.ORIENTATION_90);
 }
