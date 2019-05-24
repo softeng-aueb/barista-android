@@ -26,12 +26,13 @@ public abstract class CommandDTO <T extends Command> {
     }
 
     private String sessionToken;
-
+    private int delay;
     private CommandDTO resetCommand;
 
     public CommandDTO(String sessionToken) {
         this.sessionToken = sessionToken;
         this.resetCommand = null;
+        this.delay = 0;
     }
 
     public String getSessionToken() {
@@ -47,5 +48,14 @@ public abstract class CommandDTO <T extends Command> {
     public CommandDTO getResetCommand() {return this.resetCommand;}
 
     public void setResetCommand( CommandDTO resetCommand ) { this.resetCommand = resetCommand; }
+
+    public int getDelay(){
+        return this.delay;
+    }
+
+    public void setDelay(int delay){
+        this.delay = delay;
+    }
+
 
 }

@@ -11,7 +11,9 @@ import java.util.List;
 import gr.aueb.android.barista.core.annotations.factories.BatteryCommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.CommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.DataCommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.FollowPathFactory;
 import gr.aueb.android.barista.core.annotations.factories.GeoFixCommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.OrientationFactory;
 import gr.aueb.android.barista.core.annotations.factories.PmGrantCommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.WifiCommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.WmDensityCommandFactory;
@@ -36,19 +38,25 @@ public class BaristaAnnotationParser {
         supportedBaristaCommandAnotations.add(BatteryOptions.class);
         supportedBaristaCommandAnotations.add(Data.class);
         supportedBaristaCommandAnotations.add(Wifi.class);
+        supportedBaristaCommandAnotations.add(Orientation.class);
+        supportedBaristaCommandAnotations.add(FollowPath.class);
     }
 
     /**
-     * statically map a comand constructor for each implemented annotation
+     * statically map a command factory for each implemented annotation
      */
     static{
         commandConstructorMap.put(GeoFix.class, new GeoFixCommandFactory());
         commandConstructorMap.put(ScreenSize.class, new WmSizeCommandFactory());
         commandConstructorMap.put(Permission.class, new PmGrantCommandFactory());
         commandConstructorMap.put(Density.class, new WmDensityCommandFactory());
-        commandConstructorMap.put(BatteryOptions.class,new BatteryCommandFactory());
-        commandConstructorMap.put(Data.class,new DataCommandFactory());
-        commandConstructorMap.put(Wifi.class,new WifiCommandFactory());
+        commandConstructorMap.put(BatteryOptions.class, new BatteryCommandFactory());
+        commandConstructorMap.put(Data.class, new DataCommandFactory());
+        commandConstructorMap.put(Wifi.class, new WifiCommandFactory());
+        commandConstructorMap.put(Orientation.class, new OrientationFactory());
+        commandConstructorMap.put(FollowPath.class, new FollowPathFactory());
+
+
     }
 
     /**
@@ -63,7 +71,7 @@ public class BaristaAnnotationParser {
     public static List<CommandDTO> getParsedCommands(Description description){
 
         List<CommandDTO> commandList = new ArrayList<>();
-
+        //description.getAnnotations()
         for (Class c: supportedBaristaCommandAnotations) {
             Annotation providedAnnotation = description.getAnnotation(c);
             if(providedAnnotation !=null) {

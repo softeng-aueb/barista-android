@@ -14,6 +14,8 @@ public interface Command {
 
 
     CommandDTO getResetCommand();
+
+    int getDelay();
     //void accept(CommandExecutor executor);
 
     //boolean isCompleted(CommandClient client);
