@@ -10,9 +10,11 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = GeoFixDTO.class),
         @JsonSubTypes.Type(value = WmSizeDTO.class),
+        @JsonSubTypes.Type(value = WmSizeResetDTO.class),
         @JsonSubTypes.Type(value = WmDensityDTO.class),
         @JsonSubTypes.Type(value = PmGrantDTO.class),
         @JsonSubTypes.Type(value = WmDensityDTO.class),
+        @JsonSubTypes.Type(value = WmDensityResetDTO.class),
         @JsonSubTypes.Type(value = BatteryLevelDTO.class),
         @JsonSubTypes.Type(value = BatteryChargeDTO.class),
         @JsonSubTypes.Type(value = SvcWifiDTO.class),
