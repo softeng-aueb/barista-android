@@ -42,8 +42,8 @@ public class KMLParser {
            for(String s : points ){
 
                String[] singlePoint = s.split(",");
-               String lattitude = singlePoint[0];
-               String longtitude = singlePoint[1];
+               String longtitude = singlePoint[0];
+               String lattitude = singlePoint[1];
                 // String height = singlePoint[3]; NEVER USED
                Coordinate singleCoordinate = new Coordinate(Double.parseDouble(lattitude), Double.parseDouble(longtitude));
                parsedPoints.add(singleCoordinate);
