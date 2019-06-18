@@ -106,19 +106,23 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
         BaristaPluginService service = getRequestClient().create(BaristaPluginService.class);
         Call<ResponseBody> callSync = service.executeCommand(commands);
         Timber.d("Sending request: "+callSync.request().toString());
-
-        callSync.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Timber.d("Sucessfull Call: "+response.code()+" - "+response.message()+" - "+response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Timber.d("Failed Call: "+t.getMessage());
-            }
-
-        });
+        try {
+            callSync.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        callSync.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                Timber.d("Sucessfull Call: "+response.code()+" - "+response.message()+" - "+response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Timber.d("Failed Call: "+t.getMessage());
+//            }
+//
+//        });
 
     }
 
