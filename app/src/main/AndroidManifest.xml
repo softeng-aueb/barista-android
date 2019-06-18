@@ -40,6 +40,7 @@
                 android:value="com.example.stsisko.helloworldgradle.activities.MainActivity" />
         </activity>
         <activity android:name=".activities.WifiTestAcivity" />
+        <activity android:name=".activities.DataTestAcivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
