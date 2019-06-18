@@ -11,5 +11,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Data {
-    NetworkAdapterStateType enabled() default NetworkAdapterStateType.ENABLED;
+    NetworkAdapterStateType value() default NetworkAdapterStateType.ENABLED;
 }

@@ -27,7 +27,7 @@ public class SvcDataDTO extends CommandDTO {
 
     @Override
     public String toString(){
-        return "Data enabled: "+this.enabled;
+        return "Data value: "+this.enabled;
     }
 
 }

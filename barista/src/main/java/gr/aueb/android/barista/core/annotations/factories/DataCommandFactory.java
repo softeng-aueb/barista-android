@@ -16,7 +16,7 @@ public class DataCommandFactory implements CommandFactory {
     @Override
     public Collection<CommandDTO> constructCommand(Annotation a) {
         CommandDTO dataCommand = null;
-        NetworkAdapterStateType selectedState = ((Data)a).enabled();
+        NetworkAdapterStateType selectedState = ((Data)a).value();
         dataCommand = new SvcDataDTO(null, NetworkAdapterUtilities.NETWORK_STATES.get(selectedState));
 
         //construct reverer command

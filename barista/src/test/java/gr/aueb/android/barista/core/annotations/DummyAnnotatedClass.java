@@ -3,9 +3,6 @@ package gr.aueb.android.barista.core.annotations;
 
 import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
 import gr.aueb.android.barista.core.annotations.enumarations.OrientationOptions;
-import gr.aueb.android.barista.core.model.CommandDTO;
-
-import static gr.aueb.android.barista.core.annotations.ConstantValues.wifiEnabledEnum;
 
 
 public class DummyAnnotatedClass {
@@ -17,12 +14,12 @@ public class DummyAnnotatedClass {
     @ScreenSize(width = ConstantValues.width, height = ConstantValues.height)
     public void m2(){}
 
-    @Permission(type = ConstantValues.permission)
+    @Permission(value = ConstantValues.permission)
     public void m3(){
 
     }
 
-    @Density(density = ConstantValues.density)
+    @Density(value = ConstantValues.density)
     public void m4(){
 
     }
@@ -30,12 +27,12 @@ public class DummyAnnotatedClass {
     @BatteryOptions(plugged = ConstantValues.plugged, level = ConstantValues.baterryLevel)
     public void m5(){}
 
-    @Wifi(enabled = NetworkAdapterStateType.DISABLED)
+    @Wifi(value = NetworkAdapterStateType.DISABLED)
     public void m6(){
 
     }
 
-    @Data(enabled = NetworkAdapterStateType.DISABLED)
+    @Data(value = NetworkAdapterStateType.DISABLED)
     public void m7(){
 
     }

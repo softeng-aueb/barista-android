@@ -10,7 +10,7 @@ import gr.aueb.android.barista.core.model.GeoFixDTO;
 import timber.log.Timber;
 
 /**
- * Command Constructor that transform  GeoFix type annotations to GeoFixDTO objects
+ * Command Constructor that transform  GeoFix value annotations to GeoFixDTO objects
  * @see CommandFactory
  */
 public class GeoFixCommandFactory implements CommandFactory {

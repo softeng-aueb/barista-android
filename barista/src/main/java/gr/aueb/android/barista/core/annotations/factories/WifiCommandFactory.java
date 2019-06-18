@@ -18,7 +18,7 @@ public class WifiCommandFactory implements CommandFactory {
     public Collection<CommandDTO> constructCommand(Annotation a) {
        CommandDTO wifiCommand = null;
 
-       NetworkAdapterStateType selectedState = ((Wifi)a).enabled();
+       NetworkAdapterStateType selectedState = ((Wifi)a).value();
        Boolean state = NetworkAdapterUtilities.NETWORK_STATES.get(selectedState) ;
        wifiCommand = new SvcWifiDTO(null,state);
 

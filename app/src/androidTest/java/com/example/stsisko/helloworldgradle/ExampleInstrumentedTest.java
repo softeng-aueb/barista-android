@@ -1,11 +1,8 @@
 package com.example.stsisko.helloworldgradle;
 
 import android.Manifest;
-import android.app.Instrumentation;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -13,22 +10,21 @@ import android.support.test.runner.AndroidJUnit4;
 import com.example.stsisko.helloworldgradle.activities.BatteryTestActivity;
 import com.example.stsisko.helloworldgradle.activities.MainActivity;
 import com.example.stsisko.helloworldgradle.sights.SightNames;
-import com.example.stsisko.helloworldgradle.activities.BatteryTestActivity;
-import com.example.stsisko.helloworldgradle.activities.MainActivity;
-import com.example.stsisko.helloworldgradle.sights.SightNames;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import gr.aueb.android.barista.core.annotations.BatteryOptions;
+import gr.aueb.android.barista.core.annotations.Density;
 import gr.aueb.android.barista.core.annotations.FollowPath;
 import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.Orientation;
 import gr.aueb.android.barista.core.annotations.Permission;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
+import gr.aueb.android.barista.core.annotations.Wifi;
+import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
 import gr.aueb.android.barista.core.annotations.enumarations.OrientationOptions;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -51,14 +47,12 @@ import static org.junit.Assert.assertThat;
 public class ExampleInstrumentedTest {
 
 
-
     @Rule
     public ActivityTestRule<MainActivity> activityActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
 
     @Before
     public void init(){
         activityActivityTestRule.getActivity().getSupportFragmentManager().beginTransaction();
-
     }
 
 
@@ -86,22 +80,26 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    ///@GeoFix(lat = 37.975391, longt =23.735524) // near syntagma
-    @FollowPath(file = "C:\\Users\\s.tsisko\\Downloads\\Athens_Tour.kml")
-    @Permission(type = Manifest.permission.ACCESS_FINE_LOCATION)
+    @GeoFix(lat = 37.975391, longt =23.735524) // near syntagma
+   // @FollowPath(file = "C:\\Users\\s.tsisko\\Downloads\\Athens_Tour.kml")
+    @Permission(Manifest.permission.ACCESS_FINE_LOCATION)
     public void testNearSyntagma(){
+
+
+
 
         onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
         onView(withId(R.id.gpsButton)).perform(ViewActions.click());
         onView(withId(R.id.map)).check(matches(isDisplayed()));
-        while(true){;;}
-       // onView(withText(SightNames.SYNTAGMA)).check(matches(isDisplayed()));
+       // while(true){;;}
+        onView(withText(SightNames.SYNTAGMA)).check(matches(isDisplayed()));
 
     }
 
     @Test
     @GeoFix(lat = 37.971428, longt = 23.723716) // near acropolis
-    @Permission(type = Manifest.permission.ACCESS_FINE_LOCATION)
+    @Permission(Manifest.permission.ACCESS_FINE_LOCATION)
+    @Density(200)
     public void testNearAcropolis(){
 
         onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
@@ -109,19 +107,21 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.map)).check(matches(isDisplayed()));
         onView(withText(SightNames.ACROPOLIS)).check(matches(isDisplayed()));
         onView(withText(SightNames.AGORA)).check(matches(isDisplayed()));
+
     }
 
 
     @Test
     @GeoFix(lat = 37.9670, longt = 23.728612) //near museum
-    //@ScreenSize(width = 1600, height = 1500)
-    @Permission(type = Manifest.permission.ACCESS_FINE_LOCATION)
+    @ScreenSize(width = 1600, height = 1500)
+    @Permission(value = Manifest.permission.ACCESS_FINE_LOCATION)
+    @Wifi(NetworkAdapterStateType.DISABLED)
     public void testNearMuseum(){
 
-        onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
-        onView(withId(R.id.gpsButton)).perform(ViewActions.click());
-        onView(withId(R.id.map)).check(matches(isDisplayed()));
-        onView(withText(SightNames.MUSEUM)).check(matches(isDisplayed()));
+        onView(withId(R.id.wifiButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.wifiButton)).perform(ViewActions.click());
+        onView(withId(R.id.wifiLabel)).check(matches(isDisplayed()));
+        onView(withText("WIFI IS DISABLED")).check(matches(isDisplayed()));
 
     }
 

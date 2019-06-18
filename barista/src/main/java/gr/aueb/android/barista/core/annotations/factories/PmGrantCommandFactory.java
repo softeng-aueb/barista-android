@@ -7,13 +7,12 @@ import java.util.Collection;
 import gr.aueb.android.barista.core.annotations.Permission;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.PmGrantDTO;
-import gr.aueb.android.barista.core.model.PmRevokeDTO;
 
 public class PmGrantCommandFactory implements CommandFactory {
 
     @Override
     public Collection<CommandDTO> constructCommand(Annotation a) {
-        String permission = ((Permission)a).type();
+        String permission = ((Permission)a).value();
 
         PmGrantDTO grantCommand = new PmGrantDTO(null, permission);
 

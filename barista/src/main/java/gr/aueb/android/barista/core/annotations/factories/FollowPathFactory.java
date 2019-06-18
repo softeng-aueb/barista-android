@@ -22,8 +22,8 @@ public class FollowPathFactory implements CommandFactory {
         KMLParser kmlParser = new KMLParser(f.getPath());
         ArrayList<Coordinate> pointList = kmlParser.parseFile();
         for(Coordinate c : pointList){
-          //  GeoFixDTO grantCommand = new GeoFixDTO(null, c.getLattitutde(), c.getLongtitude());
-            GeoFixDTO grantCommand = new GeoFixDTO(null, c.getLongtitude(), c.getLattitutde());
+           //GeoFixDTO grantCommand = new GeoFixDTO(null, c.getLattitutde(), c.getLongtitude());
+            GeoFixDTO grantCommand = new GeoFixDTO(null, c.getLattitutde(), c.getLongtitude());
             commands.add(grantCommand);
             grantCommand.setDelay(500);
         }

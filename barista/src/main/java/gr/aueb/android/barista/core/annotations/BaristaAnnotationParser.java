@@ -24,7 +24,7 @@ public class BaristaAnnotationParser {
 
     private static ArrayList<Class> supportedBaristaCommandAnotations;
 
-    private static Hashtable<Class, CommandFactory> commandConstructorMap = new Hashtable<>();
+    private static Hashtable<Class, CommandFactory> commandFactoryMap = new Hashtable<>();
 
     /**
      * statically initialize the supported commands with the implemented annotation classes
@@ -46,15 +46,15 @@ public class BaristaAnnotationParser {
      * statically map a command factory for each implemented annotation
      */
     static{
-        commandConstructorMap.put(GeoFix.class, new GeoFixCommandFactory());
-        commandConstructorMap.put(ScreenSize.class, new WmSizeCommandFactory());
-        commandConstructorMap.put(Permission.class, new PmGrantCommandFactory());
-        commandConstructorMap.put(Density.class, new WmDensityCommandFactory());
-        commandConstructorMap.put(BatteryOptions.class, new BatteryCommandFactory());
-        commandConstructorMap.put(Data.class, new DataCommandFactory());
-        commandConstructorMap.put(Wifi.class, new WifiCommandFactory());
-        commandConstructorMap.put(Orientation.class, new OrientationFactory());
-        commandConstructorMap.put(FollowPath.class, new FollowPathFactory());
+        commandFactoryMap.put(GeoFix.class, new GeoFixCommandFactory());
+        commandFactoryMap.put(ScreenSize.class, new WmSizeCommandFactory());
+        commandFactoryMap.put(Permission.class, new PmGrantCommandFactory());
+        commandFactoryMap.put(Density.class, new WmDensityCommandFactory());
+        commandFactoryMap.put(BatteryOptions.class, new BatteryCommandFactory());
+        commandFactoryMap.put(Data.class, new DataCommandFactory());
+        commandFactoryMap.put(Wifi.class, new WifiCommandFactory());
+        commandFactoryMap.put(Orientation.class, new OrientationFactory());
+        commandFactoryMap.put(FollowPath.class, new FollowPathFactory());
 
 
     }
@@ -76,7 +76,7 @@ public class BaristaAnnotationParser {
             Annotation providedAnnotation = description.getAnnotation(c);
             if(providedAnnotation !=null) {
 
-                Collection<CommandDTO> cmd = commandConstructorMap.get(c).constructCommand(providedAnnotation);
+                Collection<CommandDTO> cmd = commandFactoryMap.get(c).constructCommand(providedAnnotation);
                 cmd.forEach(command->commandList.add(command));
 
             }
