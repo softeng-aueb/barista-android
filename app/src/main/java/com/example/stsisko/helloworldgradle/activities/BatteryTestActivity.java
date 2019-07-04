@@ -20,6 +20,7 @@ public class BatteryTestActivity extends Activity {
     final Handler handler = new Handler();
     private Runnable r;
     private static BatteryTestActivity INSTANCE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class BatteryTestActivity extends Activity {
 
                  public void run() {
                      System.out.println("HELLO ");
-                     handler.postDelayed(this, ThreadSleepingTime.sleepingTime);
+                     handler.postDelayed(this, ThreadSleepingTime.proccessSpeed);
 
                      TextView label = findViewById(R.id.number_label);
                      label.setText(new Integer(IntegerCounter.getNextTick()).toString());

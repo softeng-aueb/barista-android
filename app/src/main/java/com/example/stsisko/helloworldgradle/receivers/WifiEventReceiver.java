@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
+import android.os.Bundle;
 
 import com.example.stsisko.helloworldgradle.R;
 import com.example.stsisko.helloworldgradle.activities.BatteryTestActivity;
@@ -25,4 +26,6 @@ public class WifiEventReceiver extends BroadcastReceiver {
         WifiTestAcivity.wifiStatusChanged(connected);
 
     }
+
+
 }

@@ -26,6 +26,7 @@ public class WifiTestAcivity extends AppCompatActivity {
         wifiLabel =  ((TextView)findViewById(R.id.wifiLabel));
 
         IntentFilter iFilter = new IntentFilter();
+
         iFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         BroadcastReceiver wifiReceiver = new WifiEventReceiver();
         getApplicationContext().registerReceiver(wifiReceiver, iFilter);

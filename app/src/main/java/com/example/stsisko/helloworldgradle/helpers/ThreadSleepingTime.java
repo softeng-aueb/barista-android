@@ -1,18 +1,18 @@
 package com.example.stsisko.helloworldgradle.helpers;
 
 public class ThreadSleepingTime {
-    public static int sleepingTime = 500;
+    public static int proccessSpeed = proccessSpeed = ProccessSpeedModes.NORMAL;;
 
     public static void setSlowTimer(){
-        sleepingTime = 1000;
+        proccessSpeed = ProccessSpeedModes.SLOW;
     }
 
     public static void setNormalTimer(){
-        sleepingTime = 500;
+        proccessSpeed = ProccessSpeedModes.NORMAL;
     }
 
     public static void setFastTimer(){
-        sleepingTime = 200;
+        proccessSpeed = ProccessSpeedModes.FAST;
     }
 
 

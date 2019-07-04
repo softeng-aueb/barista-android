@@ -23,6 +23,7 @@ public class GeoFixCommandFactory implements CommandFactory {
         double longitude = ((GeoFix) a).longt();
         Timber.d("Set GPS coordinates to: lat:" + latitude + ", long:" + longitude);
         CommandDTO geofixCommand = new GeoFixDTO(null, latitude, longitude);
+        //geofixCommand.setDelay(500);
         return Arrays.asList(geofixCommand);
     }
 }

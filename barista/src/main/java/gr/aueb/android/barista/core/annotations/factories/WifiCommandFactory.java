@@ -25,6 +25,7 @@ public class WifiCommandFactory implements CommandFactory {
        // construct reverse command
        if(selectedState != DEFAULT_STATE ){
            CommandDTO reverse = new SvcWifiDTO(null, NetworkAdapterUtilities.NETWORK_STATES.get(DEFAULT_STATE));
+
            wifiCommand.setResetCommand(reverse);
        }
 

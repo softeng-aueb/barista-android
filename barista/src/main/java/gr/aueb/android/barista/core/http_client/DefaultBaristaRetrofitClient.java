@@ -66,6 +66,7 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
 
         try {
             Response<String> response = callSync.execute();
+            Timber.d("Sucessfull Call with response: %s",response.message());
 
         } catch (IOException e) {
             Timber.e("Exception Occured. "+e.getMessage());
@@ -107,7 +108,7 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
         Call<ResponseBody> callSync = service.executeCommand(commands);
         Timber.d("Sending request: "+callSync.request().toString());
         try {
-            callSync.execute();
+           callSync.execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
