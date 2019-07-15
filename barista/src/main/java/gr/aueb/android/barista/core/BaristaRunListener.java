@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import gr.aueb.android.barista.core.annotations.BaristaAnnotationParser;
 import gr.aueb.android.barista.core.http_client.BaristaClient;
 import gr.aueb.android.barista.core.http_client.DefaultBaristaRetrofitClient;
+import gr.aueb.android.barista.core.http_client.HTTPClientManager;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.WmSizeResetDTO;
 import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
@@ -45,10 +46,11 @@ public class BaristaRunListener extends RunListener {
 
 
         //initialize the http client.
-        httpClient = new DefaultBaristaRetrofitClient(BASE_URL,
-                DefaultBaristaConfigurationReader.getBaristaServerPort(),
-                JacksonConverterFactory.create());
-
+//        httpClient = new DefaultBaristaRetrofitClient(BASE_URL,
+//                DefaultBaristaConfigurationReader.getBaristaServerPort(),
+//                JacksonConverterFactory.create());
+        HTTPClientManager.initialize();
+        httpClient = HTTPClientManager.getInstance();
         // request to gain read permissions
         httpClient.activate();
 
@@ -74,12 +76,15 @@ public class BaristaRunListener extends RunListener {
         Timber.d("Starting test: "+description.getClassName()+":"+description.getMethodName());
 
         List<CommandDTO> currentCommands = BaristaAnnotationParser.getParsedCommands(description);
-        setSessionTokenToCommands(currentCommands);
-        Timber.d("Total commands to execute: "+currentCommands.size());
+        if(currentCommands.size() != 0){
+            setSessionTokenToCommands(currentCommands);
+            Timber.d("Total commands to execute: "+currentCommands.size());
 
-        httpClient.executeAllCommands(currentCommands);
+            httpClient.executeAllCommands(currentCommands);
 
-        this.lastExecutedCommands = currentCommands;
+            this.lastExecutedCommands = currentCommands;
+        }
+
 
     }
 
@@ -91,11 +96,13 @@ public class BaristaRunListener extends RunListener {
     public void testFinished(Description description) {
         TestRunnerMonitor.testFinished();
         Timber.d("Test "+description.getClassName()+":"+description.getMethodName()+" finished. Reseting Device");
-        List<CommandDTO> reverseCommands = this.lastExecutedCommands.stream()
-                 .filter(command -> Objects.nonNull(command.getResetCommand()))
-                 .map(command -> command.getResetCommand())
-                 .collect(Collectors.toList());
-        httpClient.executeAllCommands(reverseCommands);
+        if(lastExecutedCommands != null ) {
+            List<CommandDTO> reverseCommands = this.lastExecutedCommands.stream()
+                    .filter(command -> Objects.nonNull(command.getResetCommand()))
+                    .map(command -> command.getResetCommand())
+                    .collect(Collectors.toList());
+            httpClient.executeAllCommands(reverseCommands);
+        }
     }
 
     /**
@@ -126,6 +133,8 @@ public class BaristaRunListener extends RunListener {
 
         return commands;
     }
+
+
 
 
 }

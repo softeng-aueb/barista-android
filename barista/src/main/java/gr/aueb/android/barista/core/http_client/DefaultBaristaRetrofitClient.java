@@ -108,8 +108,11 @@ public class DefaultBaristaRetrofitClient extends BaristaRetrofitClient{
         Call<ResponseBody> callSync = service.executeCommand(commands);
         Timber.d("Sending request: "+callSync.request().toString());
         try {
-           callSync.execute();
+           Response<ResponseBody> response = callSync.execute();
+           Timber.d(response.message());
         } catch (IOException e) {
+
+            Timber.d(e.getMessage());
             e.printStackTrace();
         }
 //        callSync.enqueue(new Callback<ResponseBody>() {

@@ -1,14 +1,18 @@
 package com.example.stsisko.helloworldgradle;
 
 import android.Manifest;
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 
 import com.example.stsisko.helloworldgradle.activities.DataTestAcivity;
 import com.example.stsisko.helloworldgradle.activities.MainActivity;
 import com.example.stsisko.helloworldgradle.activities.WifiTestAcivity;
 
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,11 +22,14 @@ import gr.aueb.android.barista.core.annotations.Data;
 import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.Permission;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
+import gr.aueb.android.barista.core.annotations.Wifi;
 import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
+import gr.aueb.android.barista.core.inline.Barista;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -37,16 +44,15 @@ public class DataConnectionTest {
     @Test
     @Data(NetworkAdapterStateType.DISABLED)
     public void testIfDataDisabled(){
-
         onView(withId(R.id.dataLabel)).check(matches(isDisplayed()));
         onView(withText("DATA IS DISABLED")).check(matches(isDisplayed()));
-
     }
 
     @Test
     @Data(NetworkAdapterStateType.ENABLED)
     public void testIfDataEnabled(){
-
+       // Barista.setDataState(NetworkAdapterStateType.ENABLED);
+       // waitFor(5000);
         onView(withId(R.id.dataLabel)).check(matches(isDisplayed()));
         onView(withText("DATA IS ENABLED")).check(matches(isDisplayed()));
 
@@ -57,5 +63,28 @@ public class DataConnectionTest {
     public void init(){
         activityActivityTestRule.getActivity().getSupportFragmentManager().beginTransaction();
     }
+    /**
+     * Perform action of waiting for a specific time.
+     */
+    public static ViewAction waitFor(final long millis) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return isRoot();
+            }
+
+            @Override
+            public String getDescription() {
+                return "Wait for " + millis + " milliseconds.";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                uiController.loopMainThreadForAtLeast(millis);
+            }
+
+        };
+    }
+
 
 }
