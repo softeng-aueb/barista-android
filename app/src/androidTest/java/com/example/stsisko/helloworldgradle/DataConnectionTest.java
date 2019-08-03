@@ -51,8 +51,7 @@ public class DataConnectionTest {
     @Test
     @Data(NetworkAdapterStateType.ENABLED)
     public void testIfDataEnabled(){
-       // Barista.setDataState(NetworkAdapterStateType.ENABLED);
-       // waitFor(5000);
+
         onView(withId(R.id.dataLabel)).check(matches(isDisplayed()));
         onView(withText("DATA IS ENABLED")).check(matches(isDisplayed()));
 
@@ -62,28 +61,6 @@ public class DataConnectionTest {
     @Before
     public void init(){
         activityActivityTestRule.getActivity().getSupportFragmentManager().beginTransaction();
-    }
-    /**
-     * Perform action of waiting for a specific time.
-     */
-    public static ViewAction waitFor(final long millis) {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isRoot();
-            }
-
-            @Override
-            public String getDescription() {
-                return "Wait for " + millis + " milliseconds.";
-            }
-
-            @Override
-            public void perform(UiController uiController, View view) {
-                uiController.loopMainThreadForAtLeast(millis);
-            }
-
-        };
     }
 
 

@@ -19,13 +19,11 @@ android {
         //todo target version sould be <23 in order to use android.permission.READ_EXTERNAL_STORAGE. see https://developer.android.com/training/permissions/requesting
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
-        //targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArgument "listener", "gr.aueb.android.barista.core.BaristaRunListener"
-        //testInstrumentationRunner "com.example.stsisko.helloworldgradle.idles.ExampleTestRunner"
-        //testInstrumentationRunnerArguments clearPackageData: 'true'
+
 
     }
 
@@ -59,7 +57,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation project(path: ':barista')
-    //androidTestImplementation 'com.linkedin.testbutler:test-butler-library:2.0.0'
+    androidTestImplementation 'com.linkedin.testbutler:test-butler-library:2.0.0'
 }
 
 baristaSettings {

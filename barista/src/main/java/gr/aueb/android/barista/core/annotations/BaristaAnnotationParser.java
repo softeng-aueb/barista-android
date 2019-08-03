@@ -19,42 +19,25 @@ import gr.aueb.android.barista.core.annotations.factories.WifiCommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.WmDensityCommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.WmSizeCommandFactory;
 import gr.aueb.android.barista.core.model.CommandDTO;
+import timber.log.Timber;
 
 public class BaristaAnnotationParser {
 
-    private static ArrayList<Class> supportedBaristaCommandAnotations;
-
-    private static Hashtable<Class, CommandFactory> commandFactoryMap = new Hashtable<>();
-
-    /**
-     * statically initialize the supported commands with the implemented annotation classes
-     */
-    static{
-        supportedBaristaCommandAnotations = new  ArrayList<>();
-        supportedBaristaCommandAnotations.add(GeoFix.class);
-        supportedBaristaCommandAnotations.add(ScreenSize.class);
-        supportedBaristaCommandAnotations.add(Permission.class);
-        supportedBaristaCommandAnotations.add(Density.class);
-        supportedBaristaCommandAnotations.add(BatteryOptions.class);
-        supportedBaristaCommandAnotations.add(Data.class);
-        supportedBaristaCommandAnotations.add(Wifi.class);
-        supportedBaristaCommandAnotations.add(Orientation.class);
-        supportedBaristaCommandAnotations.add(FollowPath.class);
-    }
+    private static Hashtable<String, CommandFactory> commandFactoryMap = new Hashtable<>();
 
     /**
      * statically map a command factory for each implemented annotation
      */
     static{
-        commandFactoryMap.put(GeoFix.class, new GeoFixCommandFactory());
-        commandFactoryMap.put(ScreenSize.class, new WmSizeCommandFactory());
-        commandFactoryMap.put(Permission.class, new PmGrantCommandFactory());
-        commandFactoryMap.put(Density.class, new WmDensityCommandFactory());
-        commandFactoryMap.put(BatteryOptions.class, new BatteryCommandFactory());
-        commandFactoryMap.put(Data.class, new DataCommandFactory());
-        commandFactoryMap.put(Wifi.class, new WifiCommandFactory());
-        commandFactoryMap.put(Orientation.class, new OrientationFactory());
-        commandFactoryMap.put(FollowPath.class, new FollowPathFactory());
+        commandFactoryMap.put("GeoFix", new GeoFixCommandFactory());
+        commandFactoryMap.put("ScreenSize", new WmSizeCommandFactory());
+        commandFactoryMap.put("Permission", new PmGrantCommandFactory());
+        commandFactoryMap.put("Density", new WmDensityCommandFactory());
+        commandFactoryMap.put("BatteryOptions", new BatteryCommandFactory());
+        commandFactoryMap.put("Data", new DataCommandFactory());
+        commandFactoryMap.put("Wifi", new WifiCommandFactory());
+        commandFactoryMap.put("Orientation", new OrientationFactory());
+        commandFactoryMap.put("FollowPath", new FollowPathFactory());
 
 
     }
@@ -64,22 +47,25 @@ public class BaristaAnnotationParser {
      * barista annotations. For each annotation found it will construct a command and add it to a list.
      * Finally a list will be returned containing all the commands found.
      *
-     *
      * @param description
      * @return
      */
     public static List<CommandDTO> getParsedCommands(Description description){
 
         List<CommandDTO> commandList = new ArrayList<>();
-        //description.getAnnotations()
-        for (Class c: supportedBaristaCommandAnotations) {
-            Annotation providedAnnotation = description.getAnnotation(c);
-            if(providedAnnotation !=null) {
 
-                Collection<CommandDTO> cmd = commandFactoryMap.get(c).constructCommand(providedAnnotation);
+        for(Annotation providedAnnotation : description.getAnnotations()) {
+
+            String annotationName = providedAnnotation.annotationType().getSimpleName();
+            CommandFactory factory = commandFactoryMap.get(annotationName);
+            if(factory !=null) {
+                Timber.d("Found annotation: "+ annotationName);
+                Collection<CommandDTO> cmd = factory.constructCommand(providedAnnotation);
                 cmd.forEach(command->commandList.add(command));
 
             }
+
+
         }
 
         return commandList;

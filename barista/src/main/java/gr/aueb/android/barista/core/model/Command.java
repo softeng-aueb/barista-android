@@ -8,18 +8,7 @@ public interface Command {
      */
     String getSessionToken();
 
-    //String getCommandString();
-
     void setSessionToken(String sessionToken);
 
-
-    CommandDTO getResetCommand();
-
-    int getDelay();
-    //void accept(CommandExecutor executor);
-
-    //boolean isCompleted(CommandClient client);
-
-    //void parseResult(Stream<String> resultLines);
 
 }

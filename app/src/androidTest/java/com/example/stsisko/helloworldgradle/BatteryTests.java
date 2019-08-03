@@ -9,6 +9,7 @@ import com.example.stsisko.helloworldgradle.activities.BatteryTestActivity;
 import com.example.stsisko.helloworldgradle.activities.DataTestAcivity;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ public class BatteryTests {
     @Rule
     public ActivityTestRule<BatteryTestActivity> activityActivityTestRule = new ActivityTestRule<BatteryTestActivity>(BatteryTestActivity.class);
 
-
+    @Ignore
     @Test
     @BatteryOptions(level = 80, plugged = true)
     public void testLowBattery(){
@@ -47,10 +48,6 @@ public class BatteryTests {
     }
 
 
-//    @Before
-//    public void init(){
-//        activityActivityTestRule.getActivity().getSupportFragmentManager().beginTransaction();
-//    }
 
 
 }

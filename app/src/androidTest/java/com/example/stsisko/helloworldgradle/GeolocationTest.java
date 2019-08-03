@@ -18,6 +18,7 @@ import com.example.stsisko.helloworldgradle.sights.SightNames;
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,25 +47,26 @@ public class GeolocationTest {
     @Rule
     public ActivityTestRule<GeolocationTestActivity> activityActivityTestRule = new ActivityTestRule<GeolocationTestActivity>(GeolocationTestActivity.class);
 
-
+    @Ignore
     @Test
     @GeoFix(lat = 37.975391, longt =23.735524) // near syntagma
     @Permission(Manifest.permission.ACCESS_FINE_LOCATION)
     public void testNearSyntagma(){
 
         onView(withId(R.id.map)).check(matches(isDisplayed()));
-        onView(isRoot()).perform(waitFor(2000));
+        onView(isRoot()).perform(IdleUtilities.waitFor(2000));
         onView(withText(SightNames.SYNTAGMA)).check(matches(isDisplayed()));
 
     }
 
+    @Ignore
     @Test
     @GeoFix(lat = 37.971428, longt = 23.723716) // near acropolis
     @Permission(Manifest.permission.ACCESS_FINE_LOCATION)
-    public void testNearAcropolis(){
+    public void testNearAcropolis() {
 
         onView(withId(R.id.map)).check(matches(isDisplayed()));
-        onView(isRoot()).perform(waitFor(2000));
+        onView(isRoot()).perform(IdleUtilities.waitFor(2000)); // wait 2 seconds for animations to finish
         onView(withText(SightNames.ACROPOLIS)).check(matches(isDisplayed()));
         onView(withText(SightNames.AGORA)).check(matches(isDisplayed()));
 
@@ -79,12 +81,8 @@ public class GeolocationTest {
         ArrayList<Coordinate> pointList = kmlParser.parseFile();
         for(Coordinate coord : pointList){
             Barista.setGeolocation(coord.getLongtitude(), coord.getLattitutde());
-            onView(isRoot()).perform(waitFor(200));
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            onView(isRoot()).perform(IdleUtilities.waitFor(200));
+            // testing code logic
         }
     }
 
@@ -93,28 +91,7 @@ public class GeolocationTest {
         activityActivityTestRule.getActivity().getSupportFragmentManager().beginTransaction();
     }
 
-    /**
-     * Perform action of waiting for a specific time.
-     */
-    public static ViewAction waitFor(final long millis) {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isRoot();
-            }
 
-            @Override
-            public String getDescription() {
-                return "Wait for " + millis + " milliseconds.";
-            }
-
-            @Override
-            public void perform(UiController uiController, View view) {
-                uiController.loopMainThreadForAtLeast(millis);
-            }
-
-        };
-    }
 
 
 }

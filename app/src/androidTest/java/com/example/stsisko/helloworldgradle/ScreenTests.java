@@ -1,5 +1,7 @@
 package com.example.stsisko.helloworldgradle;
 
+import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -8,6 +10,7 @@ import com.example.stsisko.helloworldgradle.activities.MainActivity;
 import com.example.stsisko.helloworldgradle.idles.IdleUtilities;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,8 +43,10 @@ public class ScreenTests {
         rotationStates[2] = OrientationOptions.ORIENTATION_180;
         rotationStates[3] = OrientationOptions.ORIENTATION_270;
 
-    }
 
+
+    }
+    @Ignore
     @Test
     @Orientation(OrientationOptions.ORIENTATION_90)
     public void testMenuVisibilityOriented_90(){
@@ -53,7 +58,7 @@ public class ScreenTests {
             onView(withId(R.id.wifiButton)).check(matches(isDisplayed()));
             onView(withId(R.id.dataButton)).check(matches(isDisplayed()));
             onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
-            onView(isRoot()).perform(IdleUtilities.waitFor(5000));
+            onView(isRoot()).perform(IdleUtilities.waitFor(2000));
         }
 
     }
@@ -61,6 +66,7 @@ public class ScreenTests {
     @Test
     @ScreenSize(width = 800, height = 1200)
     @Density(400)
+    @Orientation(OrientationOptions.ORIENTATION_90)
     public void testMenuVisibilityRandomScreenSize(){
 
         onView(withId(R.id.batteryButton)).check(matches(isDisplayed()));
@@ -69,6 +75,21 @@ public class ScreenTests {
         onView(withId(R.id.dataButton)).check(matches(isDisplayed()));
         onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
 
+        Barista.setOrientation(OrientationOptions.ORIENTATION_0);
+
+        onView(withId(R.id.batteryButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.batteryButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.wifiButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.dataButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
+
+
+        Barista.setOrientation(OrientationOptions.ORIENTATION_180);
+        onView(withId(R.id.batteryButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.batteryButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.wifiButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.dataButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.gpsButton)).check(matches(isDisplayed()));
     }
 
 

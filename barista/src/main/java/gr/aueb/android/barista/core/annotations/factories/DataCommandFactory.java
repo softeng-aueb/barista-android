@@ -13,13 +13,14 @@ import gr.aueb.android.barista.core.model.SvcDataDTO;
 public class DataCommandFactory implements CommandFactory {
 
     private final NetworkAdapterStateType DEFAULT_STATE = NetworkAdapterStateType.ENABLED;
+
     @Override
     public Collection<CommandDTO> constructCommand(Annotation a) {
         CommandDTO dataCommand = null;
         NetworkAdapterStateType selectedState = ((Data)a).value();
         dataCommand = new SvcDataDTO(null, NetworkAdapterUtilities.NETWORK_STATES.get(selectedState));
 
-        //construct reverer command
+        //construct reverse command
         if(selectedState != DEFAULT_STATE) {
             CommandDTO resetCommand = new SvcDataDTO(null, NetworkAdapterUtilities.NETWORK_STATES.get(DEFAULT_STATE));
             dataCommand.setResetCommand(resetCommand);

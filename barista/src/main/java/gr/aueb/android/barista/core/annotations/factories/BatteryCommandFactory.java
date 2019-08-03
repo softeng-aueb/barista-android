@@ -7,7 +7,6 @@ import java.util.Collection;
 import gr.aueb.android.barista.core.annotations.BatteryOptions;
 import gr.aueb.android.barista.core.model.BatteryChargeDTO;
 import gr.aueb.android.barista.core.model.BatteryLevelDTO;
-import gr.aueb.android.barista.core.model.Command;
 import gr.aueb.android.barista.core.model.CommandDTO;
 
 public class BatteryCommandFactory implements CommandFactory {
@@ -38,8 +37,6 @@ public class BatteryCommandFactory implements CommandFactory {
             CommandDTO resetChargingStatusCommand = new BatteryChargeDTO(null,DEFAULT_CHARGING_STATUS);
             batteryChargeCommand.setResetCommand(resetChargingStatusCommand);
         }
-
-
 
         return Arrays.asList(batteryLevelCommand,batteryChargeCommand);
     }

@@ -90,7 +90,7 @@ public class BaristaRunListener extends RunListener {
 
 
     /**
-     * Executed every time a est case finishes
+     * Executed every time a Test case finishes
      * @param description
      */
     public void testFinished(Description description) {
