@@ -9,9 +9,11 @@ import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.GeoFixDTO;
 import timber.log.Timber;
 
+
 /**
- * Command Constructor that transform  GeoFix value annotations to GeoFixDTO objects
- * @see CommandFactory
+ *   Command Factory that parses GeoFix type annotations and creates
+ *   equivalent GeoFixDTO commands.
+ *
  */
 public class GeoFixCommandFactory implements CommandFactory {
 
@@ -23,7 +25,6 @@ public class GeoFixCommandFactory implements CommandFactory {
         double longitude = ((GeoFix) a).longt();
         Timber.d("Set GPS coordinates to: lat:" + latitude + ", long:" + longitude);
         CommandDTO geofixCommand = new GeoFixDTO(null, latitude, longitude);
-        //geofixCommand.setDelay(500);
         return Arrays.asList(geofixCommand);
     }
 }

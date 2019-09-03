@@ -15,6 +15,11 @@ import com.example.stsisko.helloworldgradle.helpers.IntegerCounter;
 import com.example.stsisko.helloworldgradle.helpers.ThreadSleepingTime;
 import com.example.stsisko.helloworldgradle.receivers.BatteryEventReceiver;
 
+/**
+ *  Activity that adapts its behavior according to the state of the battery.
+ *  If the battery level drops bellow  50% , the activity uses dark color theme.
+ *
+ */
 public class BatteryTestActivity extends Activity {
 
     final Handler handler = new Handler();
@@ -39,9 +44,7 @@ public class BatteryTestActivity extends Activity {
              r = new Runnable() {
 
                  public void run() {
-                     System.out.println("HELLO ");
                      handler.postDelayed(this, ThreadSleepingTime.proccessSpeed);
-
                      TextView label = findViewById(R.id.number_label);
                      label.setText(new Integer(IntegerCounter.getNextTick()).toString());
                  }

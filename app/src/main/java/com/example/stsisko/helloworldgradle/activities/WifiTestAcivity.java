@@ -17,6 +17,9 @@ import com.example.stsisko.helloworldgradle.R;
 import com.example.stsisko.helloworldgradle.receivers.BatteryEventReceiver;
 import com.example.stsisko.helloworldgradle.receivers.WifiEventReceiver;
 
+/**
+ * Activity that adapts its behavior to the the state of the wifi connection
+ */
 public class WifiTestAcivity extends AppCompatActivity {
     private static TextView wifiLabel;
     @Override

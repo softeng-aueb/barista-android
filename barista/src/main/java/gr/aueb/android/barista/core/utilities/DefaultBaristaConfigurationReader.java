@@ -11,7 +11,10 @@ import java.lang.reflect.Field;
 
 import timber.log.Timber;
 
-
+/**
+ * DefaultBaristaConfigurationReader is responsible for fetching configuration option provided by the Barista Plugin
+ *
+ */
 public class DefaultBaristaConfigurationReader {
 
     private static final int DEFAULT_PORT = 8040;

@@ -10,6 +10,11 @@ import gr.aueb.android.barista.core.model.WmSizeDTO;
 import gr.aueb.android.barista.core.model.WmSizeResetDTO;
 import timber.log.Timber;
 
+/**
+ *   Command Factory that parses ScreenSize type annotations and creates
+ *   equivalent ScreenSizeDTO commands.
+ *
+ */
 public class WmSizeCommandFactory implements CommandFactory {
 
     @Override

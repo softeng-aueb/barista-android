@@ -10,6 +10,11 @@ import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterUtili
 import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.SvcWifiDTO;
 
+/**
+ *   Command Factory that parses Wifi type annotations and creates
+ *   equivalent WifiDTO commands.
+ *
+ */
 public class WifiCommandFactory implements CommandFactory {
 
     private NetworkAdapterStateType DEFAULT_STATE = NetworkAdapterStateType.ENABLED;

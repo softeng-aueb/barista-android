@@ -20,16 +20,39 @@ import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import timber.log.Timber;
 
+/**
+ *  Barista Run Listener is hooked to the testing execution cycle by the Android Test Runner.
+ *
+ *  AndroidTestRunner calls BaristaRunListener each time the tests are starting, a test case is starting,
+ *  a testcase is finished and finally when all tests are finished.
+ *
+ */
 public class BaristaRunListener extends RunListener {
 
 
-    // The ip of the host machine (where the Barista server Runs)
+    /**
+     *  The Barsita Server IP. By default ip 10.0.2.2. is used as the default host machine IP
+     */
     private static final String BASE_URL = "http://10.0.2.2";
 
+    /**
+     * A barista http client implementation
+     */
     private BaristaClient httpClient;
+
+    /**
+     * The sessionToken to be encapsulated in each request
+     */
     private String sessionToken = null;
+
+    /**
+     *  A List containing the last executed commands in oder to know at second time, which emulator states to reset.
+     */
     private List<CommandDTO> lastExecutedCommands;
 
+    /**
+     * Empty constructor
+     */
     public BaristaRunListener(){
         Timber.plant(new Timber.DebugTree());
         lastExecutedCommands = null;
@@ -37,23 +60,20 @@ public class BaristaRunListener extends RunListener {
 
     /**
      * Called before any tests have been run.
-     * @param description
+     *
+     * @param description A description of the test class
      */
     public void testRunStarted(Description description){
 
         //debug only
         TestRunnerMonitor.testRunStarted();
 
-
-        //initialize the http client.
-//        httpClient = new DefaultBaristaRetrofitClient(BASE_URL,
-//                DefaultBaristaConfigurationReader.getBaristaServerPort(),
-//                JacksonConverterFactory.create());
         HTTPClientManager.initialize();
         httpClient = HTTPClientManager.getInstance();
         // request to gain read permissions
         httpClient.activate();
 
+        //w8 some ms for the activation to be applied
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -65,23 +85,32 @@ public class BaristaRunListener extends RunListener {
     }
 
     /**
-     *   Called when an atomic test is about to be started.
-     *   todo think about smart reseting device properties after execution
-     *         for example if only size attributes are affected , reset only screen size after execution
-     *         Maybe cache the tests
-     * @param description
+     *  Called when an atomic test is about to be started.
+     *
+     *  Android Test Runner calls this function whenever a test method is about to start. The Android runner provides
+     *  the function with a Description object that includes various metadata about the test method to be executed, including its
+     *  annotations. Those annotations are parsed by the Annotatation parer and tranformed into commands. Those commands are send to the
+     *  Barista HTTP Server for execution.
+     *
+     * @param description The metadata of a test method
      */
     public void testStarted(Description description){
         TestRunnerMonitor.testStarted();
         Timber.d("Starting test: "+description.getClassName()+":"+description.getMethodName());
 
+        // pass the metadata of the test case to the the Barista annotation parser
         List<CommandDTO> currentCommands = BaristaAnnotationParser.getParsedCommands(description);
+
         if(currentCommands.size() != 0){
+            // assign to the commands the sessionToken
             setSessionTokenToCommands(currentCommands);
             Timber.d("Total commands to execute: "+currentCommands.size());
 
+            // Send request to Barista Server
             httpClient.executeAllCommands(currentCommands);
 
+            // store the commands temporary to a list in order to know how to reset
+            // the emulator later
             this.lastExecutedCommands = currentCommands;
         }
 
@@ -90,7 +119,12 @@ public class BaristaRunListener extends RunListener {
 
 
     /**
-     * Executed every time a Test case finishes
+     *  Executed every time a Test case finishes.
+     *
+     *  Method that runs at the end of every test method and resets the emulator to its state before the begin of the test method.
+     *  It uses a temporary list which contains the last executed methods in order to derive from them the reverse commands.
+     *
+     *
      * @param description
      */
     public void testFinished(Description description) {

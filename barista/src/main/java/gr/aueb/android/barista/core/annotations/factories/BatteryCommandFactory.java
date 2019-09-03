@@ -9,6 +9,12 @@ import gr.aueb.android.barista.core.model.BatteryChargeDTO;
 import gr.aueb.android.barista.core.model.BatteryLevelDTO;
 import gr.aueb.android.barista.core.model.CommandDTO;
 
+/**
+ *  CommandFactory that creates BatteryCommands. From a BatterOptions annotation can derive two diffferent
+ *  commands. A command for requesting battery level change and a command that requests charging status state.
+ *  Therefore the result of this factory is a lsit of two commands.
+ *
+ */
 public class BatteryCommandFactory implements CommandFactory {
 
     private final int DEFAULT_BATTERY_LEVEL = 100;

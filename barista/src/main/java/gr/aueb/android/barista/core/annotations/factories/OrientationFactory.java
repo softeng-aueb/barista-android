@@ -10,6 +10,11 @@ import gr.aueb.android.barista.core.annotations.enumarations.OrientationOptions;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.SetOrientationDTO;
 
+/**
+ *   Command Factory that parses Orientation type annotations and creates
+ *   equivalent OrientationDTO commands.
+ *
+ */
 public class OrientationFactory implements CommandFactory {
     private final OrientationOptions DEFAULT_ORIENTATION = OrientationOptions.ORIENTATION_0;
 

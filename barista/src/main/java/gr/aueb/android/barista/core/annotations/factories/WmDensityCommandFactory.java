@@ -9,6 +9,11 @@ import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.WmDensityDTO;
 import gr.aueb.android.barista.core.model.WmDensityResetDTO;
 
+/**
+ *   Command Factory that parses Density type annotations and creates
+ *   equivalent DensityDTO commands.
+ *
+ */
 public class WmDensityCommandFactory implements CommandFactory {
 
     @Override

@@ -15,6 +15,10 @@ import com.example.stsisko.helloworldgradle.R;
 import com.example.stsisko.helloworldgradle.receivers.DataConnectionEventReceiver;
 import com.example.stsisko.helloworldgradle.receivers.WifiEventReceiver;
 
+/**
+ * Activity that adapts its behavior to the the state of the mobile data connection
+ *
+ */
 public class DataTestAcivity extends AppCompatActivity {
 
     @Override

@@ -31,6 +31,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ *  Activity that shows the sights that are nearby the user.
+ *
+ */
 public class GeolocationTestActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

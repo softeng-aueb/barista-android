@@ -18,7 +18,15 @@ public class SightManager {
         sights.put(SightNames.MUSEUM, new LatLng(37.968529, 23.728612));
     }
 
-
+    /**
+     *  Lazy way to find the nearest sights. Each time a location update occurs, a linear search is made in order to deside
+     *  which landmarks are worth displaying.
+     *
+     *  ONLY FOR DEMOSTRATION PURPOSES
+     * @param currentLocation
+     * @param radiusInMeters
+     * @return
+     */
     public static Collection<String> findNearbySights(LatLng currentLocation, double radiusInMeters){
         double radius = radiusInMeters/(double)100000;
         ArrayList<String> nearBy = new ArrayList<>();

@@ -3,7 +3,7 @@ package gr.aueb.android.barista.core;
 import timber.log.Timber;
 
 /**
- * Βασική ιδέα να γνωρίζει τι κλάσεις test θα εκτελεστούν
+ *
  */
 public class TestRunnerMonitor {
 

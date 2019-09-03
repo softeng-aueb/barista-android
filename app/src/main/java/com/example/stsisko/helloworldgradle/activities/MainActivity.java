@@ -7,6 +7,12 @@ import android.view.View;
 
 import com.example.stsisko.helloworldgradle.R;
 
+/**
+ *  Main activity of the test application
+ *
+ *  Activity that displays a simple menu to navigate through the various testing activities
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

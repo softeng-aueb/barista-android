@@ -21,8 +21,17 @@ import gr.aueb.android.barista.core.annotations.factories.WmSizeCommandFactory;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import timber.log.Timber;
 
+/**
+ *  BaristaAnnotationParser is used to process the annotations of a test method and build the appropriate
+ *  Commands that must to be executed in order the inscribed preferences to be applied to the emulator.
+ *
+ */
 public class BaristaAnnotationParser {
 
+    /**
+     *  A hash table that maps Annotation Names to Command Factories. For each Barista annotation a unique command factory
+     *  must be present in order
+     */
     private static Hashtable<String, CommandFactory> commandFactoryMap = new Hashtable<>();
 
     /**

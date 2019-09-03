@@ -5,6 +5,13 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+/**
+ *  A Barista Http Client implementation that uses the Retrofit2 framework.
+ *  All the commands are transfomed into JSON using the jackson converter factory.
+ *
+ *
+ *
+ */
 public abstract class BaristaRetrofitClient implements  BaristaClient {
 
     private static BaristaRetrofitClient INSTANCE = null;

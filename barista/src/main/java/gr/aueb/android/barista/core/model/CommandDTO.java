@@ -4,8 +4,16 @@ package gr.aueb.android.barista.core.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 
+/**
+ *  The mapping of model objects to JSON is handled by Jackson framework.
+ *  Each JSON that represents a command contains a key named 'type' that contains
+ *  the type of the command. This key is used by the server to be converted back to model object.
+ *
+ *  Bellow is the mapping strategy that is followed for the conversion of each command to JSON
+ *
+ * @param <T>
+ */
 @JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.PROPERTY, property="type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = GeoFixDTO.class),
