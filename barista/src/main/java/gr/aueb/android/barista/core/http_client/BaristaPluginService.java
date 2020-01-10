@@ -28,5 +28,5 @@ public interface BaristaPluginService{
     Call<String> killServer();
 
     @GET("activate")
-    Call<String> activate();
+    Call<ResponseBody> activate();
 }
