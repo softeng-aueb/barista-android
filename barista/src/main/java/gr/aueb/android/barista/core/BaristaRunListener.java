@@ -1,10 +1,14 @@
 package gr.aueb.android.barista.core;
 
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -28,12 +32,6 @@ import timber.log.Timber;
  *
  */
 public class BaristaRunListener extends RunListener {
-
-
-    /**
-     *  The Barsita Server IP. By default ip 10.0.2.2. is used as the default host machine IP
-     */
-    private static final String BASE_URL = "http://10.0.2.2";
 
     /**
      * A barista http client implementation
@@ -68,7 +66,13 @@ public class BaristaRunListener extends RunListener {
         //debug only
         TestRunnerMonitor.testRunStarted();
 
-        HTTPClientManager.initialize();
+        String host = (String) getBuildConfigValue(InstrumentationRegistry.getContext(), "baristaEndpoint");
+
+        if (host == null){
+            throw new IllegalArgumentException("BuildConfig does not include baristaEndpoint property");
+        }
+
+        HTTPClientManager.initialize(host);
         httpClient = HTTPClientManager.getInstance();
         // request to gain read permissions
         httpClient.activate();
@@ -169,6 +173,30 @@ public class BaristaRunListener extends RunListener {
     }
 
 
+    /**
+     *
+     * https://stackoverflow.com/questions/21365928/gradle-how-to-use-buildconfig-in-an-android-library-with-a-flag-that-gets-set
+     *
+     * Gets a field from the project's BuildConfig. This is useful when, for example, flavors
+     * are used at the project level to set custom fields.
+     * @param context       Used to find the correct file
+     * @param fieldName     The name of the field-to-access
+     * @return              The value of the field, or {@code null} if the field is not found.
+     */
+    public static Object getBuildConfigValue(Context context, String fieldName) {
+        try {
+            Class<?> clazz = Class.forName(context.getPackageName() + ".BuildConfig");
+            Field field = clazz.getField(fieldName);
+            return field.get(null);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
 }

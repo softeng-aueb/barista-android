@@ -6,13 +6,10 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class HTTPClientManager {
 
     private static BaristaClient httpClient = null;
-    // The ip of the host machine (where the Barista server Runs)
-    private static final String BASE_URL = "http://10.0.2.2";
 
-
-    public static void initialize(){
+    public static void initialize(String endpoint){
         if(httpClient == null){
-            httpClient = new DefaultBaristaRetrofitClient(BASE_URL,
+            httpClient = new DefaultBaristaRetrofitClient(endpoint,
                     DefaultBaristaConfigurationReader.getBaristaServerPort(),
                     JacksonConverterFactory.create());
         }

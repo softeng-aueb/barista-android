@@ -28,13 +28,20 @@ android {
     }
 
     buildTypes {
+
+        def BARISTA_ENDPOINT = "baristaEndpoint"
+        def STRING = "String"
+
         release {
+            buildConfigField STRING, BARISTA_ENDPOINT, "\"192.168.9.21\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         debug {
-
+            buildConfigField STRING, BARISTA_ENDPOINT, "\"192.168.9.21\""
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 

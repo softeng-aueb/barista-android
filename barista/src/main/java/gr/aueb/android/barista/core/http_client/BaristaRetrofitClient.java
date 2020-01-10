@@ -6,48 +6,44 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
- *  A Barista Http Client implementation that uses the Retrofit2 framework.
- *  All the commands are transfomed into JSON using the jackson converter factory.
- *
- *
- *
+ * A Barista Http Client implementation that uses the Retrofit2 framework.
+ * All the commands are transfomed into JSON using the jackson converter factory.
  */
-public abstract class BaristaRetrofitClient implements  BaristaClient {
+public abstract class BaristaRetrofitClient implements BaristaClient {
 
     private static BaristaRetrofitClient INSTANCE = null;
 
 
     private int port;
     private static Retrofit retrofit;
-    protected static String URI ;
+    protected static String URI;
     private Converter.Factory converter;
 
     /**
-     *
-     * @param BaseURL The URL of the server
-     * @param port The listening port of the server
+     * @param endpoint  The URL of the server
+     * @param port      The listening port of the server
      * @param converter The DTO -> Json Converter to be used
      */
-    public  BaristaRetrofitClient(String BaseURL, int port, Converter.Factory converter){
+    public BaristaRetrofitClient(String endpoint, int port, Converter.Factory converter) {
 
-        this.URI = BaseURL+":"+port+"/barista/";
+        this.URI = "http://" + endpoint + ":" + port + "/barista/";
         this.converter = converter;
         this.retrofit = getRequestClient();
 
     }
 
-    private void create(){
+    private void create() {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         retrofit = new Retrofit.Builder()
                 .baseUrl(URI)
-                .addConverterFactory( JacksonConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
                 .client(httpClient.build())
                 .build();
     }
 
-    private Retrofit getRequestClient(){
-        if(retrofit == null){
+    private Retrofit getRequestClient() {
+        if (retrofit == null) {
             this.create();
         }
         return retrofit;
