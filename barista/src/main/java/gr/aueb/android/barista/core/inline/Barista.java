@@ -15,6 +15,7 @@ import gr.aueb.android.barista.core.model.BatteryChargeDTO;
 import gr.aueb.android.barista.core.model.BatteryLevelDTO;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.GeoFixDTO;
+import gr.aueb.android.barista.core.model.GpsStatusDTO;
 import gr.aueb.android.barista.core.model.SetOrientationDTO;
 import gr.aueb.android.barista.core.model.SvcDataDTO;
 import gr.aueb.android.barista.core.model.SvcWifiDTO;
@@ -25,6 +26,7 @@ public class Barista{
 
     private static final NetworkAdapterStateType DEFAULT_WIFI_STATE = NetworkAdapterStateType.ENABLED;
     private static final NetworkAdapterStateType DEFAULT_DATA_STATE = NetworkAdapterStateType.ENABLED;
+    private static final NetworkAdapterStateType DEFAULT_GPS_STATE = NetworkAdapterStateType.ENABLED;
     private static final OrientationOptions DEFAULT_ORIENTATION = OrientationOptions.ORIENTATION_0;
     private static final int DEFAULT_BATTERY_LEVEL = 100;
     private static final boolean DEFAULT_CHARGING_STATUS = true;
@@ -104,6 +106,19 @@ public class Barista{
         CommandDTO geofixCommand = new GeoFixDTO(sessionToken, latitude, longitude);
         //geofixCommand.setDelay(500);
         HTTPClientManager.getInstance().executeAllCommands(Arrays.asList(geofixCommand));
+    }
+
+    public static void setGpsState(NetworkAdapterStateType selectedState) {
+        CommandDTO dataCommand = null;
+        dataCommand = new GpsStatusDTO(sessionToken, NetworkAdapterUtilities.NETWORK_STATES.get(selectedState));
+
+        //construct reverse command
+        if(selectedState != DEFAULT_GPS_STATE) {
+            CommandDTO resetCommand = new GpsStatusDTO(sessionToken, NetworkAdapterUtilities.NETWORK_STATES.get(DEFAULT_GPS_STATE));
+            dataCommand.setResetCommand(resetCommand);
+        }
+        Timber.d("Executing inline GPS command");
+        HTTPClientManager.getInstance().executeAllCommands( Arrays.asList(dataCommand));
     }
 
 }
