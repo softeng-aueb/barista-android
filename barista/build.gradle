@@ -58,22 +58,45 @@ publishing {
         library(MavenPublication) {
              artifactId = 'barista'
              groupId = 'gr.aueb.android'
-             artifact("$buildDir/outputs/aar/barista-release.aar")
-             version = '2.0'
+             artifact("$buildDir/outputs/aar/barista.aar")
+             version = '2.0-beta'
             // include dependencies at the exported aar
             //https://stackoverflow.com/questions/26874498/publish-an-android-library-to-maven-with-aar-and-source-jar/39252262
             pom.withXml {
-                def dependenciesNode = asNode().appendNode('dependencies')
-                //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
-                configurations.compile.allDependencies.each {
-                    if(it.group != null && (it.name != null || "unspecified".equals(it.name)) && it.version != null)
-                    {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
+                def node = asNode()
+
+                // ugly hack to set the packaging property in the POM as 'aar'
+                ((NodeList) node.get('packaging')).get(0).value = 'aar'
+
+                def dependenciesNode = node.appendNode('dependencies')
+
+                def cl = { Dependency dep ->
+                    if (dep.group == null || dep.version == null || dep.name == null || dep.name == "unspecified")
+                        return // ignore invalid dependencies
+
+                    def dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', dep.group)
+                    dependencyNode.appendNode('artifactId', dep.name)
+                    dependencyNode.appendNode('version', dep.version)
+
+                    if (!dep.transitive) {
+                        // If this dependency is transitive, we should force exclude all its dependencies them from the POM
+                        def exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                        exclusionNode.appendNode('groupId', '*')
+                        exclusionNode.appendNode('artifactId', '*')
+                    } else if (!dep.properties.excludeRules.empty) {
+                        // Otherwise add specified exclude rules
+                        def exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                        dep.properties.excludeRules.each { ExcludeRule rule ->
+                            exclusionNode.appendNode('groupId', rule.group ?: '*')
+                            exclusionNode.appendNode('artifactId', rule.module ?: '*')
+                        }
                     }
                 }
+
+                // List all dependencies and write to POM
+                configurations.api.getAllDependencies().each cl
+                configurations.implementation.getAllDependencies().each cl
             }
         }
     }

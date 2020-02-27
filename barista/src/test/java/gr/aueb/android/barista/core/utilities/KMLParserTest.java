@@ -1,5 +1,6 @@
 package gr.aueb.android.barista.core.utilities;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import static org.junit.Assert.*;
 public class KMLParserTest {
 
     @Test
+    @Ignore
     public void testKMLParser(){
 
         KMLParser myParser = new KMLParser("C:\\Users\\s.tsisko\\Downloads\\Athens_Tour.kml");
