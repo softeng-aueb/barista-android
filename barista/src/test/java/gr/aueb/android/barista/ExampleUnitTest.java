@@ -1,5 +1,6 @@
 package gr.aueb.android.barista;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -12,6 +13,7 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
+    @Ignore
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }

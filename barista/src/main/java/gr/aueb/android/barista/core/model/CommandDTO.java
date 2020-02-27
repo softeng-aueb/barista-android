@@ -26,7 +26,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = BatteryLevelDTO.class),
         @JsonSubTypes.Type(value = BatteryChargeDTO.class),
         @JsonSubTypes.Type(value = SvcWifiDTO.class),
-        @JsonSubTypes.Type(value = SvcDataDTO.class)
+        @JsonSubTypes.Type(value = SvcDataDTO.class),
+        @JsonSubTypes.Type(value = GpsStatusDTO.class)
 })
 public abstract class CommandDTO <T extends Command> {
 
