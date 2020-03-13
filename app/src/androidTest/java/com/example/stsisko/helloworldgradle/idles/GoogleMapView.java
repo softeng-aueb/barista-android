@@ -1,6 +1,7 @@
 package com.example.stsisko.helloworldgradle.idles;
 
-import android.support.test.espresso.IdlingResource;
+
+import androidx.test.espresso.IdlingResource;
 
 public class GoogleMapView implements IdlingResource {
     @Override

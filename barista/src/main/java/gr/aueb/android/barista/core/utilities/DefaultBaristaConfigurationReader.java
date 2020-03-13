@@ -1,7 +1,6 @@
 package gr.aueb.android.barista.core.utilities;
 
 import android.os.Environment;
-import android.support.test.InstrumentationRegistry;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
+import androidx.test.InstrumentationRegistry;
 import timber.log.Timber;
 
 /**

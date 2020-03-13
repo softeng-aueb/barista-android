@@ -1,8 +1,10 @@
 package gr.aueb.android.barista.core.annotations.factories;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import gr.aueb.android.barista.core.annotations.Density;
 import gr.aueb.android.barista.core.model.CommandDTO;
@@ -22,7 +24,10 @@ public class WmDensityCommandFactory implements CommandFactory {
         WmDensityDTO densityCommand = new WmDensityDTO(null,density);
         WmDensityResetDTO densityResetCommand = new WmDensityResetDTO(null);
         densityCommand.setResetCommand(densityResetCommand);
-        return Arrays.asList(densityCommand);
+
+        List<CommandDTO> result = new ArrayList<>();
+        result.add(densityCommand);
+        return result;
     }
 }
 

@@ -2,10 +2,11 @@ package com.example.stsisko.helloworldgradle.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.stsisko.helloworldgradle.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  *  Main activity of the test application

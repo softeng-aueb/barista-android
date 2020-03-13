@@ -1,11 +1,8 @@
 package com.example.stsisko.helloworldgradle;
 
 import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 
-import com.example.stsisko.helloworldgradle.activities.GeolocationTestActivity;
+
 import com.example.stsisko.helloworldgradle.activities.MainActivity;
 import com.example.stsisko.helloworldgradle.idles.IdleUtilities;
 
@@ -15,17 +12,20 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 import gr.aueb.android.barista.core.annotations.Density;
 import gr.aueb.android.barista.core.annotations.Orientation;
 import gr.aueb.android.barista.core.annotations.ScreenSize;
 import gr.aueb.android.barista.core.annotations.enumarations.OrientationOptions;
 import gr.aueb.android.barista.core.inline.Barista;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+
 
 @RunWith(AndroidJUnit4.class)
 public class ScreenTests {

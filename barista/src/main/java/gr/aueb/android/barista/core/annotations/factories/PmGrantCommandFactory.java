@@ -1,8 +1,10 @@
 package gr.aueb.android.barista.core.annotations.factories;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import gr.aueb.android.barista.core.annotations.Permission;
 import gr.aueb.android.barista.core.model.CommandDTO;
@@ -29,6 +31,8 @@ public class PmGrantCommandFactory implements CommandFactory {
         //PmRevokeDTO revokeCommand = new PmRevokeDTO(null, permission);
         //grantCommand.setResetCommand(revokeCommand);
 
-        return Arrays.asList(grantCommand);
+        List<CommandDTO> result = new ArrayList<>();
+        result.add(grantCommand);
+        return result;
     }
 }

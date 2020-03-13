@@ -9,10 +9,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -30,6 +26,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 /**
  *  Activity that shows the sights that are nearby the user.
@@ -104,11 +105,11 @@ public class GeolocationTestActivity extends FragmentActivity implements OnMapRe
 
                 Collection<String> nearby = SightManager.findNearbySights(currentLocation,500);
                 clearViewList();
-                nearby.forEach((s)->{
+                for(String s: nearby){
                     appendTextView(s);
                     LatLng currentSight = SightManager.sights.get(s);
                     mMap.addMarker(new MarkerOptions().position(currentSight).title(s).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                });
+                }
                 mMap.addMarker(new MarkerOptions().position(currentLocation).title("Your Location"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,16));
 

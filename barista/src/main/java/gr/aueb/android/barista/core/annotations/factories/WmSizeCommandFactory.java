@@ -1,8 +1,10 @@
 package gr.aueb.android.barista.core.annotations.factories;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import gr.aueb.android.barista.core.annotations.ScreenSize;
 import gr.aueb.android.barista.core.model.CommandDTO;
@@ -28,7 +30,9 @@ public class WmSizeCommandFactory implements CommandFactory {
         CommandDTO resetCommand = new WmSizeResetDTO(null);
         resizeCommand.setResetCommand(resetCommand);
 
-        return Arrays.asList(resizeCommand);
+        List<CommandDTO> result = new ArrayList<>();
+        result.add(resizeCommand);
+        return result;
 
     }
 }

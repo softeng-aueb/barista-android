@@ -5,10 +5,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.View;
 
+import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
-public class ColorMatcher implements Matcher<View> {
+public class ColorMatcher extends BaseMatcher<View> {
 
     private final int matchColor;
 
@@ -27,11 +28,6 @@ public class ColorMatcher implements Matcher<View> {
     @Override
     public void describeMismatch(Object item, Description mismatchDescription) {
             Log.i("Color MIsmatch",mismatchDescription.toString());
-    }
-
-    @Override
-    public void _dont_implement_Matcher___instead_extend_BaseMatcher_() {
-
     }
 
     @Override

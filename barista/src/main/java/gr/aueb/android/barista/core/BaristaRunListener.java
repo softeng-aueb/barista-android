@@ -2,26 +2,22 @@ package gr.aueb.android.barista.core;
 
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
+import androidx.test.InstrumentationRegistry;
 import gr.aueb.android.barista.core.annotations.BaristaAnnotationParser;
 import gr.aueb.android.barista.core.http_client.BaristaClient;
-import gr.aueb.android.barista.core.http_client.DefaultBaristaRetrofitClient;
 import gr.aueb.android.barista.core.http_client.HTTPClientManager;
 import gr.aueb.android.barista.core.model.CommandDTO;
-import gr.aueb.android.barista.core.model.WmSizeResetDTO;
 import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 import timber.log.Timber;
 
 /**
@@ -135,10 +131,13 @@ public class BaristaRunListener extends RunListener {
         TestRunnerMonitor.testFinished();
         Timber.d("Test "+description.getClassName()+":"+description.getMethodName()+" finished. Reseting Device");
         if(lastExecutedCommands != null ) {
-            List<CommandDTO> reverseCommands = this.lastExecutedCommands.stream()
-                    .filter(command -> Objects.nonNull(command.getResetCommand()))
-                    .map(command -> command.getResetCommand())
-                    .collect(Collectors.toList());
+            List<CommandDTO> reverseCommands = new ArrayList<>();
+            for(CommandDTO command: lastExecutedCommands){
+                if (command.getResetCommand() != null){
+                    reverseCommands.add(command.getResetCommand());
+                }
+            }
+
             httpClient.executeAllCommands(reverseCommands);
         }
     }
@@ -162,13 +161,12 @@ public class BaristaRunListener extends RunListener {
      *
      */
     private Collection<CommandDTO> setSessionTokenToCommands(Collection<CommandDTO> commands){
-        commands.forEach(command->{
+        for(CommandDTO command: commands){
             command.setSessionToken(sessionToken);
-            if(command.getResetCommand() != null ){
+            if(command.getResetCommand() != null ) {
                 command.getResetCommand().setSessionToken(sessionToken);
             }
-        });
-
+        }
         return commands;
     }
 

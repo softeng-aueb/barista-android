@@ -6,6 +6,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Map;
 
 
 public class SightManager {
@@ -30,11 +31,12 @@ public class SightManager {
     public static Collection<String> findNearbySights(LatLng currentLocation, double radiusInMeters){
         double radius = radiusInMeters/(double)100000;
         ArrayList<String> nearBy = new ArrayList<>();
-        sights.forEach( (k,v) -> {
+        for(Map.Entry<String, LatLng> k: sights.entrySet()){
+            LatLng v = k.getValue();
             double  distance = DistanceCalculator.calculateDistance(currentLocation.latitude,currentLocation.longitude, v.latitude, v.longitude);
             if(radius >= distance)
-                nearBy.add(k);
-        });
+                nearBy.add(k.getKey());
+        }
         return nearBy;
     }
 

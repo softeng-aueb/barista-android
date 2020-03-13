@@ -70,8 +70,7 @@ public class BaristaAnnotationParser {
             if(factory !=null) {
                 Timber.d("Found annotation: "+ annotationName);
                 Collection<CommandDTO> cmd = factory.constructCommand(providedAnnotation);
-                cmd.forEach(command->commandList.add(command));
-
+                commandList.addAll(cmd);
             }
 
 

@@ -10,12 +10,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.stsisko.helloworldgradle.R;
 import com.example.stsisko.helloworldgradle.receivers.BatteryEventReceiver;
 import com.example.stsisko.helloworldgradle.receivers.WifiEventReceiver;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Activity that adapts its behavior to the the state of the wifi connection
