@@ -29,8 +29,6 @@ public class WifiConnectionTest {
     @Rule
     public ActivityTestRule<WifiTestAcivity> activityActivityTestRule = new ActivityTestRule<WifiTestAcivity>(WifiTestAcivity.class);
 
-
-    @Ignore
     @Test
     @Wifi(NetworkAdapterStateType.DISABLED)
     public void testIfWifiDisabled(){

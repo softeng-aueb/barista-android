@@ -38,7 +38,7 @@ public abstract class BaristaRetrofitClient implements BaristaClient {
         retrofit = new Retrofit.Builder()
                 .baseUrl(URI)
                 .addConverterFactory(JacksonConverterFactory.create())
-                .client(httpClient.build())
+                .   client(httpClient.build())
                 .build();
     }
 

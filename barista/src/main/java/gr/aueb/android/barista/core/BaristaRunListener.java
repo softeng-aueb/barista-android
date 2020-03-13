@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import gr.aueb.android.barista.core.annotations.BaristaAnnotationParser;
 import gr.aueb.android.barista.core.http_client.BaristaClient;
 import gr.aueb.android.barista.core.http_client.HTTPClientManager;
@@ -62,7 +62,7 @@ public class BaristaRunListener extends RunListener {
         //debug only
         TestRunnerMonitor.testRunStarted();
 
-        String host = (String) getBuildConfigValue(InstrumentationRegistry.getContext(), "baristaEndpoint");
+        String host = (String) getBuildConfigValue(InstrumentationRegistry.getInstrumentation().getContext(), "baristaEndpoint");
 
         if (host == null){
             throw new IllegalArgumentException("BuildConfig does not include baristaEndpoint property");
