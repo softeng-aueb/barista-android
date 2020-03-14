@@ -1,11 +1,7 @@
 package gr.aueb.android.barista.core.inline;
 
-import android.view.Surface;
-
 import java.util.Arrays;
 
-import gr.aueb.android.barista.core.annotations.GeoFix;
-import gr.aueb.android.barista.core.annotations.Orientation;
 import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterStateType;
 import gr.aueb.android.barista.core.annotations.enumarations.NetworkAdapterUtilities;
 import gr.aueb.android.barista.core.annotations.enumarations.OrientationOptionUtilities;
@@ -19,7 +15,7 @@ import gr.aueb.android.barista.core.model.GpsStatusDTO;
 import gr.aueb.android.barista.core.model.SetOrientationDTO;
 import gr.aueb.android.barista.core.model.SvcDataDTO;
 import gr.aueb.android.barista.core.model.SvcWifiDTO;
-import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
+import gr.aueb.android.barista.core.utilities.BaristaConfiguration;
 import timber.log.Timber;
 
 public class Barista{
@@ -32,7 +28,7 @@ public class Barista{
     private static final boolean DEFAULT_CHARGING_STATUS = true;
 
 
-    private static final String sessionToken = DefaultBaristaConfigurationReader.getEmulatorSessionToken();
+    private static final String sessionToken = BaristaConfiguration.getInstance().getSessionToken();
 
     public static void setWifiState(NetworkAdapterStateType selectedState){
         CommandDTO dataCommand = null;

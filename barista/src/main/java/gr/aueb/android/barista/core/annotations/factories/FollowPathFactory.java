@@ -8,7 +8,7 @@ import java.util.Collection;
 import gr.aueb.android.barista.core.annotations.FollowPath;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.GeoFixDTO;
-import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
+import gr.aueb.android.barista.core.utilities.BaristaConfiguration;
 import gr.aueb.android.barista.core.utilities.KMLParser;
 import gr.aueb.android.barista.core.utilities.helper_classes.Coordinate;
 
@@ -18,7 +18,7 @@ public class FollowPathFactory implements CommandFactory {
 
         ArrayList<CommandDTO> commands = new ArrayList<>();
         String filePath = ((FollowPath)a).file();
-        File f = DefaultBaristaConfigurationReader.getPathFile();
+        File f = BaristaConfiguration.getPathFile();
         KMLParser kmlParser = new KMLParser(f.getPath());
         ArrayList<Coordinate> pointList = kmlParser.parseFile();
         for(Coordinate c : pointList){

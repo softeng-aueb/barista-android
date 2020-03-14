@@ -20,7 +20,7 @@ import androidx.test.runner.AndroidJUnit4;
 import gr.aueb.android.barista.core.annotations.GeoFix;
 import gr.aueb.android.barista.core.annotations.Permission;
 import gr.aueb.android.barista.core.inline.Barista;
-import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
+import gr.aueb.android.barista.core.utilities.BaristaConfiguration;
 import gr.aueb.android.barista.core.utilities.KMLParser;
 import gr.aueb.android.barista.core.utilities.helper_classes.Coordinate;
 
@@ -68,7 +68,7 @@ public class GeolocationTest {
     @Test
     @Permission(Manifest.permission.ACCESS_FINE_LOCATION)
     public void followPath(){
-        File f = DefaultBaristaConfigurationReader.getPathFile();
+        File f = BaristaConfiguration.getPathFile();
         KMLParser kmlParser = new KMLParser(f.getPath());
         ArrayList<Coordinate> pointList = kmlParser.parseFile();
         for(Coordinate coord : pointList){

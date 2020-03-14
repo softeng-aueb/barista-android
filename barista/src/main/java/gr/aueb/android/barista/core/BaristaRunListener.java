@@ -17,7 +17,7 @@ import gr.aueb.android.barista.core.annotations.BaristaAnnotationParser;
 import gr.aueb.android.barista.core.http_client.BaristaClient;
 import gr.aueb.android.barista.core.http_client.HTTPClientManager;
 import gr.aueb.android.barista.core.model.CommandDTO;
-import gr.aueb.android.barista.core.utilities.DefaultBaristaConfigurationReader;
+import gr.aueb.android.barista.core.utilities.BaristaConfiguration;
 import timber.log.Timber;
 
 /**
@@ -29,6 +29,8 @@ import timber.log.Timber;
  */
 public class BaristaRunListener extends RunListener {
 
+    public static final String BARISTA_HOST = "BARISTA_HOST";
+    public static final String BARISTA_PORT = "BARISTA_PORT";
     /**
      * A barista http client implementation
      */
@@ -62,13 +64,10 @@ public class BaristaRunListener extends RunListener {
         //debug only
         TestRunnerMonitor.testRunStarted();
 
-        String host = (String) getBuildConfigValue(InstrumentationRegistry.getInstrumentation().getContext(), "baristaEndpoint");
+        BaristaConfiguration baristaConfiguration = BaristaConfiguration.getInstance();
 
-        if (host == null){
-            throw new IllegalArgumentException("BuildConfig does not include baristaEndpoint property");
-        }
+        HTTPClientManager.initialize(baristaConfiguration.getHost());
 
-        HTTPClientManager.initialize(host);
         httpClient = HTTPClientManager.getInstance();
         // request to gain read permissions
         httpClient.activate();
@@ -81,7 +80,8 @@ public class BaristaRunListener extends RunListener {
         }
 
         // load the session token provided by the barista plugin
-        sessionToken = DefaultBaristaConfigurationReader.getEmulatorSessionToken();
+        sessionToken = baristaConfiguration.retrieveEmulatorSessionToken();
+
     }
 
     /**
@@ -129,7 +129,7 @@ public class BaristaRunListener extends RunListener {
      */
     public void testFinished(Description description) {
         TestRunnerMonitor.testFinished();
-        Timber.d("Test "+description.getClassName()+":"+description.getMethodName()+" finished. Reseting Device");
+        Timber.d("Test "+description.getClassName()+":"+description.getMethodName()+" finished. Resetting Device");
         if(lastExecutedCommands != null ) {
             List<CommandDTO> reverseCommands = new ArrayList<>();
             for(CommandDTO command: lastExecutedCommands){
