@@ -12,9 +12,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(ElementType.METHOD)
 public @interface Monkey {
 
-    public int seed();
-    public int count();
-    public int throttle();
-    public String apk_name();
+    int seed();
+    int count();
+    int throttle();
+    String apk_name();
 
 }

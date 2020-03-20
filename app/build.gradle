@@ -60,6 +60,6 @@ dependencies {
 }
 
 baristaSettings {
-    port = 8040
     host = "192.168.1.4"
+    port = 8040
 }
