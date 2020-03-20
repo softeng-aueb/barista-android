@@ -12,6 +12,7 @@ import gr.aueb.android.barista.core.model.BatteryLevelDTO;
 import gr.aueb.android.barista.core.model.CommandDTO;
 import gr.aueb.android.barista.core.model.GeoFixDTO;
 import gr.aueb.android.barista.core.model.GpsStatusDTO;
+import gr.aueb.android.barista.core.model.MonkeyDTO;
 import gr.aueb.android.barista.core.model.SetOrientationDTO;
 import gr.aueb.android.barista.core.model.SvcDataDTO;
 import gr.aueb.android.barista.core.model.SvcWifiDTO;
@@ -115,6 +116,14 @@ public class Barista{
         }
         Timber.d("Executing inline GPS command");
         HTTPClientManager.getInstance().executeAllCommands( Arrays.asList(dataCommand));
+    }
+
+    public static void executeMonkey(int seed, int count, int throttle, String apk) {
+        CommandDTO monkeyCommand = null;
+        monkeyCommand = new MonkeyDTO(sessionToken, seed, count, throttle, apk);
+
+        Timber.d("Executing Monkey fuzzer");
+        HTTPClientManager.getInstance().executeAllCommands(Arrays.asList(monkeyCommand));
     }
 
 }

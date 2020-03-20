@@ -13,6 +13,7 @@ import gr.aueb.android.barista.core.annotations.factories.CommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.DataCommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.FollowPathFactory;
 import gr.aueb.android.barista.core.annotations.factories.GeoFixCommandFactory;
+import gr.aueb.android.barista.core.annotations.factories.MonkeyCommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.OrientationFactory;
 import gr.aueb.android.barista.core.annotations.factories.PmGrantCommandFactory;
 import gr.aueb.android.barista.core.annotations.factories.WifiCommandFactory;
@@ -47,6 +48,7 @@ public class BaristaAnnotationParser {
         commandFactoryMap.put("Wifi", new WifiCommandFactory());
         commandFactoryMap.put("Orientation", new OrientationFactory());
         commandFactoryMap.put("FollowPath", new FollowPathFactory());
+        commandFactoryMap.put("Monkey", new MonkeyCommandFactory());
 
 
     }
