@@ -4,6 +4,7 @@ package gr.aueb.android.barista.core.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  *  The mapping of model objects to JSON is handled by Jackson framework.
@@ -27,7 +28,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = BatteryChargeDTO.class),
         @JsonSubTypes.Type(value = SvcWifiDTO.class),
         @JsonSubTypes.Type(value = SvcDataDTO.class),
-        @JsonSubTypes.Type(value = GpsStatusDTO.class)
+        @JsonSubTypes.Type(value = GpsStatusDTO.class),
+        @JsonSubTypes.Type(value = MonkeyDTO.class)
 })
 public abstract class CommandDTO <T extends Command> {
 
